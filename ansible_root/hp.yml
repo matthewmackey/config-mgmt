@@ -1,0 +1,6 @@
+---
+- name: Configure HP Ubuntu 20.04 server
+  hosts: mmhp
+  become: yes
+  roles:
+    - hptower

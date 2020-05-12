@@ -1,0 +1,39 @@
+---
+- name: Create '{{ username }}' user with a default SSH key
+  user:
+    state: present
+    name: "{{ username }}"
+    create_home: yes
+    generate_ssh_key: yes
+    # Default groups for the user created by Ubuntu Installer
+    groups:
+      - adm
+      - cdrom
+      - sudo
+      - dip
+      - plugdev
+      - lpadmin
+      - lxd
+      - sambashare
+    password: "{{ password }}"
+    shell: /bin/bash
+    ssh_key_bits: 4096
+    ssh_key_comment: "{{ username }} - lenovo_20.04_default"
+    ssh_key_file: "{{ home_dir }}/.ssh/id_rsa"
+    ssh_key_passphrase: "{{ mmackey_ssh_key_passphrase }}"
+    ssh_key_type: rsa
+
+- name: Change SSH private key mode to read-only
+  file:
+    state: file
+    path: "{{ home_dir }}/.ssh/id_rsa"
+    mode: 0400
+    group: "{{ username }}"
+    owner: "{{ username }}"
+
+- name: Setup SSH config file
+  copy:
+    src: ssh_config
+    group: "{{ username }}"
+    owner: "{{ username }}"
+    dest: "{{ home_dir }}/.ssh/ssh_config"

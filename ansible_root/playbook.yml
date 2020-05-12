@@ -1,0 +1,13 @@
+---
+- name: Configure Lenovo Ubuntu 20.04 laptop (locally)
+  hosts: 127.0.0.1
+  connection: local
+  become: yes
+  tasks:
+    - include_role:
+        name: common
+    - include_role:
+        name: mmackey
+  vars_prompt:
+    name: mmackey_ssh_key_passphrase
+    prompt: "Enter SSH key passphrase for `mmackey`:"

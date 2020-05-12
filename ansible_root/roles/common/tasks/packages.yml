@@ -1,0 +1,12 @@
+---
+- name: Update APT cache
+  become: true
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install common packages
+  become: true
+  apt:
+    state: latest
+    name: "{{ packages_common }}"

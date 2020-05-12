@@ -1,0 +1,49 @@
+---
+nfs_share_dir: /home/mmackey/mmackey-sync
+nfs_mount_dir: /mnt/mmackey-sync
+nfs_mount_str: 192.168.1.253:/{{ nfs_share_dir }}
+nfs_exports_str: "/home/mmackey/mmackey-sync 192.168.1.0/24(rw,sync,no_subtree_check)"
+packages_common:
+  - ack-grep
+#  - cinnamon
+  - curl
+  - parcellite
+#  - pithos
+  - synapse
+  - tmux
+  - tree
+  - xclip
+r_lang_packages:
+  - r-base-dev
+  # For 'devtools' R package
+  - libcurl4-openssl-dev
+  # For 'devtools' R package
+  - libxml2-dev
+developer_packages:
+  - git
+  - subversion
+  - sqlite
+ide_pacakges:
+  - atom
+  - roxterm
+  - sublime-text-installer
+os_packages:
+  - dconf-editor
+tool_packages:
+  - htop
+  - inetutils-traceroute
+  - jq
+  - nmap
+home_dirs:
+  - .pwd
+  - docs
+  - downloads
+  - downloads/debs
+  - logs
+  - media/pics
+  - media/music
+  - media/videos
+  - personal
+  - screenshots
+  - tmp
+  - work

@@ -1,0 +1,26 @@
+---
+- name: Update APT cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install common packages
+  apt:
+    state: latest
+    pkg:
+      - ack-grep
+      - nfs-kernel-server
+      - tmux
+      - tree
+- name: Create NFS export mount points
+  file:
+    state: directory
+    path: /home/mmackey/mmackey-sync
+- name: Create NFS exports file
+  template:
+    src: exports.j2
+    dest: /etc/exports
+- name: Restart NFS server
+  service:
+    name: nfs-kernel-server
+    state: restarted

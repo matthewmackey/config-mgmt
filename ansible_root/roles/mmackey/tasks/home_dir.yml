@@ -1,0 +1,20 @@
+---
+- name: Setup home directory structure
+  file:
+    state: directory
+    path: "{{ home_dir }}/{{ item }}"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+  loop: "{{ home_dirs_to_create }}"
+
+#- name: Rename default Ubuntu directories
+#  command: mv {{ home_dir }}/{{ item.src }} {{ home_dir }}/{{ item.dest }}
+#  loop: "{{ home_dirs_to_rename }}"
+
+# Be very careful here, so hard-coding directories
+#- name: Remove unused home directories
+#  file:
+#    state: absent
+#    path: "{{ item }}"
+#  loop:
+#    - "{{ home_dir }}/Templates"

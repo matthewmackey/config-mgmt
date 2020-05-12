@@ -1,0 +1,22 @@
+username: mmackey
+password: $6$fc3WQQnhuiVwNJ4q$YXwKJhfsDVqFONJzNCbrlmRtLiCwP16UBbf2sHrP7vR9j7/holCNsd8IObjAYtYnGWJsuPLeAEpajI2qFWpDc.
+home_dir: /home/mmackey
+home_dirs_to_create:
+  - .pwd
+  - docs
+  - downloads
+  - downloads/debs
+  - logs
+  - media/pics
+  - media/music
+  - media/videos
+  - personal
+  - screenshots
+  - tmp
+  - work
+#home_dirs_to_rename:
+#  - { src: Documents, dest: docs }
+#  - { src: Downloads, dest: downloads }
+#  - { src: Music, dest: media/music }
+#  - { src: Pictures, dest: media/pics }
+#  - { src: Videos, dest: media/videos }

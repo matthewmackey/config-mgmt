@@ -11,6 +11,7 @@ packages_common:
   - synapse
   - tmux
   - tree
+  - vim
   - xclip
 r_lang_packages:
   - r-base-dev

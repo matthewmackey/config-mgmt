@@ -8,6 +8,7 @@ packages_common:
   - curl
   - parcellite
 #  - pithos
+  - stow
   - synapse
   - tmux
   - tree

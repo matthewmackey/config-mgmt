@@ -10,6 +10,7 @@ home_dirs_to_create:
   - media/pics
   - media/music
   - media/videos
+  - notes
   - personal
   - screenshots
   - tmp

@@ -30,10 +30,3 @@
     mode: 0400
     group: "{{ username }}"
     owner: "{{ username }}"
-
-- name: Setup SSH config file
-  copy:
-    src: ssh_config
-    group: "{{ username }}"
-    owner: "{{ username }}"
-    dest: "{{ home_dir }}/.ssh/ssh_config"

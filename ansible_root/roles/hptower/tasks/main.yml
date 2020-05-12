@@ -12,14 +12,17 @@
       - nfs-kernel-server
       - tmux
       - tree
+
 - name: Create NFS export mount points
   file:
     state: directory
-    path: /home/mmackey/mmackey-sync
+    path: /mnt/mmackey-sync
+
 - name: Create NFS exports file
   template:
     src: exports.j2
     dest: /etc/exports
+
 - name: Restart NFS server
   service:
     name: nfs-kernel-server

@@ -1,0 +1,16 @@
+[user]
+  name = Matthew Mackey
+  email = matthewmackey@users.noreply.github.com
+
+[alias]
+  br = branch
+  ci = commit
+  co = checkout
+  df = diff --cached
+  st = status
+
+[push]
+  #default = simple
+
+[credential]
+  helper = cache --timeout=3600

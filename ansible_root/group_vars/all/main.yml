@@ -1,8 +1,7 @@
 ---
-nfs_share_dir: /home/mmackey/mmackey-sync
 nfs_mount_dir: /mnt/mmackey-sync
-nfs_mount_str: 192.168.1.253:/{{ nfs_share_dir }}
-nfs_exports_str: "/home/mmackey/mmackey-sync 192.168.1.0/24(rw,sync,no_subtree_check)"
+nfs_mount_str: 192.168.1.253:/{{ nfs_mount_dir }}
+nfs_exports_str: "{{ nfs_mount_dir }} 192.168.1.0/24(rw,sync,no_subtree_check)"
 packages_common:
   - ack-grep
 #  - cinnamon

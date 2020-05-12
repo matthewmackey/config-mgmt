@@ -1,0 +1,7 @@
+---
+- name: Create .gitconfig
+  copy:
+    src: .gitconfig
+    group: "{{ username }}"
+    owner: "{{ username }}"
+    dest: "{{ home_dir }}/.gitconfig"

@@ -8,6 +8,3 @@
 #        name: common
     - include_role:
         name: mmackey
-  vars_prompt:
-    name: mmackey_ssh_key_passphrase
-    prompt: "Enter SSH key passphrase for `mmackey`:"

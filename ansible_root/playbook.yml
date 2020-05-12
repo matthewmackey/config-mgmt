@@ -4,8 +4,8 @@
   connection: local
   become: yes
   tasks:
-    - include_role:
-        name: common
+#    - include_role:
+#        name: common
     - include_role:
         name: mmackey
   vars_prompt:

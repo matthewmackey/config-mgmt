@@ -1,10 +1,10 @@
 ---
 - name: Create passphrase-free ansible SSH key
   openssh_keypair:
-   path: /home/mmackey/.ssh/ansible-id_rsa
-   group: mmackey
-   owner: mmackey
+   path: "{{ home_dir }}/.ssh/ansible-id_rsa"
+   group: "{{ username }}"
+   owner: "{{ username }}"
    mode: 0400
-   comment: "ansible-lenovo"
+   comment: "{{ username }} - ansible-lenovo"
    size: 4096
    type: rsa

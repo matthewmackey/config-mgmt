@@ -1,8 +1,10 @@
 ---
 - name: Create '{{ username }}' user with a default SSH key
+  become: yes
   user:
     state: present
     name: "{{ username }}"
+    comment: "{{ name }}"
     create_home: yes
     generate_ssh_key: yes
     # Default groups for the user created by Ubuntu Installer

@@ -14,23 +14,23 @@ packages_common:
   - tree
   - vim
   - xclip
-r_lang_packages:
+packages_r_lang:
   - r-base-dev
   # For 'devtools' R package
   - libcurl4-openssl-dev
   # For 'devtools' R package
   - libxml2-dev
-developer_packages:
+packages_developer:
   - git
   - subversion
   - sqlite
-ide_pacakges:
+pacakges_ide:
   - atom
   - roxterm
   - sublime-text-installer
-os_packages:
+packages_os:
   - dconf-editor
-tool_packages:
+packages_tools:
   - htop
   - net-tools
   - jq

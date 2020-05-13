@@ -2,3 +2,4 @@
 - import_tasks: packages.yml
 - import_tasks: nfs.yml
 - import_tasks: lastpass.yml
+- import_tasks: cinnamon.yml

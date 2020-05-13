@@ -8,7 +8,7 @@
 - name: Install common packages
   become: true
   apt:
-    state: latest
+    state: present
     name: "{{ packages_common }}"
 
 - name: Download and install Chrome via .deb
@@ -19,5 +19,5 @@
 - name: Install tools packages
   become: true
   apt:
-    state: latest
+    state: present
     name: "{{ packages_tools }}"

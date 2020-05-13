@@ -49,6 +49,7 @@ cd pc-setup
 * Install Slack - `sudo snap install slack --classic`
 * Create method to run "Fullscreen" video on only half the monitor (ie - for YouTube)
 * Fix tmux prompt
+* Fix lpass `make` tasks that always trigger "changed"
 
 # HP Tower Notes
 * On `mmhp` I did the following:

@@ -1,0 +1,48 @@
+---
+- name: Install LastPass CLI debian dependencies
+  apt:
+    state: latest
+    name: "{{ item }}"
+  loop:
+    - bash-completion
+    - build-essential
+    - ca-certificates
+    - cmake
+    - libcurl4
+    - libcurl4-openssl-dev
+    - libssl1.1
+    - libssl-dev
+    - libxml2
+    - libxml2-dev
+    - pkg-config
+    - xclip
+
+- name: Download lastpass-cli from Github
+  git:
+    repo: https://github.com/lastpass/lastpass-cli.git
+    dest: /tmp/lastpass-cli
+    version: v1.3.3
+
+- name: Build lastpass-cli source
+  make:
+    chdir: /tmp/lastpass-cli
+
+- name: Install lastpass-cli from built source
+  make:
+    chdir: /tmp/lastpass-cli
+    target: install
+  become: yes
+
+- name: Install LastPass CLI documentation debian dependencies
+  apt:
+    state: latest
+    name: "{{ item }}"
+  loop:
+    - asciidoc
+    - xsltproc
+
+- name: Install lastpass-cli man page
+  make:
+    chdir: /tmp/lastpass-cli
+    target: install-doc
+  become: yes

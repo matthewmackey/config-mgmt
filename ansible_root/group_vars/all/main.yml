@@ -4,10 +4,10 @@ nfs_mount_str: 192.168.1.253:/{{ nfs_mount_dir }}
 nfs_exports_str: "{{ nfs_mount_dir }} 192.168.1.0/24(rw,sync,no_subtree_check)"
 packages_common:
   - ack-grep
-#  - cinnamon
+  - cinnamon
   - curl
   - parcellite
-#  - pithos
+  - pithos
   - stow
   - synapse
   - tmux
@@ -32,7 +32,7 @@ os_packages:
   - dconf-editor
 tool_packages:
   - htop
-  - inetutils-traceroute
+  - net-tools
   - jq
   - nmap
 home_dirs:

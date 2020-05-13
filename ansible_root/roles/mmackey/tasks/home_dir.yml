@@ -18,3 +18,9 @@
 #    path: "{{ item }}"
 #  loop:
 #    - "{{ home_dir }}/Templates"
+
+- name: Install bashmarks
+  get_url:
+    url: https://raw.githubusercontent.com/huyng/bashmarks/master/bashmarks.sh
+    dest: "{{ home_dir }}/.local/bin/bashmarks.sh"
+    checksum: sha256:cee96f60a08e3801c851ddab43be188e450e39c097d4c4cb193a50ac847122c9

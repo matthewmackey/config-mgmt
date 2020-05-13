@@ -16,8 +16,14 @@ cd pc-setup
 ```
 
 # TODO
+* Configure Parcellite options
+* Configure Cinnamon applet panel size/height & calendar applet settings
+* Configure Nemo (file explorer) to "show hidden files" by default
+* Configure Nemo "Favorites"
+* Install vim plugins
 * Install pomodoro timer and fix sound w/ 'sudo apt install sox'
-* Install Cinnamon
+  * Install sounds located at:
+    * ~/.local/share/cinnamon/applets/pomodoro@gregfreeman.org/po/pomodoro@gregfreeman.org.pot
 * Install JDK's from DEBs
   - create JAVA_HOME
   - create /usr/lib/jvm/DEFAULT symlink

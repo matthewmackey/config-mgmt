@@ -29,7 +29,7 @@
 #
 #  ~/.local/bin
 #         executables specific to this laptop's purpose (ie - company-specific
-          programs)
+#         programs)
 #
 #  ~/mmbin (managed via a link to ~/dotfiles/mmbin)
 #       generic executables that are useful on any setup and are not tied to

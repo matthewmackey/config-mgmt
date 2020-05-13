@@ -2,9 +2,7 @@ username: mmackey
 password: $6$fc3WQQnhuiVwNJ4q$YXwKJhfsDVqFONJzNCbrlmRtLiCwP16UBbf2sHrP7vR9j7/holCNsd8IObjAYtYnGWJsuPLeAEpajI2qFWpDc.
 home_dir: /home/mmackey
 home_dirs_to_create:
-  - .local/bin
   - .pwd
-  - bin
   - docs
   - downloads
   - downloads/debs
@@ -12,7 +10,6 @@ home_dirs_to_create:
   - media/pics
   - media/music
   - media/videos
-  - mmbin
   - notes
   - personal
   - screenshots

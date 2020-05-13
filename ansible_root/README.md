@@ -1,6 +1,3 @@
+# TODO
 - setup 'become' properly on all roles
-- setup ansible vault
-- setup basic tmux, vim and git config
-- setup bash aliases
 - Fix: mmackey role -> moving default Ubuntu directories
-

@@ -3,3 +3,6 @@
     - mmackey
 - import_tasks: home_dir.yml
 - import_tasks: ansible_setup.yml
+- import_tasks: developer.yml
+  tags:
+    - developer

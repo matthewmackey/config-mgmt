@@ -9,4 +9,5 @@
     - include_role:
         name: mmackey
       tags:
+        - developer
         - mmackey

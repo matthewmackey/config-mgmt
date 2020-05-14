@@ -8,3 +8,5 @@
         name: common
     - include_role:
         name: mmackey
+      tags:
+        - mmackey

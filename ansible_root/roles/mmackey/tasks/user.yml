@@ -32,3 +32,16 @@
     mode: 0400
     group: "{{ username }}"
     owner: "{{ username }}"
+
+- name: Create Github SSH key for '{{ username }}'
+  become: yes
+  user:
+    state: present
+    name: "{{ username }}"
+    force: no      # keeps an existing key from being overwritten
+    generate_ssh_key: yes
+    ssh_key_bits: 4096
+    ssh_key_comment: "{{ username }}-lenovo_github"
+    ssh_key_file: "{{ home_dir }}/.ssh/{{ username }}_github-id_rsa"
+    ssh_key_passphrase: "{{ mmackey_github_ssh_key_passphrase }}"
+    ssh_key_type: rsa

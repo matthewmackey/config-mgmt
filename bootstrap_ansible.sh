@@ -91,7 +91,7 @@ create_ansible_bin_script() {
 
   cat > ${ANSIBLE_BIN_SCRIPT} <<END
 #!/bin/sh
-PYTHONPATH=${PYTHONPATH} ${TMP_PYTHON_DIR}/local/bin/ansible
+PYTHONPATH=${PYTHONPATH} ${TMP_PYTHON_DIR}/local/bin/ansible-playbook
 END
 
   chmod +x ${ANSIBLE_BIN_SCRIPT}

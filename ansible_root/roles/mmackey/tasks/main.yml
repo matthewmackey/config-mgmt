@@ -6,3 +6,6 @@
 - import_tasks: developer.yml
   tags:
     - developer
+- import_tasks: python.yml
+  tags:
+    - python

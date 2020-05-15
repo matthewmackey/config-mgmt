@@ -1,0 +1,69 @@
+---
+
+# See: https://github.com/pyenv/pyenv/wiki/Common-build-problems
+#
+# Technically, these are the deps for all of `pyenv`, which `python-build`
+# is a part of, but I didn't take the time to narrow down which ones are
+# the only ones needed for using `python-build` (it would be very hard to do).
+- name: Install dependencies for python-build
+  apt:
+    state: present
+    name: "{{ item }}"
+  loop:
+    - build-essential
+    - curl
+    - git
+    - libbz2-dev
+    - libffi-dev
+    - liblzma-dev
+    - libncurses5-dev
+    - libncursesw5-dev
+    - libreadline-dev
+    - libsqlite3-dev
+    - libssl-dev
+    - llvm
+    - python-openssl
+    - tk-dev
+    - wget
+    - xz-utils
+    - zlib1g-dev
+  tags:
+    - pkg_install
+
+# TODO: change to https URL
+- name: Download python-build (part of pyenv)
+  git:
+    repo: git://github.com/pyenv/pyenv.git
+    dest: /tmp/pyenv
+    version: v1.2.18
+
+# NOTE: this also installs `pyenv-install` & `pyenv-uninstall` to /usr/local,
+#       which we don't use
+- name: Install python-build to /usr/local
+  become: yes
+  shell: PREFIX=/usr/local /bin/bash -c './install.sh -v'
+  args:
+    chdir: /tmp/pyenv/plugins/python-build
+    creates: /usr/local/bin/python-build
+
+- name: Create ~/pythons directory to store python-build Pythons
+  file:
+    state: directory
+    path: "{{ home_dir }}/pythons"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+
+# As of 5/12/2020, 3.8.2 is the Python version installed with base Ubuntu 20.04
+- name: Install Python version 3.8.2 to ~/pythons with 'python-build'
+  shell: python-build 3.8.2 "{{ home_dir }}/pythons/3.8.2"
+  args:
+    chdir: /usr/local/bin
+    creates: "{{ home_dir }}/pythons/3.8.2/bin/python"
+
+- name: Set Python 3.8.2 as the 'default' Python with a symlink
+  file:
+    state: link
+    src: "{{ home_dir }}/pythons/3.8.2"
+    dest: "{{ home_dir }}/pythons/default"
+    owner: "{{ username }}"
+    group: "{{ username }}"

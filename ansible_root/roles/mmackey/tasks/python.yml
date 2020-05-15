@@ -55,7 +55,7 @@
 
 # As of 5/12/2020, 3.8.2 is the Python version installed with base Ubuntu 20.04
 - name: Install Python version 3.8.2 to ~/pythons with 'python-build'
-  shell: python-build 3.8.2 "{{ home_dir }}/pythons/3.8.2"
+  shell: ./python-build 3.8.2 "{{ home_dir }}/pythons/3.8.2"
   args:
     chdir: /usr/local/bin
     creates: "{{ home_dir }}/pythons/3.8.2/bin/python"
@@ -67,3 +67,9 @@
     dest: "{{ home_dir }}/pythons/default"
     owner: "{{ username }}"
     group: "{{ username }}"
+
+- name: Install 'virtualenvwrapper' into default (3.8.2) Python in ~/pythons
+  shell: ./pip3 install virtualenvwrapper
+  args:
+    chdir: "{{ home_dir }}/pythons/default/bin"
+    creates: "{{ home_dir }}/pythons/default/bin/virtualenvwrapper"

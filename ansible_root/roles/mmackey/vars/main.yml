@@ -13,8 +13,10 @@ home_dirs_to_create:
   - media/videos
   - notes
   - personal
+  - pythons
   - screenshots
   - tmp
+  - virtualenvs
   - work
 #home_dirs_to_rename:
 #  - { src: Documents, dest: docs }

@@ -6,6 +6,8 @@
   tasks:
     - include_role:
         name: common
+      tags:
+        - common
     - include_role:
         name: mmackey
       tags:

@@ -8,3 +8,23 @@
    comment: "{{ username }} - ansible-lenovo"
    size: 4096
    type: rsa
+
+# NOTE: this depends on the .bashrc
+- name: Create Python 3 virtualenv to install ansible into
+  become_user: "{{ username }}"
+  shell: |
+    default_python_bin={{ home_dir }}/pythons/default/bin
+    export WORKON_HOME={{ home_dir }}/virtualenvs
+    export VIRTUALENVWRAPPER_PYTHON=$default_python_bin/python
+    export VIRTUALENVWRAPPER_VIRTUALENV=$default_python_bin/virtualenv
+    export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--always-copy'
+    source $default_python_bin/virtualenvwrapper.sh
+    mkvirtualenv ansible
+  args:
+    creates: "{{ home_dir }}/virtualenvs/ansible/bin/python"
+
+- name: Install ansible into Python 3 virtualenv
+  become_user: "{{ username }}"
+  pip:
+    name: ansible
+    virtualenv: "{{ home_dir }}/virtualenvs/ansible"

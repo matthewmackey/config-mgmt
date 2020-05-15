@@ -4,10 +4,12 @@
 - import_tasks: home_dir.yml
   tags:
     - mmackey
-- import_tasks: ansible_setup.yml
 - import_tasks: developer.yml
   tags:
     - developer
 - import_tasks: python.yml
   tags:
     - python
+- import_tasks: ansible_setup.yml  # Must be done after 'python.yml'
+  tags:
+    - ansible

@@ -48,3 +48,21 @@
     groups:
       - plugdev
     append: yes
+
+- name: Download JetBrains Toolbox tarball SHA-256 checksum
+  shell: curl -s https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.17.6856.tar.gz.sha256 | cut -d ' ' -f 1
+  register: jetbrains_toolbox_tarball_sha256sum
+  args:
+    warn: no
+
+- name: Download JetBrains Toolbox tarball
+  get_url:
+    url: https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.17.6856.tar.gz
+    dest: "{{ home_dir }}/downloads/srv/jetbrains-toolbox-1.17.6856.tar.gz"
+    checksum: sha256:{{ jetbrains_toolbox_tarball_sha256sum.stdout }}
+
+- name: Unarchive JetBrains Toolbox tarball to /opt
+  unarchive:
+    src: "{{ home_dir }}/downloads/srv/jetbrains-toolbox-1.17.6856.tar.gz"
+    dest: /opt
+    remote_src: yes

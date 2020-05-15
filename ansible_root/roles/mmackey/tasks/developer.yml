@@ -25,6 +25,8 @@
     - libvirt-clients
     - libvirt-daemon-system
     - qemu-kvm
+  tags:
+    - pkg_install
 
 - name: Add {{ username }} to groups required for Android emulator KVM
   become: yes
@@ -50,19 +52,45 @@
     append: yes
 
 - name: Download JetBrains Toolbox tarball SHA-256 checksum
-  shell: curl -s https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.17.6856.tar.gz.sha256 | cut -d ' ' -f 1
-  register: jetbrains_toolbox_tarball_sha256sum
+  shell: |
+    curl -s https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.17.6856.tar.gz.sha256 \
+      | cut -d ' ' -f 1 > /tmp/jetbrains_toolbox_tar.sha256
   args:
+    creates: /tmp/jetbrains_toolbox_tar.sha256
     warn: no
 
 - name: Download JetBrains Toolbox tarball
   get_url:
     url: https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.17.6856.tar.gz
     dest: "{{ home_dir }}/downloads/srv/jetbrains-toolbox-1.17.6856.tar.gz"
-    checksum: sha256:{{ jetbrains_toolbox_tarball_sha256sum.stdout }}
+    checksum: sha256:{{ jetbrains_toolbox_tar_sha256 }}
+  vars:
+    jetbrains_toolbox_tar_sha256: "{{ lookup('file', '/tmp/jetbrains_toolbox_tar.sha256') }}"
 
 - name: Unarchive JetBrains Toolbox tarball to /opt
   unarchive:
     src: "{{ home_dir }}/downloads/srv/jetbrains-toolbox-1.17.6856.tar.gz"
     dest: /opt
     remote_src: yes
+
+- name: Download vagrant .deb SHA-256 checksum
+  shell: |
+    curl -s https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_SHA256SUMS \
+      | grep vagrant_2.2.9_x86_64.deb \
+      | cut -d ' ' -f 1 > /tmp/vagrant_deb.sha256
+  args:
+    creates: /tmp/vagrant_deb.sha256
+    warn: no
+
+- name: Download vagrant .deb
+  get_url:
+    url: https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_x86_64.deb
+    dest: "{{ home_dir }}/downloads/srv/vagrant_2.2.9_x86_64.deb"
+    checksum: sha256:{{ vagrant_deb_sha256 }}
+  vars:
+    vagrant_deb_sha256: "{{ lookup('file', '/tmp/vagrant_deb.sha256') }}"
+
+- name: Install vagrant via .deb
+  apt:
+    state: present
+    deb: "{{ home_dir }}/downloads/srv/vagrant_2.2.9_x86_64.deb"

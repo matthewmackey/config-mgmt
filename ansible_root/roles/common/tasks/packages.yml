@@ -27,3 +27,8 @@
     state: present
     name: slack
     classic: yes
+
+- name: Download and install Zoom via .deb
+  apt:
+    state: present
+    deb: /home/mmackey/downloads/srv/zoom_amd64.deb

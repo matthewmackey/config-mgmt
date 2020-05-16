@@ -4,6 +4,10 @@
   user:
     state: present
     name: "{{ username }}"
+    # this allows other tasks to add this user to groups; otherwise, every time
+    # this task is run, it will overwrite any other groups this user has been
+    # added to by other tasks
+    append: yes
     comment: "{{ name }}"
     create_home: yes
     generate_ssh_key: yes
@@ -11,12 +15,12 @@
     groups:
       - adm
       - cdrom
-      - sudo
       - dip
-      - plugdev
       - lpadmin
       - lxd
+      - plugdev
       - sambashare
+      - sudo
     password: "{{ password }}"
     shell: /bin/bash
     ssh_key_bits: 4096

@@ -17,19 +17,19 @@
     - pkg-config
     - xclip
 
-- name: Download lastpass-cli from Github
-  git:
-    repo: https://github.com/lastpass/lastpass-cli.git
-    dest: /tmp/lastpass-cli
-    version: v1.3.3
-#  when: lastpass_cli.stat.exists == False
-
-# The `make` module does NOT provided a `creates` option so using this
+# The `make` & `git` modules do NOT provided a `creates` option so using this
 # test instead:
 - name: Check if LastPass CLI is already installed
   stat:
     path: /usr/bin/lpass
   register: lastpass_cli
+
+- name: Download lastpass-cli from Github
+  git:
+    repo: https://github.com/lastpass/lastpass-cli.git
+    dest: /tmp/lastpass-cli
+    version: v1.3.3
+  when: lastpass_cli.stat.exists == False
 
 - name: Build lastpass-cli source
   make:

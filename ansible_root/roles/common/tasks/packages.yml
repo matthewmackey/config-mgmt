@@ -11,10 +11,16 @@
     state: present
     name: "{{ packages_common }}"
 
+- name: Check if Chrome already installed
+  shell: dpkg -l | grep -E '^ii(.*)google-chrome-stable' >/dev/null && echo yes || echo no
+  changed_when: False
+  register: is_chrome_installed
+
 - name: Download and install Chrome via .deb
   apt:
     state: present
     deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  when: is_chrome_installed == "no"
 
 - name: Install tools packages
   become: true

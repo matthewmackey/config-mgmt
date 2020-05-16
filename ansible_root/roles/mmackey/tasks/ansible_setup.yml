@@ -22,6 +22,7 @@
     mkvirtualenv ansible
   args:
     creates: "{{ home_dir }}/virtualenvs/ansible/bin/python"
+    executable: /bin/bash
 
 - name: Install ansible into Python 3 virtualenv
   become_user: "{{ username }}"

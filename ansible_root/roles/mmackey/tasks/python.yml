@@ -6,6 +6,7 @@
 # is a part of, but I didn't take the time to narrow down which ones are
 # the only ones needed for using `python-build` (it would be very hard to do).
 - name: Install dependencies for python-build
+  become: user
   apt:
     state: present
     name: "{{ item }}"
@@ -47,6 +48,7 @@
     creates: /usr/local/bin/python-build
 
 - name: Create ~/pythons directory to store python-build Pythons
+  become: user
   file:
     state: directory
     path: "{{ home_dir }}/pythons"
@@ -55,12 +57,14 @@
 
 # As of 5/12/2020, 3.8.2 is the Python version installed with base Ubuntu 20.04
 - name: Install Python version 3.8.2 to ~/pythons with 'python-build'
+  become_user: "{{ username }}"
   shell: ./python-build 3.8.2 "{{ home_dir }}/pythons/3.8.2"
   args:
     chdir: /usr/local/bin
     creates: "{{ home_dir }}/pythons/3.8.2/bin/python"
 
 - name: Set Python 3.8.2 as the 'default' Python with a symlink
+  become: user
   file:
     state: link
     src: "{{ home_dir }}/pythons/3.8.2"
@@ -69,6 +73,7 @@
     group: "{{ username }}"
 
 - name: Install 'virtualenvwrapper' into default (3.8.2) Python in ~/pythons
+  become_user: "{{ username }}"
   shell: ./pip3 install virtualenvwrapper
   args:
     chdir: "{{ home_dir }}/pythons/default/bin"

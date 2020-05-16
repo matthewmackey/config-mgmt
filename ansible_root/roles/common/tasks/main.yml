@@ -8,4 +8,7 @@
     - pkg_install
 - import_tasks: nfs.yml
 - import_tasks: lastpass.yml
+  tags:
+    - common
+    - lastpass
 - import_tasks: cinnamon.yml

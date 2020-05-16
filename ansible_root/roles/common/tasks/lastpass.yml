@@ -1,7 +1,7 @@
 ---
 - name: Install LastPass CLI debian dependencies
   apt:
-    state: latest
+    state: present
     name: "{{ item }}"
   loop:
     - bash-completion
@@ -22,18 +22,29 @@
     repo: https://github.com/lastpass/lastpass-cli.git
     dest: /tmp/lastpass-cli
     version: v1.3.3
+#  when: lastpass_cli.stat.exists == False
+
+# The `make` module does NOT provided a `creates` option so using this
+# test instead:
+- name: Check if LastPass CLI is already installed
+  stat:
+    path: /usr/bin/lpass
+  register: lastpass_cli
 
 - name: Build lastpass-cli source
   make:
     chdir: /tmp/lastpass-cli
+  when: lastpass_cli.stat.exists == False
 
 - name: Install lastpass-cli from built source
+  become: yes
   make:
     chdir: /tmp/lastpass-cli
     target: install
-  become: yes
+  when: lastpass_cli.stat.exists == False
 
 - name: Install LastPass CLI documentation debian dependencies
+  become: yes
   apt:
     state: latest
     name: "{{ item }}"
@@ -41,8 +52,16 @@
     - asciidoc
     - xsltproc
 
+# The `make` module does NOT provided a `creates` option so using this
+# test instead:
+- name: Check if LastPass CLI docs are already installed
+  stat:
+    path: /usr/share/man/man1/lpass.1
+  register: lastpass_cli_docs
+
 - name: Install lastpass-cli man page
+  become: yes
   make:
     chdir: /tmp/lastpass-cli
     target: install-doc
-  become: yes
+  when: lastpass_cli_docs.stat.exists == False

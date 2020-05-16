@@ -1,0 +1,47 @@
+---
+#-------------------------------------------------------------------------------
+# Use the following whenever Docker adds 20.04 packages to its APT repo; for
+# now, we are just going to install Docker from the main Ubuntu repos.
+#-------------------------------------------------------------------------------
+#- name: Install Docker .deb dependencies
+#  apt:
+#    state: present
+#    name: "{{ item }}"
+#  loop:
+#    - apt-transport-https
+#    - ca-certificates
+#    - curl
+#    - gnupg-agent
+#    - software-properties-common
+#
+#- name: Install Docker's APT repository key
+#  apt_key:
+#    state: present
+#    url: https://download.docker.com/linux/ubuntu/gpg
+#
+#- name: Add Docker's APT repository
+#  apt_repository:
+#    state: present
+#    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+
+- name: Install Docker from Ubuntu package repo
+  become: yes
+  apt:
+    state: present
+    name: docker.io=19.03.8-0ubuntu1
+
+- name: Create 'docker' group
+  become: yes
+  group:
+    state: present
+    name: docker
+    system: yes
+
+- name: Add 'mmackey' to 'docker' group
+  become: yes
+  user:
+    state: present
+    name: "{{ username }}"
+    append: yes
+    groups:
+      - docker

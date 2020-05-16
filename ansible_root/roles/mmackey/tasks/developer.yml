@@ -68,6 +68,7 @@
     jetbrains_toolbox_tar_sha256: "{{ lookup('file', '/tmp/jetbrains_toolbox_tar.sha256') }}"
 
 - name: Unarchive JetBrains Toolbox tarball to /opt
+  become: yes
   unarchive:
     src: "{{ home_dir }}/downloads/srv/jetbrains-toolbox-1.17.6856.tar.gz"
     dest: /opt
@@ -91,6 +92,7 @@
     vagrant_deb_sha256: "{{ lookup('file', '/tmp/vagrant_deb.sha256') }}"
 
 - name: Install Vagrant via .deb
+  become: yes
   apt:
     state: present
     deb: "{{ home_dir }}/downloads/srv/vagrant_2.2.9_x86_64.deb"
@@ -113,6 +115,7 @@
     virtualbox_deb_sha256: "{{ lookup('file', '/tmp/virtualbox_deb.sha256') }}"
 
 - name: Install Oracle VirtualBox via .deb
+  become: yes
   apt:
     state: present
     deb: "{{ home_dir }}/downloads/srv/virtualbox-6.1_6.1.8-137981~Ubuntu~eoan_amd64.deb"

@@ -1,0 +1,21 @@
+- name: Create 'srv' group
+  group:
+    state: present
+    name: srv
+    system: yes
+
+- name: Add 'mmackey' to 'srv' group
+  user:
+    state: present
+    name: mmackey
+    append: yes
+    groups:
+      - srv
+
+- name: Set group for /srv to be 'srv'
+  file:
+    state: directory
+    path: /srv
+    owner: root
+    group: srv
+    mode: "2775"  # setgid

@@ -16,6 +16,7 @@ home_dirs_to_create:
   - pythons
   - screenshots
   - tmp
+  - virtualbox_vms
   - virtualenvs
   - work
 #home_dirs_to_rename:

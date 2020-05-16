@@ -119,3 +119,10 @@
   apt:
     state: present
     deb: "{{ home_dir }}/downloads/srv/virtualbox-6.1_6.1.8-137981~Ubuntu~eoan_amd64.deb"
+
+- name: Install Multipass Ubuntu VM manager by Canonical
+  become: yes
+  snap:
+    state: present
+    name: multipass
+    classic: yes

@@ -11,6 +11,13 @@
     state: present
     name: "{{ packages_common }}"
 
+- name: Install common snaps
+  snap:
+    state: present
+    name: "{{ snaps_common }}"
+    channel: stable
+    classic: yes
+
 - name: Check if Chrome already installed
   shell: dpkg -l | grep -E '^ii(.*)google-chrome-stable' >/dev/null && echo yes || echo no
   changed_when: False
@@ -27,12 +34,6 @@
   apt:
     state: present
     name: "{{ packages_tools }}"
-
-- name: Install Slack via snap
-  snap:
-    state: present
-    name: slack
-    classic: yes
 
 - name: Download and install Zoom via .deb
   apt:

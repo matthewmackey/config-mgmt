@@ -15,6 +15,9 @@ packages_common:
   - tree
   - vim
   - xclip
+snaps_common:
+  - slack
+  - skype
 packages_r_lang:
   - r-base-dev
   # For 'devtools' R package

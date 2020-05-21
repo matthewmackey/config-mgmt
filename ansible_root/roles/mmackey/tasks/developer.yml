@@ -143,8 +143,23 @@
     cache_valid_time: 3600
     update_cache: yes
 
+# Atom doesn't provide checksum URL so I got it myself
+- name: Download Atom IDE .deb
+  get_url:
+    url: https://atom-installer.github.com/v1.47.0/atom-amd64.deb
+    dest: "{{ home_dir }}/downloads/srv/atom-amdd64-v1.47.0.deb"
+    checksum: sha256:500117c2da4b6a2a0d1342559777c921e577aec216ecad2c04b5d800b7d460b3
+
 - name: Install Atom IDE
   become: yes
   apt:
     state: present
-    deb: https://atom-installer.github.com/v1.47.0/atom-amd64.deb
+    deb: "{{ home_dir }}/downloads/srv/atom-amdd64-v1.47.0.deb"
+
+- name: Install Atom IDE packages
+  become_user: mmackey
+  shell: apm install {{ item }}
+  args:
+    creates: "{{ home_dir }}/.atom/packages/{{ item }}/package.json"
+  loop:
+    - vim-mode-plus

@@ -140,4 +140,11 @@
   apt:
     state: present
     name: dotnet-sdk-3.1
+    cache_valid_time: 3600
     update_cache: yes
+
+- name: Install Atom IDE
+  become: yes
+  apt:
+    state: present
+    deb: https://atom-installer.github.com/v1.47.0/atom-amd64.deb

@@ -1,0 +1,76 @@
+---
+#-------------------------------------------------------------------------------
+# JetBrains
+#-------------------------------------------------------------------------------
+- name: Download JetBrains Toolbox tarball SHA-256 checksum
+  shell: |
+    curl -s https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.17.6856.tar.gz.sha256 \
+      | cut -d ' ' -f 1 > /tmp/jetbrains_toolbox_tar.sha256
+  args:
+    creates: /tmp/jetbrains_toolbox_tar.sha256
+    warn: no
+
+- name: Download JetBrains Toolbox tarball
+  get_url:
+    url: https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.17.6856.tar.gz
+    dest: "{{ home_dir }}/downloads/srv/jetbrains-toolbox-1.17.6856.tar.gz"
+    checksum: sha256:{{ jetbrains_toolbox_tar_sha256 }}
+  vars:
+    jetbrains_toolbox_tar_sha256: "{{ lookup('file', '/tmp/jetbrains_toolbox_tar.sha256') }}"
+
+- name: Unarchive JetBrains Toolbox tarball to /opt
+  become: yes
+  unarchive:
+    src: "{{ home_dir }}/downloads/srv/jetbrains-toolbox-1.17.6856.tar.gz"
+    dest: /opt
+    remote_src: yes
+
+#-------------------------------------------------------------------------------
+# Microsoft
+#-------------------------------------------------------------------------------
+# There is no checksum for this pkg from MS so installing directly from URL
+# without any checksum
+- name: Install Microsoft APT configuration for packages.microsoft.com via .deb
+  become: yes
+  apt:
+    state: present
+    deb: https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
+
+- name: Install Microsoft .NET Core SDK
+  become: yes
+  apt:
+    state: present
+    name: dotnet-sdk-3.1
+    cache_valid_time: 3600
+    update_cache: yes
+
+- name: Install Visual Studio Code from snap
+  become: yes
+  snap:
+     state: present
+     name: code
+     classic: yes
+
+#-------------------------------------------------------------------------------
+# Atom
+#-------------------------------------------------------------------------------
+# Atom doesn't provide checksum URL so I got it myself
+- name: Download Atom IDE .deb
+  get_url:
+    url: https://atom-installer.github.com/v1.47.0/atom-amd64.deb
+    dest: "{{ home_dir }}/downloads/srv/atom-amdd64-v1.47.0.deb"
+    checksum: sha256:500117c2da4b6a2a0d1342559777c921e577aec216ecad2c04b5d800b7d460b3
+
+- name: Install Atom IDE
+  become: yes
+  apt:
+    state: present
+    deb: "{{ home_dir }}/downloads/srv/atom-amdd64-v1.47.0.deb"
+
+- name: Install Atom IDE packages
+  become_user: "{{ username }}"
+  shell: apm install {{ item }}
+  args:
+    creates: "{{ home_dir }}/.atom/packages/{{ item }}/package.json"
+  loop:
+    - vim-mode-plus

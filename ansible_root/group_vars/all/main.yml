@@ -29,8 +29,11 @@ packages_developer:
   - git
 #  - subversion
 #  - sqlite
+  - gcc-arm-linux-gnueabihf
+  - g++-arm-linux-gnueabihf
   - gcc-aarch64-linux-gnu
   - g++-aarch64-linux-gnu
+  - universal-ctags
 pacakges_ide:
   - atom
   - roxterm

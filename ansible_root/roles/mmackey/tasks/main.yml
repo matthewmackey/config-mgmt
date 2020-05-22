@@ -1,3 +1,4 @@
+---
 - import_tasks: user.yml
   tags:
     - mmackey
@@ -8,15 +9,27 @@
 - import_tasks: home_dir.yml
   tags:
     - mmackey
-- import_tasks: developer.yml
+- import_tasks: android.yml
   tags:
-    - developer
+    - mmackey
+    - android
+- import_tasks: ides.yml
+  tags:
+    - mmackey
+    - ides
+- import_tasks: virtual.yml
+  tags:
+    - mmackey
+    - virtual
 - import_tasks: docker.yml
   tags:
+    - mmackey
     - docker
 - import_tasks: python.yml
   tags:
+    - mmackey
     - python
 - import_tasks: ansible_setup.yml  # Must be done after 'python.yml'
   tags:
+    - mmackey
     - ansible

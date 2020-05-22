@@ -1,12 +1,11 @@
 ---
-
 # See: https://github.com/pyenv/pyenv/wiki/Common-build-problems
 #
 # Technically, these are the deps for all of `pyenv`, which `python-build`
 # is a part of, but I didn't take the time to narrow down which ones are
 # the only ones needed for using `python-build` (it would be very hard to do).
 - name: Install dependencies for python-build
-  become: user
+  become: yes
   apt:
     state: present
     name: "{{ item }}"
@@ -48,7 +47,7 @@
     creates: /usr/local/bin/python-build
 
 - name: Create ~/pythons directory to store python-build Pythons
-  become: user
+  become: yes
   file:
     state: directory
     path: "{{ home_dir }}/pythons"
@@ -64,7 +63,7 @@
     creates: "{{ home_dir }}/pythons/3.8.2/bin/python"
 
 - name: Set Python 3.8.2 as the 'default' Python with a symlink
-  become: user
+  become: yes
   file:
     state: link
     src: "{{ home_dir }}/pythons/3.8.2"

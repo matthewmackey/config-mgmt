@@ -1,0 +1,53 @@
+---
+- name: Download Vagrant .deb SHA-256 checksum
+  shell: |
+    curl -s https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_SHA256SUMS \
+      | grep vagrant_2.2.9_x86_64.deb \
+      | cut -d ' ' -f 1 > /tmp/vagrant_deb.sha256
+  args:
+    creates: /tmp/vagrant_deb.sha256
+    warn: no
+
+- name: Download Vagrant .deb
+  get_url:
+    url: https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_x86_64.deb
+    dest: "{{ home_dir }}/downloads/srv/vagrant_2.2.9_x86_64.deb"
+    checksum: sha256:{{ vagrant_deb_sha256 }}
+  vars:
+    vagrant_deb_sha256: "{{ lookup('file', '/tmp/vagrant_deb.sha256') }}"
+
+- name: Install Vagrant via .deb
+  become: yes
+  apt:
+    state: present
+    deb: "{{ home_dir }}/downloads/srv/vagrant_2.2.9_x86_64.deb"
+
+- name: Download Oracle VirtualBox .deb SHA-256 checksum
+  shell: |
+    curl -s https://www.virtualbox.org/download/hashes/6.1.8/SHA256SUMS \
+      | grep virtualbox-6.1_6.1.8-137981~Ubuntu~eoan_amd64.deb \
+      | cut -d ' ' -f 1 > /tmp/virtualbox_deb.sha256
+  args:
+    creates: /tmp/virtualbox_deb.sha256
+    warn: no
+
+- name: Download Oracle VirtualBox .deb
+  get_url:
+    url: https://download.virtualbox.org/virtualbox/6.1.8/virtualbox-6.1_6.1.8-137981~Ubuntu~eoan_amd64.deb
+    dest: "{{ home_dir }}/downloads/srv/virtualbox-6.1_6.1.8-137981~Ubuntu~eoan_amd64.deb"
+    checksum: sha256:{{ virtualbox_deb_sha256 }}
+  vars:
+    virtualbox_deb_sha256: "{{ lookup('file', '/tmp/virtualbox_deb.sha256') }}"
+
+- name: Install Oracle VirtualBox via .deb
+  become: yes
+  apt:
+    state: present
+    deb: "{{ home_dir }}/downloads/srv/virtualbox-6.1_6.1.8-137981~Ubuntu~eoan_amd64.deb"
+
+- name: Install Multipass Ubuntu VM manager by Canonical
+  become: yes
+  snap:
+    state: present
+    name: multipass
+    classic: yes

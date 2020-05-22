@@ -1,0 +1,52 @@
+---
+- name: Unzip Android Studio to /opt
+  become: yes
+  unarchive:
+    src: "{{ home_dir }}/downloads/srv/android-studio-ide-192.6392135-linux.tar.gz"
+    dest: /opt
+    creates: /opt/android-studio/bin/studio.sh
+    remote_src: yes
+
+- name: Create Android SDK folder in HOME
+  file:
+    state: directory
+    path: "{{ home_dir }}/android/sdk"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+
+# See: https://developer.android.com/studio/run/emulator-acceleration?utm_source=android-studio#vm-linux
+- name: Install .debs to enable KVM acceleration for Android emulator
+  become: yes
+  apt:
+    state: present
+    name: "{{ item }}"
+  loop:
+    - bridge-utils
+    - libvirt-clients
+    - libvirt-daemon-system
+    - qemu-kvm
+  tags:
+    - pkg_install
+
+- name: Add {{ username }} to groups required for Android emulator KVM
+  become: yes
+  user:
+    name: "{{ username }}"
+    groups:
+      - kvm
+      - libvirt
+    append: yes
+
+- name: Install Android Debug Bridge (adb)
+  become: yes
+  apt:
+    state: present
+    name: adb
+
+- name: Add {{ username }} to groups required for 'adb'
+  become: yes
+  user:
+    name: "{{ username }}"
+    groups:
+      - plugdev
+    append: yes

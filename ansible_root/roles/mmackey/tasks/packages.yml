@@ -1,0 +1,10 @@
+---
+- name: Install developer packages
+  become: yes
+  apt:
+    state: present
+    name: "{{ packages_developer }}"
+    cache_valid_time: 3600
+    update_cache: yes
+  tags:
+    - pkg_install

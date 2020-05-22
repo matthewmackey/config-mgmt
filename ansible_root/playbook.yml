@@ -12,9 +12,11 @@
     - include_role:
         name: mmackey
       tags:
+        - android
         - ansible
-        - developer
         - docker
+        - ides
         - packages_developer
-        - mmackey
         - python
+        - mmackey
+        - virtual

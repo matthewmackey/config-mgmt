@@ -27,8 +27,10 @@ packages_r_lang:
   - libxml2-dev
 packages_developer:
   - git
-  - subversion
-  - sqlite
+#  - subversion
+#  - sqlite
+  - gcc-aarch64-linux-gnu
+  - g++-aarch64-linux-gnu
 pacakges_ide:
   - atom
   - roxterm

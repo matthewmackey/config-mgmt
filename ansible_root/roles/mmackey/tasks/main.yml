@@ -1,6 +1,10 @@
 - import_tasks: user.yml
   tags:
     - mmackey
+- import_tasks: packages.yml
+  tags:
+    - mmackey
+    - packages_developer
 - import_tasks: home_dir.yml
   tags:
     - mmackey

@@ -15,5 +15,6 @@
         - ansible
         - developer
         - docker
+        - packages_developer
         - mmackey
         - python

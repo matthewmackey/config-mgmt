@@ -17,6 +17,10 @@
   tags:
     - mmackey
     - ides
+- import_tasks: dotnet.yml
+  tags:
+    - mmackey
+    - dotnet
 - import_tasks: virtual.yml
   tags:
     - mmackey

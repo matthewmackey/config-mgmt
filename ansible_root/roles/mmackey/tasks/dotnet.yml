@@ -1,0 +1,27 @@
+---
+#-------------------------------------------------------------------------------
+# Microsoft
+#-------------------------------------------------------------------------------
+# There is no checksum for this pkg from MS so installing directly from URL
+# without any checksum
+- name: Install Microsoft APT configuration for packages.microsoft.com via .deb
+  become: yes
+  apt:
+    state: present
+    deb: https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
+
+- name: Install Microsoft .NET Core SDK
+  become: yes
+  apt:
+    state: present
+    name: dotnet-sdk-3.1
+    cache_valid_time: 3600
+    update_cache: yes
+
+- name: Install Mono Runtime to run .NET applications on Linux
+  become: yes
+  apt:
+    state: present
+    name: mono-runtime
+    cache_valid_time: 3600
+    update_cache: yes

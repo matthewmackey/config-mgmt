@@ -17,7 +17,8 @@
         - docker
         - dotnet
         - ides
+        - mmackey
         - packages_developer
         - python
-        - mmackey
+        - user
         - virtual

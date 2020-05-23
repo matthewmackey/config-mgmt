@@ -5,7 +5,7 @@
    group: "{{ username }}"
    owner: "{{ username }}"
    mode: 0400
-   comment: "{{ username }} - ansible-lenovo"
+   comment: "{{ username }}-lenovo_ansible"
    size: 4096
    type: rsa
 

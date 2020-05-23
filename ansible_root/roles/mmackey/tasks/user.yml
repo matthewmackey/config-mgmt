@@ -24,7 +24,7 @@
     password: "{{ password }}"
     shell: /bin/bash
     ssh_key_bits: 4096
-    ssh_key_comment: "{{ username }} - lenovo_20.04_default"
+    ssh_key_comment: "{{ username }}-lenovo_20.04_default"
     ssh_key_file: "{{ home_dir }}/.ssh/id_rsa"
     ssh_key_passphrase: "{{ mmackey_ssh_key_passphrase }}"
     ssh_key_type: rsa
@@ -49,3 +49,11 @@
     ssh_key_file: "{{ home_dir }}/.ssh/{{ username }}_github-id_rsa"
     ssh_key_passphrase: "{{ mmackey_github_ssh_key_passphrase }}"
     ssh_key_type: rsa
+
+- name: Change Github SSH private key mode to read-only
+  file:
+    state: file
+    path: "{{ home_dir }}/.ssh/{{ username }}_github-id_rsa"
+    mode: 0400
+    group: "{{ username }}"
+    owner: "{{ username }}"

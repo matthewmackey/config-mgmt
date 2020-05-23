@@ -2,6 +2,7 @@
 - import_tasks: user.yml
   tags:
     - mmackey
+    - user
 - import_tasks: packages.yml
   tags:
     - mmackey

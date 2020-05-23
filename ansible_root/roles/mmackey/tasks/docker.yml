@@ -57,3 +57,9 @@
     url: "{{ docker_compose_url.stdout }}"
     dest: "{{ docker_compose_bin }}"
     mode: "ugo+x"
+
+- name: Download & install 'docker-compose' Bash completion
+  become: yes
+  get_url:
+    url: https://raw.githubusercontent.com/docker/compose/1.25.5/contrib/completion/bash/docker-compose
+    dest: "/etc/bash_completion.d/docker-compose"

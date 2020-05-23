@@ -45,3 +45,15 @@
     append: yes
     groups:
       - docker
+
+- name: Build 'docker-compose' URL
+  shell: |
+    echo "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" 
+  register: docker_compose_url
+
+- name: Download & install 'docker-compose'
+  become: yes
+  get_url:
+    url: "{{ docker_compose_url.stdout }}"
+    dest: "{{ docker_compose_bin }}"
+    mode: "ugo+x"

@@ -18,10 +18,11 @@
     cache_valid_time: 3600
     update_cache: yes
 
+# SEE: https://www.mono-project.com/download/stable/#download-lin-ubuntu
 - name: Install Mono Runtime to run .NET applications on Linux
   become: yes
   apt:
     state: present
-    name: mono-runtime
+    name: mono-complete
     cache_valid_time: 3600
     update_cache: yes

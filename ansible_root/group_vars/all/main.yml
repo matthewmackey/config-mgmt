@@ -33,6 +33,7 @@ packages_developer:
   - g++-arm-linux-gnueabihf
   - gcc-aarch64-linux-gnu
   - g++-aarch64-linux-gnu
+  - remmina
   - universal-ctags
 pacakges_ide:
   - atom

@@ -35,7 +35,10 @@
     creates: "{{ node_bin }}"
     remote_src: yes
 
+# For some reason, if we don't specify 'become_user' here, then ansible ignores
+# owner/group attributes and sets owner/group to 'root' not 'mmackey'
 - name: Setup Node.js symlink to 'default' Node.js version
+  become_user: "{{ username }}"
   file:
     state: link
     src: "{{ node_version_home_dir }}"

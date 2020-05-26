@@ -28,9 +28,12 @@ home_dirs_to_create:
 #  - { src: Pictures, dest: media/pics }
 #  - { src: Videos, dest: media/videos }
 node_version: 12.16.3
-node_archive_filename: "node-v{{ node_version }}-linux-x64.tar.xz"
+node_full_version_id: "node-v{{ node_version }}-linux-x64"
+node_archive_filename: "{{ node_full_version_id }}.tar.xz"
 node_archive_url: "https://nodejs.org/dist/v{{ node_version }}/{{ node_archive_filename }}"
 node_archive_dest: "{{ downloads_dir }}/{{ node_archive_filename }}"
 node_archive_checksum_url: "https://nodejs.org/dist/v{{ node_version }}/SHASUMS256.txt"
 node_home_dir: "{{ home_dir }}/node"
-node_bin: "{{ node_home_dir }}/node-v{{ node_version }}/bin/node"
+node_version_home_dir: "{{ node_home_dir }}/{{ node_full_version_id }}"
+node_bin: "{{ node_version_home_dir }}/bin/node"
+node_default_version_symlink: "{{ node_home_dir }}/default"

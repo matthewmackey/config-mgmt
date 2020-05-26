@@ -35,3 +35,10 @@
     creates: "{{ node_bin }}"
     remote_src: yes
 
+- name: Setup Node.js symlink to 'default' Node.js version
+  file:
+    state: link
+    src: "{{ node_version_home_dir }}"
+    dest: "{{ node_default_version_symlink }}"
+    owner: "{{ username }}"
+    group: "{{ username }}"

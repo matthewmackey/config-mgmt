@@ -18,6 +18,7 @@
         - dotnet
         - ides
         - mmackey
+        - node
         - packages_developer
         - python
         - user

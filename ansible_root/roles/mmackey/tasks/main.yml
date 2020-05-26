@@ -38,3 +38,7 @@
   tags:
     - mmackey
     - ansible
+- import_tasks: node.yml
+  tags:
+    - mmackey
+    - node

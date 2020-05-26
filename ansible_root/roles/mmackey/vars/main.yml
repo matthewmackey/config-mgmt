@@ -2,6 +2,7 @@ username: mmackey
 name: "Matthew Mackey"
 password: $6$fc3WQQnhuiVwNJ4q$YXwKJhfsDVqFONJzNCbrlmRtLiCwP16UBbf2sHrP7vR9j7/holCNsd8IObjAYtYnGWJsuPLeAEpajI2qFWpDc.
 docker_compose_bin: /usr/local/bin/docker-compose
+downloads_dir: "{{ home_dir }}/downloads/srv"
 home_dir: /home/mmackey
 home_dirs_to_create:
   - .pwd
@@ -26,3 +27,10 @@ home_dirs_to_create:
 #  - { src: Music, dest: media/music }
 #  - { src: Pictures, dest: media/pics }
 #  - { src: Videos, dest: media/videos }
+node_version: 12.16.3
+node_archive_filename: "node-v{{ node_version }}-linux-x64.tar.xz"
+node_archive_url: "https://nodejs.org/dist/v{{ node_version }}/{{ node_archive_filename }}"
+node_archive_dest: "{{ downloads_dir }}/{{ node_archive_filename }}"
+node_archive_checksum_url: "https://nodejs.org/dist/v{{ node_version }}/SHASUMS256.txt"
+node_home_dir: "{{ home_dir }}/node"
+node_bin: "{{ node_home_dir }}/node-v{{ node_version }}/bin/node"

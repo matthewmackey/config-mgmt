@@ -2,23 +2,6 @@
 #-------------------------------------------------------------------------------
 # Node.js
 #-------------------------------------------------------------------------------
-- name: Download Node.js archive
-  get_url:
-    url: "{{ node_archive_url }}"
-    dest: "{{ node_archive_dest }}"
-
-- name: Validate Node.js archive SHA-256 checksum
-  shell: |
-    curl -s {{ node_archive_checksum_url }} \
-    | grep {{ node_archive_filename }} \
-    | sha256sum -c -
-  args:
-    chdir: "{{ downloads_dir }}"
-    warn: no
-  register: nodejs_checksum
-  failed_when: nodejs_checksum.rc != 0
-  changed_when: False
-
 - name: Create node HOME directory
   file:
     state: directory
@@ -26,22 +9,29 @@
     owner: "{{ username }}"
     group: "{{ username }}"
 
-- name: "Unarchive Node.js archive to {{ node_home_dir }}"
-  unarchive:
-    src: "{{ node_archive_dest }}"
-    dest: "{{ node_home_dir }}"
-    owner: "{{ username }}"
-    group: "{{ username }}"
-    creates: "{{ node_bin }}"
-    remote_src: yes
+# Install node versions
+- include: node-install.yml
+  vars:
+    node_version: "{{ item }}"
+    node_full_version_id: "node-v{{ node_version }}-linux-x64"
+    node_archive_filename: "{{ node_full_version_id }}.tar.xz"
+    node_archive_url: "https://nodejs.org/dist/v{{ node_version }}/{{ node_archive_filename }}"
+    node_archive_dest: "{{ downloads_dir }}/{{ node_archive_filename }}"
+    node_archive_checksum_url: "https://nodejs.org/dist/v{{ node_version }}/SHASUMS256.txt"
+    node_home_dir: "{{ home_dir }}/node"
+    node_version_home_dir: "{{ node_home_dir }}/{{ node_full_version_id }}"
+    node_bin: "{{ node_version_home_dir }}/bin/node"
+  with_items:
+    - 10.20.1
+    - 12.16.3
 
 # For some reason, if we don't specify 'become_user' here, then ansible ignores
 # owner/group attributes and sets owner/group to 'root' not 'mmackey'
-- name: Setup Node.js symlink to 'default' Node.js version
+- name: Setup Node.js symlink to a 'DEFAULT' Node.js version
   become_user: "{{ username }}"
   file:
     state: link
-    src: "{{ node_version_home_dir }}"
+    src: "{{ node_default_version_home_dir }}"
     dest: "{{ node_default_version_symlink }}"
     owner: "{{ username }}"
     group: "{{ username }}"

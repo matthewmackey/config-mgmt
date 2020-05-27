@@ -1,0 +1,26 @@
+---
+- name: Download Node.js archive
+  get_url:
+    url: "{{ node_archive_url }}"
+    dest: "{{ node_archive_dest }}"
+
+- name: Validate Node.js archive SHA-256 checksum
+  shell: |
+    curl -s {{ node_archive_checksum_url }} \
+    | grep {{ node_archive_filename }} \
+    | sha256sum -c -
+  args:
+    chdir: "{{ downloads_dir }}"
+    warn: no
+  register: nodejs_checksum
+  failed_when: nodejs_checksum.rc != 0
+  changed_when: False
+
+- name: "Unarchive Node.js archive to {{ node_home_dir }}"
+  unarchive:
+    src: "{{ node_archive_dest }}"
+    dest: "{{ node_home_dir }}"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    creates: "{{ node_bin }}"
+    remote_src: yes

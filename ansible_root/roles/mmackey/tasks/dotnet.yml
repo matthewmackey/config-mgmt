@@ -38,3 +38,51 @@
   apt:
     state: present
     name: mono-complete
+  when:
+    - ansible_facts['distribution'] == "Ubuntu"
+    - ansible_facts['distribution_major_version'] == "20"
+
+- name: Install Mono Runtime pre-requisite packages
+  become: yes
+  apt:
+    state: present
+    name: "{{ item }}"
+  loop:
+    - ca-certificates
+    - gnupg
+  when:
+    - ansible_facts['distribution'] == "Ubuntu"
+    - ansible_facts['distribution_major_version'] == "18"
+
+- name: Add Mono Runtime APT key
+  become: yes
+  apt_key:
+    state: present
+    keyserver: hkp://keyserver.ubuntu.com:80
+    id: 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+  when:
+    - ansible_facts['distribution'] == "Ubuntu"
+    - ansible_facts['distribution_major_version'] == "18"
+
+- name: Add Mono Runtime APT repository
+  become: yes
+  apt_repository:
+    state: present
+    repo: deb https://download.mono-project.com/repo/ubuntu stable-bionic main
+    filename: mono-official-stable.list
+    update_cache: yes
+  when:
+    - ansible_facts['distribution'] == "Ubuntu"
+    - ansible_facts['distribution_major_version'] == "18"
+
+# SEE: https://www.mono-project.com/download/stable/
+- name: Install Mono Runtime
+  become: yes
+  apt:
+    state: present
+    name: "{{ item }}"
+  loop:
+    - mono-complete
+  when:
+    - ansible_facts['distribution'] == "Ubuntu"
+    - ansible_facts['distribution_major_version'] == "18"

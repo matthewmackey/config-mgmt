@@ -1,4 +1,11 @@
 ---
+- name: Ensure Node download directory exists
+  file:
+    state: directory
+    path: "{{ node_downloads_dir }}"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+
 - name: Download Node.js archive
   get_url:
     url: "{{ node_archive_url }}"
@@ -10,7 +17,7 @@
     | grep {{ node_archive_filename }} \
     | sha256sum -c -
   args:
-    chdir: "{{ downloads_dir }}"
+    chdir: "{{ node_downloads_dir }}"
     warn: no
   register: nodejs_checksum
   failed_when: nodejs_checksum.rc != 0

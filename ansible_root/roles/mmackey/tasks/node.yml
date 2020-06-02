@@ -16,7 +16,7 @@
     node_full_version_id: "node-v{{ node_version }}-linux-x64"
     node_archive_filename: "{{ node_full_version_id }}.tar.xz"
     node_archive_url: "https://nodejs.org/dist/v{{ node_version }}/{{ node_archive_filename }}"
-    node_archive_dest: "{{ downloads_dir }}/{{ node_archive_filename }}"
+    node_archive_dest: "{{ node_downloads_dir }}/{{ node_archive_filename }}"
     node_archive_checksum_url: "https://nodejs.org/dist/v{{ node_version }}/SHASUMS256.txt"
     node_home_dir: "{{ home_dir }}/node"
     node_version_home_dir: "{{ node_home_dir }}/{{ node_full_version_id }}"

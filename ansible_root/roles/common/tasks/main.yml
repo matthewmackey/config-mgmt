@@ -1,14 +1,10 @@
 ---
 - import_tasks: users_groups.yml
-  tags:
-    - common
 - import_tasks: packages.yml
   tags:
-    - common
     - pkg_install
 - import_tasks: nfs.yml
 - import_tasks: lastpass.yml
   tags:
-    - common
     - lastpass
 - import_tasks: cinnamon.yml

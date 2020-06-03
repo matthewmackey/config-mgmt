@@ -35,6 +35,8 @@ packages_developer:
   - g++-aarch64-linux-gnu
   - remmina
   - universal-ctags
+snaps_developer:
+  - postman
 pacakges_ide:
   - atom
   - roxterm

@@ -6,5 +6,9 @@
     name: "{{ packages_developer }}"
     cache_valid_time: 3600
     update_cache: yes
-  tags:
-    - pkg_install
+
+- name: Install developer snaps
+  become: yes
+  snap:
+    state: present
+    name: "{{ snaps_developer }}"

@@ -1,0 +1,25 @@
+---
+- name: Add Microsoft APT key
+  apt_key:
+    state: present
+    url: https://packages.microsoft.com/keys/microsoft.asc
+
+- name: Add Azure CLI APT repository
+  apt_repository:
+    state: present
+    repo: deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ focal main
+    filename: azure-cli.list
+    update_cache: yes
+
+- name: Install Azure CLI pre-requistes
+  apt:
+    state: present
+    name: "{{ item }}"
+  loop:
+    - apt-transport-https
+    - ca-certificates
+
+- name: Install Azure CLI
+  apt:
+    state: present
+    name: azure-cli

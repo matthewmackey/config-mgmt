@@ -40,3 +40,7 @@
 - import_tasks: node.yml
   tags:
     - node
+
+- import_tasks: azure.yml
+  tags:
+    - azure

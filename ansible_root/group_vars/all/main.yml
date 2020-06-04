@@ -26,7 +26,6 @@ packages_r_lang:
   # For 'devtools' R package
   - libxml2-dev
 packages_developer:
-  - azure-cli
   - git
 #  - subversion
 #  - sqlite

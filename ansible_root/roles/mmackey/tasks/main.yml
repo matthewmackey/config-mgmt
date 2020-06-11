@@ -44,3 +44,7 @@
 - import_tasks: azure.yml
   tags:
     - azure
+
+- import_tasks: certbot.yml
+  tags:
+    - certbot

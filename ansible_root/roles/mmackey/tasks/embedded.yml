@@ -1,0 +1,51 @@
+---
+#-------------------------------------------------------------------------------
+# Texas Instruments Code Composer Studio (CCS)
+#-------------------------------------------------------------------------------
+- name: Install TI 'Code Composer Studio' dependencies
+  become: yes
+  apt:
+    state: present
+    name: "{{ item }}"
+  loop:
+   - libc6:i386
+   - libgconf-2-4
+   - libncurses5
+   - libpython2.7
+   - libtinfo5
+   - libusb-0.1-4
+
+- name: Download TI 'Code Composer Studio'  tarball MD5 checksum
+  shell: |
+    curl -sL https://software-dl.ti.com/ccs/esd/CCSv10/CCS_10_1_0/exports/CCS10.1.0.00010_linux-x64.tar.gz.md5 \
+      | grep CCS10.1.0.00010_linux-x64.tar.gz \
+      | cut -d ' ' -f 1 > /tmp/ccs_tar.md5
+  args:
+    creates: /tmp/ccs_tar.md5
+    warn: no
+
+- name: Download TI 'Code Composer Studo' tarball
+  get_url:
+    url: https://software-dl.ti.com/ccs/esd/CCSv10/CCS_10_1_0/exports/CCS10.1.0.00010_linux-x64.tar.gz
+    dest: "{{ home_dir }}/downloads/srv/CCS10.1.0.00010_linux-x64.tar.gz"
+    checksum: md5:{{ ccs_tar_md5 }}
+  vars:
+    ccs_tar_md5: "{{ lookup('file', '/tmp/ccs_tar.md5') }}"
+
+- name: Unarchive TI 'Code Composer Studo' tarball to /opt
+  become: yes
+  unarchive:
+    src: "{{ home_dir }}/downloads/srv/CCS10.1.0.00010_linux-x64.tar.gz"
+    dest: /tmp
+    creates: /tmp/CCS10.1.0.00010_linux-x64/ccs_setup_10.1.0.00010.run
+    remote_src: yes
+
+- name: Output message to complete GUI installation of 'Code Composer Studio'
+  debug:
+    msg: |
+      This is as far as ansible can go to install TI's 'Code Composer Studio'.
+      Please run:
+
+        sudo /tmp/CCS10.1.0.00010_linux-x64/ccs_setup_10.1.0.00010.run
+
+      to start the GUI installer to complete the installation.

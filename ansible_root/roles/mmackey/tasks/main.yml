@@ -48,3 +48,7 @@
 - import_tasks: certbot.yml
   tags:
     - certbot
+
+- import_tasks: embedded.yml
+  tags:
+    - embedded

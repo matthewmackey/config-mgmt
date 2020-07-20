@@ -1,0 +1,16 @@
+---
+#-------------------------------------------------------------------------------
+# Microsoft Teams
+#-------------------------------------------------------------------------------
+# MS Teams doesn't provide checksum URL so I got it myself
+- name: Download Microsoft Teams .deb
+  get_url:
+    url: https://go.microsoft.com/fwlink/p/?linkid=2112886&clcid=0x409&culture=en-us&country=us
+    dest: "{{ home_dir }}/downloads/srv/teams_1.3.00.16851_amd64.deb"
+    checksum: sha256:23838c8f8dea4960dce8bba559cd7ee3cdedc78ea7fdb226139b5b2204eee4d6
+
+- name: Install Microsoft Teams
+  become: yes
+  apt:
+    state: present
+    deb: "{{ home_dir }}/downloads/srv/teams_1.3.00.16851_amd64.deb"

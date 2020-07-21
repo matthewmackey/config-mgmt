@@ -1,4 +1,8 @@
 ---
+- import_tasks: sudoers.yml
+  tags:
+    - sudoers
+
 - import_tasks: user.yml
   tags:
     - user

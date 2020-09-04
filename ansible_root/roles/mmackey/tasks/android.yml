@@ -50,3 +50,9 @@
     groups:
       - plugdev
     append: yes
+
+- name: Install 'scrcpy' screen mirroring tool
+  become: yes
+  snap:
+    name: scrcpy
+    state: present

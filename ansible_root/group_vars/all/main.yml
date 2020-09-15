@@ -49,3 +49,4 @@ packages_tools:
   - net-tools
   - jq
   - nmap
+  - whois

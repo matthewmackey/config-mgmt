@@ -44,6 +44,16 @@
     state: present
     name: "{{ packages_tools }}"
 
+- name: Install tools snaps
+  become: true
+  snap:
+    state: present
+    name: "{{ snaps_tools }}"
+    channel: stable
+    classic: yes
+  tags:
+    - snaps_tools
+
 - name: Download and install Zoom via .deb
   apt:
     state: present

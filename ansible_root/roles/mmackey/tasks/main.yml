@@ -65,3 +65,7 @@
   tags:
     - tools
 
+- import_tasks: hacker.yml
+  tags:
+    - hacker
+

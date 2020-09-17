@@ -46,6 +46,7 @@ packages_os:
 packages_tools:
   - bluez-hcidump
   - htop
+  - mysql-client
   - net-tools
   - jq
   - nmap

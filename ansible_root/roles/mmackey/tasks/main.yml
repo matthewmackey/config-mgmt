@@ -69,3 +69,6 @@
   tags:
     - hacker
 
+- import_tasks: golang.yml
+  tags:
+    - golang

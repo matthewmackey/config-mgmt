@@ -53,3 +53,4 @@ packages_tools:
   - whois
 snaps_tools:
   - john-the-ripper
+  - amass

@@ -52,5 +52,6 @@ packages_tools:
   - nmap
   - whois
 snaps_tools:
-  - john-the-ripper
   - amass
+  - john-the-ripper
+  - zaproxy

@@ -50,6 +50,7 @@ packages_tools:
   - net-tools
   - jq
   - nmap
+  - p7zip-full
   - whois
 snaps_tools:
   - amass

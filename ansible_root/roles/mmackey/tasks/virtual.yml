@@ -51,3 +51,22 @@
     state: present
     name: multipass
     classic: yes
+
+# Download requires website login, EULA acceptance, etc.; so is a real pain
+- name: Verify checksum on Pre-Downloaded VMware ovftool installer
+  shell: shasum -a 256 -c VMware-ovftool-4.4.0-16360108-lin.x86_64.bundle.shasum
+  changed_when: False
+  args:
+    chdir: "{{ home_dir }}/downloads/srv"
+
+- name: Run VMware ovftool installer
+  become: yes
+  shell: |
+    ./VMware-ovftool-4.4.0-16360108-lin.x86_64.bundle \
+      --console \
+      --required \
+      --eulas-agreed
+  args:
+    chdir: "{{ home_dir }}/downloads/srv"
+    creates: /usr/bin/ovftool
+

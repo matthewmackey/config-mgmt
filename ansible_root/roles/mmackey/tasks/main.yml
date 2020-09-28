@@ -72,3 +72,7 @@
 - import_tasks: golang.yml
   tags:
     - golang
+
+- import_tasks: java.yml
+  tags:
+    - java

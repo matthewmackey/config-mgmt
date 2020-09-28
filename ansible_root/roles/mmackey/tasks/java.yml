@@ -1,0 +1,37 @@
+---
+- name: Set Maven tarball checksum file variable
+  set_fact:
+    maven_tar_checksum_file: "{{ home_dir }}/downloads/srv/apache-maven-3.6.3-bin.tar.gz.512"
+
+- name: Download Maven binary tarball checksum file
+  shell: |
+    curl -s https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz.sha512 \
+      -o "{{ maven_tar_checksum_file }}"
+  args:
+    creates: "{{ maven_tar_checksum_file }}"
+
+- name: Download Maven binary tarball
+  get_url:
+    url: ftp://ftp.osuosl.org/pub/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
+    dest: "{{ home_dir }}/downloads/srv/apache-maven-3.6.3-bin.tar.gz"
+    checksum: sha512:{{ maven_tar_sha512 }}
+  vars:
+    maven_tar_sha512: "{{ lookup('file', maven_tar_checksum_file) }}"
+
+- name: Install Maven from binary tarball
+  become: yes
+  unarchive:
+    src:  "{{ home_dir }}/downloads/srv/apache-maven-3.6.3-bin.tar.gz"
+    dest: /opt
+    remote_src: yes
+    creates: /opt/apache-maven-3.6.3/bin/mvn
+
+- name: Set this as the default Maven version with symlink in /opt
+  become: yes
+  file:
+    state: link
+    src: /opt/apache-maven-3.6.3
+    dest: /opt/maven
+    owner: root
+    group: root
+

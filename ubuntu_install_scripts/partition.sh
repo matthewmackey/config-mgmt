@@ -25,13 +25,13 @@ function read_passphrase() {
 
   if [[ -e "$PASSPHRASE_FILE" ]]; then
     echo "  Reading pass from file"
-    PASSPHRASE=$(cat $PASSPHRASE_FILE)   
-  else 
+    PASSPHRASE=$(cat $PASSPHRASE_FILE)
+  else
     read -rsp "Enter passphrase: " PASSPHRASE
     echo
     read -rsp "Enter again: " PASSPHRASE_AGAIN
     echo
-  
+
     if [[ "$PASSPHRASE" != "$PASSPHRASE_AGAIN" ]]; then
       echo "Passphrases don't match...exiting"
       exit -1

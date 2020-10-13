@@ -25,7 +25,7 @@ function read_passphrase() {
     echo
     read -rsp "Enter again: " PASSPHRASE_AGAIN
     echo
-  
+
     if [[ "$PASSPHRASE" != "$PASSPHRASE_AGAIN" ]]; then
       echo "Passphrases don't match...exiting"
       exit -1

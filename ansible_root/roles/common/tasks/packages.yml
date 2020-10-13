@@ -38,23 +38,8 @@
     deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   when: is_chrome_installed == "no"
 
-- name: Install tools packages
-  become: true
-  apt:
-    state: present
-    name: "{{ packages_tools }}"
-
-- name: Install tools snaps
-  become: true
-  snap:
-    state: present
-    name: "{{ snaps_tools }}"
-    channel: stable
-    classic: yes
-  tags:
-    - snaps_tools
-
 - name: Download and install Zoom via .deb
   apt:
     state: present
     deb: /home/mmackey/downloads/srv/zoom_amd64.deb
+

@@ -1,0 +1,39 @@
+---
+- name: Install Hacker "Common" packages
+  become: yes
+  apt:
+    state: present
+    name: "{{ hacker_packages_common }}"
+    cache_valid_time: 3600
+    update_cache: yes
+
+- name: Install Hacker "Archives" packages
+  become: yes
+  apt:
+    state: present
+    name: "{{ hacker_packages_archives }}"
+    cache_valid_time: 3600
+    update_cache: yes
+
+- name: Install Hacker "Forensics" packages
+  become: yes
+  apt:
+    state: present
+    name: "{{ hacker_packages_forensics }}"
+    cache_valid_time: 3600
+    update_cache: yes
+
+- name: Install Hacker "Net" packages
+  become: yes
+  apt:
+    state: present
+    name: "{{ hacker_packages_net }}"
+    cache_valid_time: 3600
+    update_cache: yes
+
+
+- name: Install Hacker Snaps
+  become: yes
+  snap:
+    state: present
+    name: "{{ hacker_snaps }}"

@@ -65,10 +65,6 @@
   tags:
     - tools
 
-- import_tasks: hacker.yml
-  tags:
-    - hacker
-
 - import_tasks: golang.yml
   tags:
     - golang

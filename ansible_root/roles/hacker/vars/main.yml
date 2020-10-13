@@ -1,0 +1,43 @@
+---
+#-------------------------------------------------------------------------------
+# PACKAGES
+#-------------------------------------------------------------------------------
+hacker_packages_common:
+  - ack-grep
+  - bluez-hcidump
+  - git
+  - htop
+  - jq
+  - mysql-client
+  - tmux
+  - tree
+  - xclip
+
+hacker_packages_archives:
+  - p7zip-full
+
+hacker_packages_forensics:
+  - binwalk
+  - foremost
+  - steghide
+
+hacker_packages_net:
+  - arping
+  - curl
+  - iputils-ping
+  - iputils-tracepath
+  - net-tools
+  - nmap
+  - wget
+  - whois
+  - wireshark
+
+#-------------------------------------------------------------------------------
+# SNAPS
+#-------------------------------------------------------------------------------
+hacker_snaps:
+  - amass
+  - john-the-ripper
+  - postman
+  - zaproxy
+

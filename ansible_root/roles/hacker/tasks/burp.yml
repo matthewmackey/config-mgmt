@@ -4,12 +4,13 @@
 - name: Download Burp Suite Community installer
   get_url:
     url: "https://portswigger.net/burp/releases/download?product=community&version=2020.9.1&type=Linux"
-    dest: "{{ home_dir }}/downloads/srv/burpsuite_community_linux_v2020_9_1.sh"
+    dest: "{{ downloads_dir }}/burpsuite_community_linux_v2020_9_1.sh"
     checksum: sha256:0a1be83d0023b976f37fa0331a28278627eb90b6ea24a34fca3f7360e1430e9f
 
 # TODO: Consider using '-overwrite' option with un-attended install
 - name: Run un-attended Burp Suite Community installer
   become: yes
-  shell: "{{ home_dir }}/downloads/srv/burpsuite_community_linux_v2020_9_1.sh -q"
+  shell: "{{ downloads_dir }}/burpsuite_community_linux_v2020_9_1.sh -q"
   args:
-    creates: "/opt/BurpSuiteCommunity/BurpSuiteCommunity"
+    creates: /opt/BurpSuiteCommunity/BurpSuiteCommunity
+

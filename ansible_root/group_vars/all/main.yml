@@ -1,4 +1,5 @@
 ---
+downloads_dir: "/home/mmackey/downloads/srv"
 nfs_mount_dir: /mnt/mmackey-sync
 nfs_mount_str: 192.168.1.253:/{{ nfs_mount_dir }}
 nfs_exports_str: "{{ nfs_mount_dir }} 192.168.1.0/24(rw,sync,no_subtree_check)"
@@ -7,6 +8,9 @@ packages_common:
   - apt-file
   - cinnamon
   - curl
+  - htop
+  - jq
+  - p7zip-full
   - parcellite
   - pithos
   - stow
@@ -43,16 +47,4 @@ pacakges_ide:
   - sublime-text-installer
 packages_os:
   - dconf-editor
-packages_tools:
-  - bluez-hcidump
-  - htop
-  - mysql-client
-  - net-tools
-  - jq
-  - nmap
-  - p7zip-full
-  - whois
-snaps_tools:
-  - amass
-  - john-the-ripper
-  - zaproxy
+

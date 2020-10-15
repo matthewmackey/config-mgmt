@@ -1,0 +1,15 @@
+---
+- name: Download 'awscli' Docker container
+  docker_image:
+    name:  amazon/aws-cli
+    state: present
+    tag: "{{ awscli_version }}"
+
+- name: Create Bash alias to shorten running 'awscli' from inside Docker container
+  template:
+    src: awscli.bash_aliases.j2
+    dest: "{{ awscli_bash_aliases_file }}"
+    mode: 0644
+    owner: "{{ username }}"
+    group: "{{ username }}"
+

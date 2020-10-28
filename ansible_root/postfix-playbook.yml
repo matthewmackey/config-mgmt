@@ -1,0 +1,11 @@
+---
+- name: Configure Postfix VM
+  hosts: postfix
+  become: yes
+
+  tasks:
+
+    - import_role:
+        name: postfix
+      tags:
+        - postfix

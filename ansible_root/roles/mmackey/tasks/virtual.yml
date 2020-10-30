@@ -45,6 +45,15 @@
     state: present
     deb: "{{ home_dir }}/downloads/srv/{{ virtualbox_deb_file }}"
 
+- name: Add "{{ username }}" to 'vboxusers' group
+  become: yes
+  user:
+    state: present
+    name: "{{ username }}"
+    append: yes
+    groups:
+      - vboxusers
+
 - name: Install Multipass Ubuntu VM manager by Canonical
   become: yes
   snap:

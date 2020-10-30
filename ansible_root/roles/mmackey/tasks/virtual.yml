@@ -24,26 +24,26 @@
 
 - name: Download Oracle VirtualBox .deb SHA-256 checksum
   shell: |
-    curl -s https://www.virtualbox.org/download/hashes/6.1.8/SHA256SUMS \
-      | grep virtualbox-6.1_6.1.8-137981~Ubuntu~eoan_amd64.deb \
-      | cut -d ' ' -f 1 > /tmp/virtualbox_deb.sha256
+    curl -s "{{ virtualbox_hash_url }}" \
+      | grep "{{ virtualbox_deb_file }}" \
+      | cut -d ' ' -f 1 > "/tmp/{{ virtualbox_deb_file }}.sha256"
   args:
-    creates: /tmp/virtualbox_deb.sha256
+    creates: "/tmp/{{ virtualbox_deb_file }}.sha256"
     warn: no
 
 - name: Download Oracle VirtualBox .deb
   get_url:
-    url: https://download.virtualbox.org/virtualbox/6.1.8/virtualbox-6.1_6.1.8-137981~Ubuntu~eoan_amd64.deb
-    dest: "{{ home_dir }}/downloads/srv/virtualbox-6.1_6.1.8-137981~Ubuntu~eoan_amd64.deb"
+    url: "{{ virtualbox_deb_url }}"
+    dest: "{{ home_dir }}/downloads/srv/{{ virtualbox_deb_file }}"
     checksum: sha256:{{ virtualbox_deb_sha256 }}
   vars:
-    virtualbox_deb_sha256: "{{ lookup('file', '/tmp/virtualbox_deb.sha256') }}"
+    virtualbox_deb_sha256: "{{ lookup('file', '/tmp/' + virtualbox_deb_file + '.sha256') }}"
 
 - name: Install Oracle VirtualBox via .deb
   become: yes
   apt:
     state: present
-    deb: "{{ home_dir }}/downloads/srv/virtualbox-6.1_6.1.8-137981~Ubuntu~eoan_amd64.deb"
+    deb: "{{ home_dir }}/downloads/srv/{{ virtualbox_deb_file }}"
 
 - name: Install Multipass Ubuntu VM manager by Canonical
   become: yes

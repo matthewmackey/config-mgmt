@@ -28,6 +28,7 @@ hacker_packages_net:
   - iputils-tracepath
   - net-tools
   - nmap
+  - tshark
   - wget
   - whois
   - wireshark

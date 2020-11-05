@@ -22,6 +22,7 @@ packages_common:
   - tree
   - vim
   - wireshark
+  - wmctrl
   - xclip
 snaps_common:
   - slack

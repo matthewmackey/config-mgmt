@@ -12,6 +12,11 @@
         - common
 
     - import_role:
+        name: docker
+      tags:
+        - docker
+
+    - import_role:
         name: mmackey
       tags:
         - mmackey

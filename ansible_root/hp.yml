@@ -3,4 +3,5 @@
   hosts: mmhp
   become: yes
   roles:
-    - hptower
+    #- hptower
+    - docker

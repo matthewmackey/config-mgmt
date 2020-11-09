@@ -1,0 +1,73 @@
+---
+- name: Install Docker .deb dependencies
+  become: yes
+  apt:
+    state: present
+    name: "{{ item }}"
+    update_cache: yes
+    cache_valid_time: 3600
+  loop:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg-agent
+    - software-properties-common
+
+- name: Install Docker's APT repository key
+  become: yes
+  apt_key:
+    state: present
+    url: https://download.docker.com/linux/ubuntu/gpg
+
+- name: Add Docker's APT repository
+  become: yes
+  apt_repository:
+    state: present
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
+    update_cache: yes
+  when:
+    - ansible_facts['distribution'] == "Ubuntu"
+    - ansible_facts['distribution_major_version'] == "18"
+
+- name: Add Docker's APT repository
+  become: yes
+  apt_repository:
+    state: present
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+    update_cache: yes
+  when:
+    - ansible_facts['distribution'] == "Ubuntu"
+    - ansible_facts['distribution_major_version'] == "20"
+
+- name: Install Docker from Docker's Ubuntu package repo
+  become: yes
+  apt:
+    state: present
+    name: "{{ item }}"
+  loop:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+
+- name: Create 'docker' group
+  become: yes
+  group:
+    state: present
+    name: docker
+    system: yes
+
+- name: Add '{{ username }}' to 'docker' group
+  become: yes
+  user:
+    state: present
+    name: "{{ username }}"
+    append: yes
+    groups:
+      - docker
+
+- name: Enable Docker service to run on startup
+  become: yes
+  service:
+    name: docker
+    enabled: yes
+

@@ -56,14 +56,15 @@
     name: docker
     system: yes
 
-- name: Add '{{ username }}' to 'docker' group
+- name: Add users to 'docker' group so they can run Docker commands w/o sudo
   become: yes
   user:
     state: present
-    name: "{{ username }}"
+    name: "{{ item }}"
     append: yes
     groups:
       - docker
+  loop: "{{ docker_docker_users }}"
 
 - name: Enable Docker service to run on startup
   become: yes

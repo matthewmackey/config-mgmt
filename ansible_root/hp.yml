@@ -2,6 +2,9 @@
 - name: Configure HP Ubuntu 20.04 server
   hosts: mmhp
   become: yes
+  vars:
+    docker_docker_users:
+      - mmachaj
   roles:
     #- hptower
     - docker

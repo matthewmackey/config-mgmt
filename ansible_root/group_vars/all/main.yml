@@ -27,6 +27,8 @@ packages_common:
 snaps_common:
   - slack
   - skype
+snaps_server:
+  - multipass
 packages_r_lang:
   - r-base-dev
   # For 'devtools' R package

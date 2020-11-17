@@ -7,4 +7,5 @@
       - mmachaj
   roles:
     #- hptower
-    - docker
+    #- docker
+    - server

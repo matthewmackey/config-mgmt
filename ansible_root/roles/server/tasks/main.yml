@@ -1,0 +1,9 @@
+---
+- name: Install server Snaps
+  become: yes
+  snap:
+    name: "{{ item }}"
+    state: present
+    classic: yes
+  loop: "{{ snaps_server }}"
+

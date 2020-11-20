@@ -31,6 +31,13 @@
     cache_valid_time: 3600
     update_cache: yes
 
+- name: Install Hacker "Reverse Engineering" packages
+  become: yes
+  apt:
+    state: present
+    name: "{{ hacker_packages_reverse_engr }}"
+    cache_valid_time: 3600
+    update_cache: yes
 
 - name: Install Hacker Snaps
   become: yes

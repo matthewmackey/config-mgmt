@@ -25,6 +25,7 @@ packages_common:
   - wmctrl
   - xclip
 snaps_common:
+  - hexchat
   - slack
   - skype
 snaps_server:

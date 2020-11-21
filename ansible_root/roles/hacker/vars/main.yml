@@ -6,6 +6,7 @@ hacker_packages_common:
   - ack-grep
   - bluez-hcidump
   - git
+  - hashcash
   - htop
   - jq
   - mysql-client

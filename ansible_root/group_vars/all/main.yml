@@ -24,6 +24,19 @@ packages_common:
   - wireshark
   - wmctrl
   - xclip
+packages_common_server:
+  - ack-grep
+  - apt-file
+  - curl
+  - htop
+  - jq
+  - nfs-kernel-server
+  - p7zip-full
+  - stow
+  - tmux
+  - tree
+  - vim
+  - wireshark
 snaps_common:
   - hexchat
   - slack

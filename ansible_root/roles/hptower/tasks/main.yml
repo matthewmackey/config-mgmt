@@ -5,13 +5,10 @@
     cache_valid_time: 3600
 
 - name: Install common packages
+  become: true
   apt:
-    state: latest
-    pkg:
-      - ack-grep
-      - nfs-kernel-server
-      - tmux
-      - tree
+    state: present
+    name: "{{ packages_common_server }}"
 
 - name: Create NFS export mount points
   file:

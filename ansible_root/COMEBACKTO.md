@@ -14,4 +14,18 @@
     - possibly creating re-usable tasks to allow them to easily add alias files
       that already have the "DO NOT EDIT - created by ansible on XX/XX/XXXX"
       header
+* fix roles/mmackey/tasks/ansible_setup.yml so that the public key has the proper
+  restricted permissions after creation; it seems I had to manually fix the perms
+  on the public key generated so that I don't get this message:
 
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Permissions 0620 for '/home/mmackey/.ssh/ansible.pub' are too open.
+It is required that your private key files are NOT accessible by others.
+This private key will be ignored.
+Load key "/home/mmackey/.ssh/ansible.pub": bad permissions
+
+* Run PluginInstall via command-line for Vim plugins (this may be better in
+  dotfiles/install.sh than ansible though)
+  * SEE: https://github.com/VundleVim/Vundle.vim for 'vim +PluginInstall +qall' info

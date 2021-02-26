@@ -7,3 +7,35 @@
     classic: yes
   loop: "{{ snaps_server }}"
 
+#------------------------------------------------------------------------------
+# Home bin directory setup:
+#
+#  ~/bin
+#       used for programs that auto-install here as well as binaries that are
+#       not laptop-specific but shouldn't be in ~/mmbin b/c they arebinary and
+#       can't  be in git
+#
+#  ~/.local/bin
+#         executables specific to this laptop's purpose (ie - company-specific
+#         programs)
+#
+#  ~/mmbin (managed via a link to ~/dotfiles/mmbin)
+#       generic executables that are useful on any setup and are not tied to
+#       laptop-specific purposes; this directory is in personal version control
+#------------------------------------------------------------------------------
+- name: Setup bin directories
+  file:
+    state: directory
+    path: "{{ home_dir }}/{{ item }}"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+  loop:
+    - bin
+    - .local/bin
+
+- name: Install bashmarks
+  get_url:
+    url: https://raw.githubusercontent.com/huyng/bashmarks/master/bashmarks.sh
+    dest: "{{ home_dir }}/.local/bin/bashmarks.sh"
+    checksum: sha256:cee96f60a08e3801c851ddab43be188e450e39c097d4c4cb193a50ac847122c9
+

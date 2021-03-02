@@ -6,8 +6,16 @@
 #
 # By setting the 'interface' or 'listen-address' explicitly we can avoid
 # that default IP/port binding behavior
-#interface=eth0
-listen-address=127.0.0.1
+#listen-address=127.0.0.1
+interface=lo
+
+# The following is needed b/c Multipass also runs a dnsmasq server that binds
+# to port 53.  This ENSURES that dnsmasq only binds to the 'interface' and
+# 'listen-address' interfaces and IPs.
+#
+# SEE: https://serverfault.com/a/830737/571596
+# SEE: https://thekelleys.org.uk/dnsmasq/docs/dnsmasq-man.html
+bind-interfaces
 
 # Port to bind to
 port=53

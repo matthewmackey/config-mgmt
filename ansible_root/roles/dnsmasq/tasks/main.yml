@@ -1,0 +1,43 @@
+---
+#-------------------------------------------------------------------------------
+# SEE: https://kifarunix.com/configure-local-dns-server-using-dnsmasq-on-ubuntu-20-04/
+#-------------------------------------------------------------------------------
+
+- name: Disable system-resolved
+  become: yes
+  systemd:
+    name: systemd-resolved
+    state: stopped
+    enabled: false
+
+# NOTE: this must be done before installing dnsmasq from APT b/c otherwise
+#       APT cannot resolve the package servers due to systemd-resolved
+#       being disabled above (we possibly could re-arrange step order to
+#       avoid this at some point)
+- name: Replace resolv.conf that was managed by system-resolved
+  become: yes
+  copy:
+    src: resolv.conf
+    dest: /etc/resolv.conf
+    mode: 0644
+    owner: root
+    group: root
+    backup: yes
+
+- name: Install dnsmasq from APT
+  become: yes
+  apt:
+    name: dnsmasq
+    state: present
+
+- name: Setup initial /etc/dnsmasq.conf
+  become: yes
+  template:
+    src: dnsmasq.conf.j2
+    dest: /etc/dnsmasq.conf
+    mode: 0644
+    owner: root
+    group: root
+  notify:
+  - dnsmasq-service-restart
+

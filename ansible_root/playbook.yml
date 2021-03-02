@@ -17,6 +17,11 @@
         - docker
 
     - import_role:
+        name: dnsmasq
+      tags:
+        - dns
+
+    - import_role:
         name: mmackey
       tags:
         - mmackey

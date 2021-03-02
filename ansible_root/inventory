@@ -4,3 +4,11 @@ all:
     mmhp:
       ansible_python_interpreter: /usr/bin/python3
     nymbusaz:
+
+dns_servers:
+  hosts:
+    mmhp:
+
+dns_clients:
+  hosts:
+    127.0.0.1:

@@ -1,0 +1,3 @@
+{% for nameserver in dnsmasq_resolvconf_nameservers %}
+nameserver {{ nameserver }}
+{% endfor %}

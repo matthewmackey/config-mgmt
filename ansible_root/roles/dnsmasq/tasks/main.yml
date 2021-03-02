@@ -16,8 +16,8 @@
 #       avoid this at some point)
 - name: Replace resolv.conf that was managed by system-resolved
   become: yes
-  copy:
-    src: resolv.conf
+  template:
+    src: resolv.conf.j2
     dest: /etc/resolv.conf
     mode: 0644
     owner: root
@@ -29,25 +29,6 @@
   apt:
     name: dnsmasq
     state: present
-
-# NOTE: 3/2/21 - cannot seem to run the followng currently due to link below so
-#       commenting this step out:
-#          - https://github.com/ansible/ansible/issues/71528
-#- name: Ensure dnsmasq service is enabled and runing
-  #become: yes
-  #service:
-    #name: dnsmasq
-    #state: started
-    #enabled: true
-
-# NOTE: this is needed b/c the restart handler will fail in the step to deploy
-#       dnsmasq.conf if service isn't up yet
-- name: Wait for dnsmasq service to start so we can deploy a new dnsmasq.conf
-  wait_for:
-    state: started
-    port: 53
-    timeout: 5
-    msg: "port 53 is not open yet so dnsmasq service did not start properly"
 
 - name: Setup initial /etc/dnsmasq.conf
   become: yes

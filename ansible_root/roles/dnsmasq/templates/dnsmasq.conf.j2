@@ -6,8 +6,8 @@
 #
 # By setting the 'interface' or 'listen-address' explicitly we can avoid
 # that default IP/port binding behavior
-#listen-address=127.0.0.1
-interface=lo
+#interface=lo
+listen-address={{ dnsmasq_listen_addresses|join(',') }}
 
 # The following is needed b/c Multipass also runs a dnsmasq server that binds
 # to port 53.  This ENSURES that dnsmasq only binds to the 'interface' and

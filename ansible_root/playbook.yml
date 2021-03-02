@@ -1,6 +1,6 @@
 ---
 - name: Configure Lenovo Ubuntu 20.04 laptop (locally)
-  hosts: 127.0.0.1
+  hosts: dns_clients
   connection: local
   become: yes
 

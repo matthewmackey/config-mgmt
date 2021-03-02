@@ -29,3 +29,9 @@ Load key "/home/mmackey/.ssh/ansible.pub": bad permissions
 * Run PluginInstall via command-line for Vim plugins (this may be better in
   dotfiles/install.sh than ansible though)
   * SEE: https://github.com/VundleVim/Vundle.vim for 'vim +PluginInstall +qall' info
+
+* figure out way to better templatize dnsmasq variables for domain and wildcard
+  domain settings. Currently I don't like the values set in defaults/main.yml,
+  however, setting the values to blank values there causes a dnsmasq.conf config
+  file error on service startup.  Need to figure out a way to comment out the "domain"
+  and "address" variables in dnsmasq.conf if no value is supplied for them.

@@ -3,5 +3,3 @@ dnsmasq_domain: mmloc
 dnsmasq_domains_to_wildcard: /mmloc/192.168.1.253
 dnsmasq_listen_addresses:
   - 127.0.0.1
-dnsmasq_resolvconf_nameservers:
-  - 8.8.8.8

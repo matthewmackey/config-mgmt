@@ -1,0 +1,26 @@
+### DO NOT EDIT - deployed by Ansible ###
+#-------------------------------------------------------------------------------
+# Info on Docker DNS Resolution:
+#
+# FROM: https://docs.docker.com/config/containers/container-networking/
+#
+# By default, a container inherits the DNS settings of the host, as defined in
+# the /etc/resolv.conf configuration file. Containers that use the default
+# bridge network get a copy of this file, whereas containers that use a custom
+# network use Docker’s embedded DNS server, which forwards external DNS lookups
+# to the DNS servers configured on the host.
+#
+# The embedded Docker DNS server is at: 127.0.0.11:53.  That IP is pingable
+# from the Docker daemon host, but port 53 on that IP is NOT open from the
+# Docker daemon host.
+#
+# The /etc/resolv.conf file for containers using Docker's embedded DNS looks
+# like:
+#
+#    nameserver 127.0.0.11
+#    options ndots:0
+#
+#-------------------------------------------------------------------------------
+{% for nameserver in resolvconf_nameservers %}
+nameserver {{ nameserver }}
+{% endfor %}

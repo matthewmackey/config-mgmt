@@ -17,11 +17,6 @@
         - docker
 
     - import_role:
-        name: dnsmasq
-      tags:
-        - dns
-
-    - import_role:
         name: mmackey
       tags:
         - mmackey
@@ -35,3 +30,13 @@
         name: awscli
       tags:
         - awscli
+
+- name: Setup managed resolv.conf on DNS clients
+  hosts: dns_clients
+  become: yes
+  tasks:
+    - import_role:
+        name: resolvconf
+      tags:
+        - resolvconf
+

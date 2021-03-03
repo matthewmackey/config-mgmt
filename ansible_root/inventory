@@ -1,6 +1,9 @@
 ---
 all:
   hosts:
+    lenovo:
+      ansible_connection: local
+      ansible_host: 127.0.0.1
     mmhp:
       ansible_python_interpreter: /usr/bin/python3
     nymbusaz:
@@ -11,4 +14,5 @@ dns_servers:
 
 dns_clients:
   hosts:
-    127.0.0.1:
+    lenovo:
+    mmhp:

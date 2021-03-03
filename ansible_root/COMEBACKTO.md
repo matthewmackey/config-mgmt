@@ -35,3 +35,7 @@ Load key "/home/mmackey/.ssh/ansible.pub": bad permissions
   however, setting the values to blank values there causes a dnsmasq.conf config
   file error on service startup.  Need to figure out a way to comment out the "domain"
   and "address" variables in dnsmasq.conf if no value is supplied for them.
+
+* Restart docker daemon when resolv.conf is changed on a host
+* Extract dns_client tasks and dns_server tasks so dnsmasq is NOT installed on
+  the clients (ie - lenovo)

@@ -9,4 +9,26 @@
     #- hptower
     #- docker
     #- server
-    - dnsmasq
+    #- dnsmasq
+
+  tasks:
+
+    - import_role:
+        name: docker
+      tags:
+        - docker
+
+    - import_role:
+        name: dnsmasq
+      tags:
+        - dns
+
+    - import_role:
+        name: hptower
+      tags:
+        - hptower
+
+    - import_role:
+        name: server
+      tags:
+        - server

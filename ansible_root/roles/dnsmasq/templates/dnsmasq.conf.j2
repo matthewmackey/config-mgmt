@@ -31,7 +31,11 @@ bogus-priv
 expand-hosts
 
 # Domain for dnsmasq to append to simple names
-domain={{ dnsmasq_domain }}
+{% if dnsmasq_default_domain != "" %}
+domain={{ dnsmasq_default_domain }}
+{% else %}
+#domain=
+{% endif %}
 
 # Setup wildcard domains
 # SEE: https://qiita.com/bmj0114/items/9c24d863bcab1a634503

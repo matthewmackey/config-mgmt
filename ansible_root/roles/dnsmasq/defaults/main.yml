@@ -1,5 +1,5 @@
 ---
-dnsmasq_domain: mmloc
+dnsmasq_default_domain: ""
 dnsmasq_domains_to_wildcard: []
 dnsmasq_listen_addresses:
   - 127.0.0.1

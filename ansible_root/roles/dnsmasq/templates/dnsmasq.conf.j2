@@ -1,3 +1,4 @@
+#jinja2: lstrip_blocks: "True"
 # An 'interface' or 'listen-address' configuration option is required b/c
 # otherwise it seems like dnsmasq tries to bind to port 53
 # of the *.*.*.1 IP address of ALL interfaces. This causes a failure b/c
@@ -34,7 +35,13 @@ domain={{ dnsmasq_domain }}
 
 # Setup wildcard domains
 # SEE: https://qiita.com/bmj0114/items/9c24d863bcab1a634503
-address={{ dnsmasq_domains_to_wildcard }}
+{% if dnsmasq_domains_to_wildcard|length > 0 %}
+  {% for d in dnsmasq_domains_to_wildcard %}
+address=/{{ d.domain }}/{{ d.ip }}
+  {% endfor %}
+{% else %}
+#address=
+{% endif %}
 
 # Size of cached domain names
 cache-size=1000

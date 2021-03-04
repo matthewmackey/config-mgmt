@@ -10,9 +10,25 @@
 # network use Docker’s embedded DNS server, which forwards external DNS lookups
 # to the DNS servers configured on the host.
 #
-# The embedded Docker DNS server is at: 127.0.0.11:53.  That IP is pingable
-# from the Docker daemon host, but port 53 on that IP is NOT open from the
-# Docker daemon host.
+# The Docker daemon will mount the host's /etc/resolv.conf file into containers
+# as the file exists at the moment when a container is started. This
+# means you do NOT need to restart the Docker daemon for new containers to
+# "pick-up" any changes made on the host's /etc/resolv.conf file. However, the
+# changes will only show up in containers started AFTER the changes to the host's
+# /etc/resolv.conf file were made though. Currently running containers will not
+# pick-up host the changes. However, if a container is stopped and restarted,
+# then it will pick-up the changes on restart.
+#
+# Additionally, the Docker daemon will remove any DNS nameservers in the host's
+# /etc/resolv.conf that are in the localhost IP range: 127.0.0.0/8. This
+# behavior doesn't seem to be documented anymore on the Docker website, so see
+# here for more info:
+#
+#   https://stackoverflow.com/a/39400887/14209903
+#
+# For custom networks, the embedded Docker DNS server is at: 127.0.0.11:53.
+# It can be noted that this IP seems to be pingable from the Docker daemon host,
+# but port 53 on that IP is NOT open to the Docker daemon host.
 #
 # The /etc/resolv.conf file for containers using Docker's embedded DNS looks
 # like:

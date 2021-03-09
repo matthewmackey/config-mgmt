@@ -39,3 +39,9 @@ Load key "/home/mmackey/.ssh/ansible.pub": bad permissions
 * Restart docker daemon when resolv.conf is changed on a host
 * Extract dns_client tasks and dns_server tasks so dnsmasq is NOT installed on
   the clients (ie - lenovo)
+
+* Figure out how to make dnsmasq role dependent on resolvconf role b/c a static
+  resolv.conf is needed for the dnsmasq setup we want
+  * SEE: https://kifarunix.com/configure-local-dns-server-using-dnsmasq-on-ubuntu-20-04/
+
+* Add ssh bash completion script

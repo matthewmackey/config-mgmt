@@ -1,0 +1,3 @@
+{% for nopass_user in sudoers_nopass_users %}
+{{ nopass_user }} ALL=(ALL) NOPASSWD: ALL
+{% endfor %}

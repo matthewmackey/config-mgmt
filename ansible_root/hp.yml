@@ -32,3 +32,8 @@
         name: server
       tags:
         - server
+
+    - import_role:
+        name: sudoers
+      tags:
+        - sudoers

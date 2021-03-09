@@ -1,0 +1,19 @@
+- name: Ensure '/etc/sudoers' has include for '/etc/sudoers.d'
+  lineinfile:
+    state: present
+    line: "#includedir /etc/sudoers.d"
+    dest: /etc/sudoers
+    validate: "/usr/sbin/visudo -cf %s"
+
+# NOTE: files in /etc/sudoers.d will not be parsed if there is a '.' in the filename
+# SEE /etc/sudoers.d/README for more info
+- name: Grant certain users NOPASSWD sudo access
+  become: yes
+  template:
+    src: nopass.j2
+    dest: /etc/sudoers.d/nopass
+    mode: 0440
+    owner: root
+    group: root
+    validate: "/usr/sbin/visudo -cf %s"
+  when: sudoers_nopass_users|length > 0

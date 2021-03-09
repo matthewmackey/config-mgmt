@@ -1,0 +1,17 @@
+---
+- name: Port check playbook for debugging
+  hosts: mmhacker
+  become: yes
+  tasks:
+  - name: Check if service is running by querying the application port
+    wait_for:
+      port: 22
+      timeout: 3
+      state: stopped
+      msg: "Port 22 is NOT accessible, application is already installed and running"
+    register: service_status
+
+  - name: print status
+    debug:
+      var: service_status
+

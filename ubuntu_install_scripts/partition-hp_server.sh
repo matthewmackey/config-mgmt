@@ -10,13 +10,13 @@ function read_passphrase() {
 
   if [[ -e "$PASSPHRASE_FILE" ]]; then
     echo "  Reading pass from file"
-    PASSPHRASE=$(cat $PASSPHRASE_FILE)   
+    PASSPHRASE=$(cat $PASSPHRASE_FILE)
   else 
     read -rsp "Enter passphrase: " PASSPHRASE
     echo
     read -rsp "Enter again: " PASSPHRASE_AGAIN
     echo
-  
+
     if [[ "$PASSPHRASE" != "$PASSPHRASE_AGAIN" ]]; then
       echo "Passphrases don't match...exiting"
       exit -1
@@ -29,7 +29,7 @@ function read_passphrase() {
 
 function create_partitions() {
   echo -e "\n------ [Create Partitions] --------------------------"
-  # GRUB - unencrypted 
+  # GRUB - unencrypted
   sgdisk --new 1:0:+2M $DEV
 
   # /boot - encrypted
@@ -43,8 +43,8 @@ function create_partitions() {
   sgdisk --typecode 3:8301 $DEV
 
   sgdisk --change-name 1:GRUB $DEV
-  sgdisk --change-name 2:/boot $DEV 
-  sgdisk --change-name 3:rootfs $DEV 
+  sgdisk --change-name 2:/boot $DEV
+  sgdisk --change-name 3:rootfs $DEV
 }
 
 
@@ -74,7 +74,7 @@ function setup_lvm() {
 
   lvcreate -L 12G -n swap $VG_NAME
   lvcreate -L 40G -n root $VG_NAME
-  lvcreate -L 60G -n home $VG_NAME 
+  lvcreate -L 60G -n home $VG_NAME
 }
 
 function display_grub_message() {

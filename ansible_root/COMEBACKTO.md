@@ -45,3 +45,5 @@ Load key "/home/mmackey/.ssh/ansible.pub": bad permissions
   * SEE: https://kifarunix.com/configure-local-dns-server-using-dnsmasq-on-ubuntu-20-04/
 
 * Add ssh bash completion script
+
+* Add role to deploy dotfiles -> this will also require removal of .bashrc

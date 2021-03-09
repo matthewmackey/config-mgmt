@@ -1,0 +1,11 @@
+---
+- name: Configure mmhacker Vagrant VM
+  hosts: mmhacker
+  become: yes
+  roles:
+    - role: hacker
+    - role: sudoers
+      tags:
+        - sudoers
+      vars:
+        sudoers_nopass_users: ["vagrant"]

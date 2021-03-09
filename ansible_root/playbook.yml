@@ -7,6 +7,11 @@
   tasks:
 
     - import_role:
+        name: awscli
+      tags:
+        - awscli
+
+    - import_role:
         name: common
       tags:
         - common
@@ -17,19 +22,20 @@
         - docker
 
     - import_role:
-        name: mmackey
-      tags:
-        - mmackey
-
-    - import_role:
         name: hacker
       tags:
         - hacker
 
     - import_role:
-        name: awscli
+        name: mmackey
       tags:
-        - awscli
+        - mmackey
+
+    - import_role:
+        name: sudoers
+      tags:
+        - sudoers
+
 
 - name: Setup managed resolv.conf on DNS clients
   hosts: dns_clients

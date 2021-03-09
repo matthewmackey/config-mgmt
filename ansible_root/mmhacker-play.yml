@@ -4,8 +4,34 @@
   become: yes
   roles:
     - role: hacker
+      tags:
+        - hacker
     - role: sudoers
       tags:
         - sudoers
       vars:
         sudoers_nopass_users: ["vagrant"]
+  vars:
+    home_dir: /home/vagrant
+    username: vagrant
+
+  tasks:
+    - name: Setup bin directories
+      file:
+        state: directory
+        path: "{{ home_dir }}/{{ item }}"
+        owner: "{{ username }}"
+        group: "{{ username }}"
+      loop:
+        - bin
+        - .local/bin
+      tags:
+        - bashmarks
+
+    - name: Install bashmarks
+      get_url:
+        url: https://raw.githubusercontent.com/huyng/bashmarks/master/bashmarks.sh
+        dest: "{{ home_dir }}/.local/bin/bashmarks.sh"
+        checksum: sha256:cee96f60a08e3801c851ddab43be188e450e39c097d4c4cb193a50ac847122c9
+      tags:
+        - bashmarks

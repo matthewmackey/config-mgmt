@@ -10,6 +10,7 @@ hacker_packages_common:
   - htop
   - jq
   - mysql-client
+  - stow
   - tmux
   - tree
   - xclip

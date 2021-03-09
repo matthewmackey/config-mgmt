@@ -44,3 +44,11 @@
   snap:
     state: present
     name: "{{ hacker_snaps }}"
+
+- name: Install Hacker Snaps in --classic mode
+  become: yes
+  snap:
+    state: present
+    name: "{{ hacker_snaps_classic }}"
+    classic: yes
+

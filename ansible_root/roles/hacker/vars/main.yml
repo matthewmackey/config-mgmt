@@ -45,5 +45,7 @@ hacker_snaps:
   - amass
   - john-the-ripper
   - postman
+
+hacker_snaps_classic:
   - zaproxy
 

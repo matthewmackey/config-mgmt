@@ -17,6 +17,12 @@
     state: present
     name: libvirt-daemon-system
 
+- name: Ensure 'libvirtd' service is enabled and running
+  service:
+    name: libvirtd
+    state: started
+    enabled: yes
+
 - name: Install libvirt client tools
   become: yes
   apt:
@@ -29,8 +35,8 @@
     state: present
     name: virt-manager
 
-- name: Ensure 'libvirtd' service is enabled and running
-  service:
-    name: libvirtd
-    state: started 
-    enabled: yes
+- name: Install 'osinfo-query' tool for querying osinfo DB
+  become: yes
+  apt:
+    state: present
+    name: libosinfo-bin

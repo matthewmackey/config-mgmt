@@ -1,0 +1,21 @@
+---
+#-------------------------------------------------------------------------------
+# For info on "color profile" and "system crash" issues when connecting to the
+# Xrdp server for the first time:
+#
+#   - https://c-nergy.be/blog/?p=12073
+#   - http://c-nergy.be/blog/?p=12043
+#-------------------------------------------------------------------------------
+- name: Install Xrdp server for RDP connections
+  become: yes
+  apt:
+    state: present
+    name: xrdp
+
+- name: Ensure xrdp service is running and enabled
+  become: yes
+  service:
+    state: started
+    name: xrdp
+    enabled: yes
+

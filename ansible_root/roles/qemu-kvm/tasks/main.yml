@@ -1,0 +1,36 @@
+---
+- name: Install QEMU emulator for KVM hypervisor
+  become: yes
+  apt:
+    state: present
+    name: qemu-kvm
+
+- name: Install 'bridge-utils' for creating Linux Ethernet bridges
+  become: yes
+  apt:
+    state: present
+    name: bridge-utils
+
+- name: Install 'libvirtd' daemon for managing VMs
+  become: yes
+  apt:
+    state: present
+    name: libvirt-daemon-system
+
+- name: Install libvirt client tools
+  become: yes
+  apt:
+    state: present
+    name: libvirt-clients
+
+- name: Install libvirt VM manager GUI
+  become: yes
+  apt:
+    state: present
+    name: virt-manager
+
+- name: Ensure 'libvirtd' service is enabled and running
+  service:
+    name: libvirtd
+    state: started 
+    enabled: yes

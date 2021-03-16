@@ -5,12 +5,6 @@
     state: present
     name: qemu-kvm
 
-- name: Install 'bridge-utils' for creating Linux Ethernet bridges
-  become: yes
-  apt:
-    state: present
-    name: bridge-utils
-
 - name: Install 'libvirtd' daemon for managing VMs
   become: yes
   apt:
@@ -29,11 +23,23 @@
     state: present
     name: libvirt-clients
 
-- name: Install libvirt VM manager GUI
+- name: Install 'virt-manager' GUI for managing VMs
   become: yes
   apt:
     state: present
     name: virt-manager
+
+- name: Install 'virt-viewer' utility for viewing graphical console of VMs
+  become: yes
+  apt:
+    state: present
+    name: virt-viewer
+
+- name: Install 'bridge-utils' for creating Linux Ethernet bridges
+  become: yes
+  apt:
+    state: present
+    name: bridge-utils
 
 - name: Install 'osinfo-query' tool for querying osinfo DB
   become: yes

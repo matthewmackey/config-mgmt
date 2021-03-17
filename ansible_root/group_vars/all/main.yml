@@ -1,6 +1,10 @@
 ---
 username: mmackey
-downloads_dir: "/home/mmackey/downloads/srv"
+#
+# TODO: replace one of these two variables since they ared dups
+downloads_dir: "{{ home_dir }}/downloads/srv"
+downloads_srv_dir: "{{ downloads_dir }}"
+
 ansible_bash_dir: "/home/{{ username }}/.local/ansible_bash"
 
 nfs_mount_dir: /mnt/mmackey-sync

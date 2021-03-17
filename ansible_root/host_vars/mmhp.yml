@@ -1,0 +1,6 @@
+---
+username: mmachaj
+home_dir: /home/{{ username }}
+sudoers_nopass_users:
+  - mmachaj
+  - mmackey

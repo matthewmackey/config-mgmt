@@ -3,47 +3,43 @@
   shell: |
     curl -s https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_SHA256SUMS \
       | grep vagrant_2.2.9_x86_64.deb \
-      | cut -d ' ' -f 1 > /tmp/vagrant_deb.sha256
+      | cut -d ' ' -f 1
   args:
-    creates: /tmp/vagrant_deb.sha256
     warn: no
+  register: vagrant_deb_sha256_task
 
 - name: Download Vagrant .deb
   get_url:
     url: https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_x86_64.deb
-    dest: "{{ home_dir }}/downloads/srv/vagrant_2.2.9_x86_64.deb"
-    checksum: sha256:{{ vagrant_deb_sha256 }}
-  vars:
-    vagrant_deb_sha256: "{{ lookup('file', '/tmp/vagrant_deb.sha256') }}"
+    dest: "{{ downloads_srv_dir }}/vagrant_2.2.9_x86_64.deb"
+    checksum: sha256:{{ vagrant_deb_sha256_task.stdout }}
 
 - name: Install Vagrant via .deb
   become: yes
   apt:
     state: present
-    deb: "{{ home_dir }}/downloads/srv/vagrant_2.2.9_x86_64.deb"
+    deb: "{{ downloads_srv_dir }}/vagrant_2.2.9_x86_64.deb"
 
 - name: Download Oracle VirtualBox .deb SHA-256 checksum
   shell: |
     curl -s "{{ virtualbox_hash_url }}" \
       | grep "{{ virtualbox_deb_file }}" \
-      | cut -d ' ' -f 1 > "/tmp/{{ virtualbox_deb_file }}.sha256"
+      | cut -d ' ' -f 1
   args:
-    creates: "/tmp/{{ virtualbox_deb_file }}.sha256"
     warn: no
+  register: virtualbox_deb_sha256_task
 
 - name: Download Oracle VirtualBox .deb
   get_url:
     url: "{{ virtualbox_deb_url }}"
-    dest: "{{ home_dir }}/downloads/srv/{{ virtualbox_deb_file }}"
-    checksum: sha256:{{ virtualbox_deb_sha256 }}
-  vars:
-    virtualbox_deb_sha256: "{{ lookup('file', '/tmp/' + virtualbox_deb_file + '.sha256') }}"
+    dest: "{{ downloads_srv_dir }}/{{ virtualbox_deb_file }}"
+    checksum: sha256:{{ virtualbox_deb_sha256_task.stdout }}
 
 - name: Install Oracle VirtualBox via .deb
   become: yes
   apt:
     state: present
-    deb: "{{ home_dir }}/downloads/srv/{{ virtualbox_deb_file }}"
+    deb: "{{ downloads_srv_dir }}/{{ virtualbox_deb_file }}"
 
 - name: Add "{{ username }}" to 'vboxusers' group
   become: yes
@@ -60,13 +56,16 @@
     state: present
     name: multipass
     classic: yes
+  when: virtual_machines_install_multipass
 
 # Download requires website login, EULA acceptance, etc.; so is a real pain
+# Thus, this requires a download of both bundle & its checksum file *outside of Ansible*
+# to the same directory
 - name: Verify checksum on Pre-Downloaded VMware ovftool installer
   shell: shasum -a 256 -c VMware-ovftool-4.4.0-16360108-lin.x86_64.bundle.shasum
   changed_when: False
   args:
-    chdir: "{{ home_dir }}/downloads/srv"
+    chdir: "{{ downloads_srv_dir }}"
 
 - name: Run VMware ovftool installer
   become: yes
@@ -76,6 +75,6 @@
       --required \
       --eulas-agreed
   args:
-    chdir: "{{ home_dir }}/downloads/srv"
+    chdir: "{{ downloads_srv_dir }}"
     creates: /usr/bin/ovftool
 

@@ -21,13 +21,9 @@
   tags:
     - dotnet
 
-- import_tasks: virtual.yml
-  tags:
-    - virtual
-
-- import_tasks: python.yml
-  tags:
-    - python
+#- import_tasks: python.yml
+  #tags:
+    #- python
 
 - import_tasks: ansible_setup.yml  # Must be done after 'python.yml'
   tags:

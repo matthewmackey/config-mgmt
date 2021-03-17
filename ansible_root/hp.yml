@@ -10,7 +10,9 @@
     #- docker
     #- server
     #- dnsmasq
-    - qemu-kvm
+    #- qemu-kvm
+    - virtual_machines
+      #    - xrdp
 
   #tasks:
 

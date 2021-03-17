@@ -3,46 +3,23 @@
   hosts: lenovo
   connection: local
   become: yes
+  roles:
+    #- name: awscli
+    #- name: common
+    #- name: docker
+    #- name: hacker
+    #- name: mmackey
+    #- name: qemu-kvm
+    #- name: sudoers
+    - name: virtual_machines
+    #- name: vim
 
-  tasks:
-
-    - import_role:
-        name: awscli
-      tags:
-        - awscli
-
-    - import_role:
-        name: common
-      tags:
-        - common
-
-    - import_role:
-        name: docker
-      tags:
-        - docker
-
-    - import_role:
-        name: hacker
-      tags:
-        - hacker
-
-    - import_role:
-        name: mmackey
-      tags:
-        - mmackey
-
-    - import_role:
-        name: sudoers
-      tags:
-        - sudoers
-
-
-- name: Setup managed resolv.conf on DNS clients
-  hosts: dns_clients
-  become: yes
-  tasks:
-    - import_role:
-        name: resolvconf
-      tags:
-        - resolvconf
+#- name: Setup managed resolv.conf on DNS clients
+  #hosts: dns_clients
+  #become: yes
+  #tasks:
+    #- import_role:
+        #name: resolvconf
+      #tags:
+        #- resolvconf
 

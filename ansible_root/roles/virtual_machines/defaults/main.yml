@@ -1,0 +1,6 @@
+---
+virtualbox_deb_base_url: https://download.virtualbox.org/virtualbox/6.1.16/
+virtualbox_deb_file: virtualbox-6.1_6.1.16-140961~Ubuntu~eoan_amd64.deb
+virtualbox_deb_url: "{{ virtualbox_deb_base_url }}/{{ virtualbox_deb_file }}"
+virtualbox_hash_url: https://www.virtualbox.org/download/hashes/6.1.16/SHA256SUMS
+virtual_machines_install_multipass: no

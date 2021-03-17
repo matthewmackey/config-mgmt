@@ -1,7 +1,11 @@
 ---
-- name: Configure mmhacker Vagrant VM
-  hosts: mmhacker
+- name: Configure hacker Vagrant VM
+  hosts: hacker_vms
   become: yes
+  vars:
+    home_dir: /home/vagrant
+    username: vagrant
+
   roles:
     - role: hacker
       tags:
@@ -11,9 +15,7 @@
         - sudoers
       vars:
         sudoers_nopass_users: ["vagrant"]
-  vars:
-    home_dir: /home/vagrant
-    username: vagrant
+    - role: vim
 
   tasks:
     - name: Setup bin directories

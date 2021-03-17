@@ -4,14 +4,15 @@
 - name: Download Go binary tarball
   get_url:
     url: https://golang.org/dl/go1.15.2.linux-amd64.tar.gz
-    dest: "{{ home_dir }}/downloads/srv/go1.15.2.linux-amd64.tar.gz"
+    dest: "{{ downloads_srv_dir }}/go1.15.2.linux-amd64.tar.gz"
     checksum: sha256:b49fda1ca29a1946d6bb2a5a6982cf07ccd2aba849289508ee0f9918f6bb4552
 
 - name: Unarchive Go binary tarball to /usr/local
   become: yes
   unarchive:
-    src: "{{ home_dir }}/downloads/srv/go1.15.2.linux-amd64.tar.gz"
+    src: "{{ downloads_srv_dir }}/go1.15.2.linux-amd64.tar.gz"
     dest: /usr/local
     remote_src: yes
   args:
     creates: /usr/local/go/bin
+

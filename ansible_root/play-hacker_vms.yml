@@ -11,6 +11,11 @@
       apt:
         update_cache: yes
         cache_valid_time: 360
+    # TODO: move to a role (required by golang role)
+    - name: Setup downloads/srv directory
+      file:
+        state: directory
+        name: "{{ downloads_srv_dir }}"
 
   roles:
     #- role: hacker
@@ -22,6 +27,7 @@
       vars:
         sudoers_nopass_users: ["vagrant"]
     - role: vim
+    - role: go
 
   tasks:
     - name: Setup bin directories

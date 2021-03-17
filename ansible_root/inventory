@@ -9,6 +9,8 @@ all:
     lenovo:
       ansible_connection: local
       ansible_host: 127.0.0.1
+    kali:
+      ansible_python_interpreter: /usr/bin/python3
     mmhacker:
     mmhp:
       ansible_python_interpreter: /usr/bin/python3
@@ -27,6 +29,10 @@ dns_clients:
   hosts:
     lenovo:
     mmhp:
+
+hacker_vms:
+  hosts:
+    kali:
 
 local_vms:
   hosts:

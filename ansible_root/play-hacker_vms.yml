@@ -6,10 +6,16 @@
     home_dir: /home/vagrant
     username: vagrant
 
+  pre_tasks:
+    - name: Update APT cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 360
+
   roles:
-    - role: hacker
-      tags:
-        - hacker
+    #- role: hacker
+      #tags:
+        #- hacker
     - role: sudoers
       tags:
         - sudoers

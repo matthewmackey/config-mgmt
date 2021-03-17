@@ -1,0 +1,27 @@
+---
+#-------------------------------------------------------------------------------
+# General Setup
+#-------------------------------------------------------------------------------
+- name: Create Vim persistent-undo directory
+  file:
+    name: "{{ home_dir }}/.vim/tmp/undo"
+    state: directory
+
+#-------------------------------------------------------------------------------
+# YouCompleteMe plugin setup
+# See: https://github.com/ycm-core/YouCompleteMe#linux-64-bit
+#-------------------------------------------------------------------------------
+- name: Install Vim w/ scripting languages support
+  apt:
+    name: vim-nox
+    state: present
+
+- name: Install YouCompleteMe plugin APT dependencies
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - build-essential
+    - cmake
+    - python3-dev
+

@@ -1,0 +1,24 @@
+---
+- name: Configure cake
+  hosts: cake
+  become: yes
+  tasks:
+    - include_role:
+        name: common
+      tags:
+        - common
+        #- lastpass
+    - include_role:
+        name: mmackey
+      tags:
+        - android
+        - ansible
+        - docker
+        - dotnet
+        - ides
+        - mmackey
+        - node
+        - packages_developer
+        - python
+        - user
+        - virtual

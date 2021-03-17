@@ -47,3 +47,7 @@ Load key "/home/mmackey/.ssh/ansible.pub": bad permissions
 * Add ssh bash completion script
 
 * Add role to deploy dotfiles -> this will also require removal of .bashrc
+
+* figure out how to synchronize values in dotfiles files with ansible stuff; for
+  example the Go bin path is set in dotfiles but that bin dir being on the PATH
+  is a pre-requisite for installing YCM w/ the --go-completer

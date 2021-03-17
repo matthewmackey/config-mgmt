@@ -12,6 +12,7 @@ all:
     kali:
       ansible_python_interpreter: /usr/bin/python3
     mmhacker:
+      ansible_python_interpreter: /usr/bin/python3
     mmhp:
       ansible_python_interpreter: /usr/bin/python3
       sudoers_nopass_users:
@@ -33,6 +34,7 @@ dns_clients:
 hacker_vms:
   hosts:
     kali:
+    mmhacker:
 
 local_vms:
   hosts:

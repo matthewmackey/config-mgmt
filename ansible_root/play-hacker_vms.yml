@@ -18,16 +18,27 @@
         name: "{{ downloads_srv_dir }}"
 
   roles:
-    #- role: hacker
-      #tags:
-        #- hacker
-    - role: sudoers
+    - role: hacker
       tags:
-        - sudoers
+        - hacker
+
+    - role: sudoers
       vars:
         sudoers_nopass_users: ["vagrant"]
-    - role: vim
+      tags:
+        - sudoers
+
     - role: go
+      tags:
+        - go
+
+    - role: vim
+      vars:
+        vim_ycm_completers:
+          - completer: go-completer
+            creates: "{{ vim_bundle_dir }}/YouCompleteMe/third_party/ycmd/third_party/go/bin/gopls"
+      tags:
+        - vim
 
   tasks:
     - name: Setup bin directories

@@ -1,0 +1,2 @@
+vim_bundle_dir: "{{ home_dir }}/.vim/bundle"
+vim_ycm_completers: []

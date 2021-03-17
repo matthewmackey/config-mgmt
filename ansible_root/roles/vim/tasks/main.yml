@@ -6,22 +6,38 @@
   file:
     name: "{{ home_dir }}/.vim/tmp/undo"
     state: directory
+    owner: "{{ username }}"
+    group: "{{ username }}"
 
 #-------------------------------------------------------------------------------
 # YouCompleteMe plugin setup
 # See: https://github.com/ycm-core/YouCompleteMe#linux-64-bit
 #-------------------------------------------------------------------------------
 - name: Install Vim w/ scripting languages support
+  become: yes
   apt:
     name: vim-nox
     state: present
 
 - name: Install YouCompleteMe plugin APT dependencies
+  become: yes
   apt:
-    name: "{{ item }}"
+    name: ["build-essential", "cmake", "python3-dev" ]
     state: present
-  with_items:
-    - build-essential
-    - cmake
-    - python3-dev
 
+- name: Clone YouCompleteMe Vim plugin
+  become_user: "{{ username }}"
+  git:
+    repo: https://github.com/ycm-core/YouCompleteMe.git
+    dest: "{{ vim_bundle_dir }}/YouCompleteMe"
+    update: no
+
+# Need to source .bashrc so this script can find Go executable on PATH
+- name: Compile YouCompleteMe Vim plugin
+  become_user: "{{ username }}"
+  shell: "source /home/{{ username }}/.bashrc && python3 install.py --{{ item.completer }}"
+  args:
+    chdir: "{{ vim_bundle_dir }}/YouCompleteMe"
+    creates: "{{ item.creates }}"
+    executable: /bin/bash
+  loop: "{{ vim_ycm_completers }}"

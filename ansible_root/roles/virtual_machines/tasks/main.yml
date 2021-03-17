@@ -1,4 +1,7 @@
 ---
+#-------------------------------------------------------------------------------
+# Vagrant
+#-------------------------------------------------------------------------------
 - name: Download Vagrant .deb SHA-256 checksum
   shell: |
     curl -s https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_SHA256SUMS \
@@ -20,6 +23,35 @@
     state: present
     deb: "{{ downloads_srv_dir }}/vagrant_2.2.9_x86_64.deb"
 
+#--------------------------------------------------------------
+# Vagrant's libvirt provider
+# From: https://github.com/vagrant-libvirt/vagrant-libvirt#installation
+#--------------------------------------------------------------
+#- name: Install Vagrant libvirt provider build-dep dependencies
+  #become: yes
+  #apt:
+    #state: build-dep
+    #name: "{{ item }}"
+  #with_items:
+    #- ruby-libvirt
+
+#- name: Install Vagrant libvirt provider dependencies
+  #become: yes
+  #apt:
+    #state: present
+    #name: "{{ item }}"
+  #with_items:
+    #- dnsmasq-base
+    #- ebtables
+    #- libxslt-dev
+    #- libxml2-dev
+    #- libvirt-dev
+    #- ruby-dev
+    #- zlib1g-dev
+
+#-------------------------------------------------------------------------------
+# Virtualbox - Virtualbox provider works out of box with Vagrant
+#-------------------------------------------------------------------------------
 - name: Download Oracle VirtualBox .deb SHA-256 checksum
   shell: |
     curl -s "{{ virtualbox_hash_url }}" \
@@ -50,6 +82,9 @@
     groups:
       - vboxusers
 
+#-------------------------------------------------------------------------------
+# Multipass
+#-------------------------------------------------------------------------------
 - name: Install Multipass Ubuntu VM manager by Canonical
   become: yes
   snap:
@@ -58,6 +93,9 @@
     classic: yes
   when: virtual_machines_install_multipass
 
+#-------------------------------------------------------------------------------
+# VMware-related
+#-------------------------------------------------------------------------------
 # Download requires website login, EULA acceptance, etc.; so is a real pain
 # Thus, this requires a download of both bundle & its checksum file *outside of Ansible*
 # to the same directory

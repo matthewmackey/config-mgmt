@@ -1,0 +1,21 @@
+---
+- name: Ensure drivers download dir exists
+  file:
+    path: "{{ drivers_dir }}"
+    state: directory
+    owner: "{{ username }}"
+    group: "{{ username }}"
+
+- name: Download & extract Epson ES-200 Scanner driver .debs & install script
+  unarchive:
+    src: "https://download2.ebz.epson.net/epsonscan2/common/deb/x64/epsonscan2-bundle-6.6.2.3.x86_64.deb.tar.gz"
+    dest: "{{ drivers_dir }}"
+    remote_src: yes
+    creates: "{{ drivers_dir }}/epsonscan2-bundle-6.6.2.3.x86_64.deb/install.sh"
+
+- name: Run Epson ES-200 Scanner driver install script
+  become: yes
+  shell: "{{ drivers_dir }}/epsonscan2-bundle-6.6.2.3.x86_64.deb/install.sh"
+  args:
+    chdir: "{{ drivers_dir }}"
+    creates: /usr/bin/epsonscan2

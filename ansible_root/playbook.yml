@@ -6,8 +6,8 @@
   roles:
     #- name: awscli
     #- name: common
-    #- name: docker
-    - name: epson_scanner
+    - name: docker
+    #- name: epson_scanner
     #- name: hacker
     #- name: mmackey
     #- name: qemu-kvm

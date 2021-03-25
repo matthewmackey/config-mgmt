@@ -19,7 +19,7 @@
     state: present
     url: https://download.docker.com/linux/ubuntu/gpg
 
-- name: Add Docker's APT repository
+- name: Add Docker's APT repository for Ubuntu 18.04
   become: yes
   apt_repository:
     state: present
@@ -29,7 +29,7 @@
     - ansible_facts['distribution'] == "Ubuntu"
     - ansible_facts['distribution_major_version'] == "18"
 
-- name: Add Docker's APT repository
+- name: Add Docker's APT repository for Ubuntu 20.04
   become: yes
   apt_repository:
     state: present

@@ -6,14 +6,14 @@
   roles:
     #- name: awscli
     #- name: common
-    - name: docker
+    #- name: docker
     #- name: epson_scanner
     #- name: hacker
     #- name: mmackey
     #- name: qemu-kvm
     #- name: sudoers
     #- name: virtual_machines
-    #- name: vim
+    - name: vim
 
 #- name: Setup managed resolv.conf on DNS clients
   #hosts: dns_clients

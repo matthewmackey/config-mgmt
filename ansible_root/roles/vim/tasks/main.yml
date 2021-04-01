@@ -9,6 +9,12 @@
     owner: "{{ username }}"
     group: "{{ username }}"
 
+- name: Install powerline fonts
+  become: yes
+  apt:
+    state: present
+    name: fonts-powerline
+
 #-------------------------------------------------------------------------------
 # YouCompleteMe plugin setup
 # See: https://github.com/ycm-core/YouCompleteMe#linux-64-bit

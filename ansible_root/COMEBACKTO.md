@@ -51,3 +51,8 @@ Load key "/home/mmackey/.ssh/ansible.pub": bad permissions
 * figure out how to synchronize values in dotfiles files with ansible stuff; for
   example the Go bin path is set in dotfiles but that bin dir being on the PATH
   is a pre-requisite for installing YCM w/ the --go-completer
+
+* consider creating a ~/src/github.com directory to permanently store things
+  like powerline/fonts.git repo AND also any github repos I checkout; kind of
+  would be modeling ~/go/src
+

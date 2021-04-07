@@ -23,6 +23,7 @@ packages_common:
   - parcellite
   - pass
   - pithos
+  - ripgrep
   - stow
   - synapse
   - tmux

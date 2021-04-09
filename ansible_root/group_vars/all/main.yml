@@ -17,6 +17,8 @@ packages_common:
   - apt-file
   - cinnamon
   - curl
+  - fd-find
+  - fzf
   - htop
   - jq
   - p7zip-full

@@ -21,6 +21,7 @@ packages_common:
   - fzf
   - htop
   - jq
+  - gparted
   - p7zip-full
   - parcellite
   - pass

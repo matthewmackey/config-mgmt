@@ -35,6 +35,12 @@
     state: present
     name: virt-viewer
 
+- name: Install 'virt-list-filesystems' utility for viewing vdisk filesystems
+  become: yes
+  apt:
+    state: present
+    name: libguestfs-tools
+
 - name: Install 'bridge-utils' for creating Linux Ethernet bridges
   become: yes
   apt:

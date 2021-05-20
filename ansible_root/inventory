@@ -6,7 +6,7 @@ all:
       ansible_host: 10.3.236.137
       ansible_python_interpreter: /usr/bin/python3
       ansible_user: ubuntu
-    lenovo:
+    mmlenovo:
       ansible_connection: local
       ansible_host: 127.0.0.1
     kali:
@@ -28,7 +28,7 @@ dns_servers:
 
 dns_clients:
   hosts:
-    lenovo:
+    mmlenovo:
     mmhp:
 
 hacker_vms:

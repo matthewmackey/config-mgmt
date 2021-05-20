@@ -1,3 +1,4 @@
 ---
 resolvconf_nameservers:
   - 1.1.1.1
+resolvconf_ndots: 1

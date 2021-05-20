@@ -40,3 +40,12 @@
 {% for nameserver in resolvconf_nameservers %}
 nameserver {{ nameserver }}
 {% endfor %}
+
+{% if resolvconf_search_domains is defined %}
+search {{ resolvconf_search_domains }}
+{% endif %}
+
+{% if resolvconf_ndots is defined %}
+options ndots:{{ resolvconf_ndots }}
+{% endif %}
+

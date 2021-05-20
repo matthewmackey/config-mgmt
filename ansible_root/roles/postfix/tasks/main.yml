@@ -28,3 +28,10 @@
     update_cache: yes
     cache_valid_time: 3600
 
+- name: Setup main.cf file that will work w/ local Gitlab instance
+  file:
+    src: main.cf.j2
+    dest: /etc/postfix/main.cf
+    owner: root
+    group: root
+    mode: '0644'

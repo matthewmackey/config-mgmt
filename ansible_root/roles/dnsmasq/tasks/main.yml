@@ -16,11 +16,6 @@
     mode: 0644
     owner: root
     group: root
-
-- name: Ensure dnsmasq service is enabled & restarted after config update
-  become: yes
-  service:
-    name: dnsmasq
-    state: restarted
-    enabled: yes
+  notify:
+    - dnsmasq-enable-restart
 

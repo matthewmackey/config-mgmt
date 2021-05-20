@@ -1,0 +1,8 @@
+---
+- name: dnsmasq-enable-restart
+  become: yes
+  service:
+    name: dnsmasq
+    state: restarted
+    enabled: yes
+

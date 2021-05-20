@@ -1,5 +1,6 @@
 ---
 - name: Set postfix main mailer type debconf selection
+  become: yes
   debconf:
     name: postfix
     question: postfix/main_mailer_type
@@ -7,6 +8,7 @@
     vtype: select
 
 - name: Set postfix mailname debconf selection
+  become: yes
   debconf:
     name: postfix
     question: postfix/mailname
@@ -14,6 +16,7 @@
     vtype: string
 
 - name: Set postfix destinations debconf selection
+  become: yes
   debconf:
     name: postfix
     question: postfix/destinations
@@ -22,16 +25,26 @@
     vtype: string
 
 - name: Install postfix package & related utilities
+  become: yes
   apt:
     name: mailutils
     state: present
     update_cache: yes
     cache_valid_time: 3600
 
+- name: Ensure postfix service is enabled
+  become: yes
+  service:
+    name: postfix
+    enabled: yes
+
 - name: Setup main.cf file that will work w/ local Gitlab instance
-  file:
+  become: yes
+  template:
     src: main.cf.j2
     dest: /etc/postfix/main.cf
     owner: root
     group: root
     mode: '0644'
+  notify: postfix-restart
+

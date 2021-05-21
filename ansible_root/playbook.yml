@@ -8,13 +8,14 @@
     # - name: common
     #- name: docker
     #- name: epson_scanner
+    - name: go
     #- name: hacker
     #- name: mmackey
     # - name: qemu-kvm
+    # - name: resolvconf
     #- name: sudoers
     #- name: virtual_machines
     # - name: vim
-    - name: resolvconf
 
 #- name: Setup managed resolv.conf on DNS clients
   #hosts: dns_clients

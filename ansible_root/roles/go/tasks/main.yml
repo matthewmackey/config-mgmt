@@ -3,16 +3,33 @@
 #   - https://golang.org/dl/
 - name: Download Go binary tarball
   get_url:
-    url: https://golang.org/dl/go1.15.2.linux-amd64.tar.gz
-    dest: "{{ downloads_srv_dir }}/go1.15.2.linux-amd64.tar.gz"
-    checksum: sha256:b49fda1ca29a1946d6bb2a5a6982cf07ccd2aba849289508ee0f9918f6bb4552
+    url: "https://golang.org/dl/{{ go_tarball_filename }}"
+    dest: "{{ go_downloaded_tarball_file }}"
+    checksum: "{{ go_tarball_checksum }}"
 
-- name: Unarchive Go binary tarball to /usr/local
+- name: Make version-specific Go directory in /usr/local
+  file:
+    state: directory
+    dest: /usr/local/go-{{ go_version }}
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Unarchive Go binary tarball to /usr/local/go-{{ go_version }}
   become: yes
   unarchive:
-    src: "{{ downloads_srv_dir }}/go1.15.2.linux-amd64.tar.gz"
-    dest: /usr/local
+    src: "{{ go_downloaded_tarball_file }}"
+    dest: /usr/local/go-{{ go_version }}
     remote_src: yes
+    extra_opts: ["--strip-components=1"]
   args:
-    creates: /usr/local/go/bin
+    creates: /usr/local/go/{{ go_version }}/bin/go
+
+- name: Update /usr/local/go symlink to point to /usr/local/go-{{ go_version }}
+  file:
+    state: link
+    src: /usr/local/go-{{ go_version }}
+    dest: /usr/local/go
+    owner: root
+    group: root
 

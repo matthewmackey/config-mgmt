@@ -1,0 +1,3 @@
+ruby_rbenv_dir: "{{ home_dir }}/.rbenv"
+ruby_rbenv_version: master
+ruby_ruby_build_version: master

@@ -2,17 +2,17 @@
 - name: Configure Lenovo Ubuntu 20.04 laptop (locally)
   hosts: mmlenovo
   connection: local
-  become: yes
   roles:
     #- name: awscli
     # - name: common
     #- name: docker
     #- name: epson_scanner
-    - name: go
+    # - name: go
     #- name: hacker
     #- name: mmackey
     # - name: qemu-kvm
     # - name: resolvconf
+    - name: ruby
     #- name: sudoers
     #- name: virtual_machines
     # - name: vim

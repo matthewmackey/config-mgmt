@@ -10,9 +10,29 @@
   args:
     creates: "{{ ruby_rbenv_dir }}/src/realpath.o"
 
-- name: Install `rbenv-build` as `rbenv` plugin
+- name: Install `ruby-build` as `rbenv` plugin
   git:
     repo: https://github.com/rbenv/ruby-build.git
     dest: "{{ ruby_rbenv_dir }}/plugins/ruby-build"
     version: "{{ ruby_ruby_build_version }}"
 
+# Per: https://github.com/rbenv/ruby-build/wiki#suggested-build-environment
+- name: Install `ruby-build` dependencies for building Ruby versions
+  become: yes
+  apt:
+    state: present
+    name:
+      - autoconf
+      - bison
+      - build-essential
+      - libdb-dev
+      - libffi-dev
+      - libgdbm6
+      - libgdbm-dev
+      - libncurses5-dev
+      - libreadline6-dev
+      - libssl-dev
+      - libyaml-dev
+      - zlib1g-dev
+    cache_valid_time: 3600
+    update_cache: yes

@@ -1,4 +1,7 @@
 ---
+#-------------------------------------------------------------------
+# Common
+#-------------------------------------------------------------------
 - name: Install Hacker "Common" packages
   become: yes
   apt:
@@ -6,15 +9,54 @@
     name: "{{ hacker_packages_common }}"
     cache_valid_time: 3600
     update_cache: yes
+  tags:
+    - hacker_common
 
-- name: Install Hacker "Archives" packages
+#-------------------------------------------------------------------
+# Tools
+#-------------------------------------------------------------------
+- name: Install Hacker "Tools" packages
   become: yes
   apt:
     state: present
-    name: "{{ hacker_packages_archives }}"
+    name: "{{ hacker_packages_tools }}"
     cache_valid_time: 3600
     update_cache: yes
+  tags:
+    - hacker_tools
 
+- name: Install Hacker "Tools" Snaps
+  become: yes
+  snap:
+    state: present
+    name: "{{ hacker_snaps_tools }}"
+  tags:
+    - hacker_tools
+
+#-------------------------------------------------------------------
+# Pentest
+#-------------------------------------------------------------------
+- name: Install Hacker "Pentest" packages
+  become: yes
+  apt:
+    state: present
+    name: "{{ hacker_packages_pentest }}"
+    cache_valid_time: 3600
+    update_cache: yes
+  tags:
+    - hacker_pentest
+
+- name: Install Hacker "Pentest" Snaps
+  become: yes
+  snap:
+    state: present
+    name: "{{ hacker_snaps_pentest }}"
+  tags:
+    - hacker_pentest
+
+#-------------------------------------------------------------------
+# MISC
+#-------------------------------------------------------------------
 - name: Install Hacker "Forensics" packages
   become: yes
   apt:
@@ -22,14 +64,8 @@
     name: "{{ hacker_packages_forensics }}"
     cache_valid_time: 3600
     update_cache: yes
-
-- name: Install Hacker "Net" packages
-  become: yes
-  apt:
-    state: present
-    name: "{{ hacker_packages_net }}"
-    cache_valid_time: 3600
-    update_cache: yes
+  tags:
+    - hacker_forensics
 
 - name: Install Hacker "Reverse Engineering" packages
   become: yes
@@ -38,21 +74,21 @@
     name: "{{ hacker_packages_reverse_engr }}"
     cache_valid_time: 3600
     update_cache: yes
+  tags:
+    - hacker_reverse_eng
 
-- name: Install Hacker Snaps
-  become: yes
-  snap:
-    state: present
-    name: "{{ hacker_snaps }}"
+# - name: Install Hacker Snaps in --classic mode
+#   become: yes
+#   snap:
+#     state: present
+#     name: "{{ hacker_snaps_classic }}"
+#     classic: yes
 
-- name: Install Hacker Snaps in --classic mode
-  become: yes
-  snap:
-    state: present
-    name: "{{ hacker_snaps_classic }}"
-    classic: yes
-
+#-------------------------------------------------------------------
+# Burp Suite
+#-------------------------------------------------------------------
 - import_tasks: burp.yml
   tags:
     - burp
   when: hacker_install_burp
+

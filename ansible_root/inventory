@@ -1,6 +1,7 @@
 ---
 all:
   hosts:
+    aws:
     cake:
       ansible_ssh_private_key_file: /home/mmackey/.ssh/ansible-id_rsa
       ansible_host: 10.3.236.137

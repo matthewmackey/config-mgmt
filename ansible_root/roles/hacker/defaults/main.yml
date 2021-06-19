@@ -2,52 +2,69 @@
 hacker_install_burp: no
 
 #-------------------------------------------------------------------------------
-# PACKAGES
+# PACKAGES / SNAPS
 #-------------------------------------------------------------------------------
 hacker_packages_common:
   - ack-grep
-  - bluez-hcidump
+  - curl
+  - fd-find
+  - fzf
   - git
-  - hashcash
   - htop
   - jq
-  - mysql-client
-  - stow
+  - p7zip-full
+  - ripgrep
   - tmux
   - tree
+  - wget
   - xclip
+  - xsel
 
-hacker_packages_archives:
-  - p7zip-full
+hacker_packages_tools:
+  - ascii
+
+hacker_snaps_tools:
+  - amass
+  - john-the-ripper
+
+hacker_packages_pentest:
+  - arping
+  - arp-scan
+  - iputils-ping
+  - iputils-tracepath
+  - mysql-client
+  - net-tools
+  - nikto
+  - nmap
+  - tshark
+  - whois
+
+hacker_snaps_pentest: []
 
 hacker_packages_forensics:
   - binwalk
   - foremost
   - steghide
 
-hacker_packages_net:
-  - arping
-  - curl
-  - iputils-ping
-  - iputils-tracepath
-  - net-tools
-  - nmap
-  - tshark
-  - wget
-  - whois
-  - wireshark
-
 hacker_packages_reverse_engr:
   - fs-uae
   - fs-uae-launcher
 
-#-------------------------------------------------------------------------------
-# SNAPS
-#-------------------------------------------------------------------------------
-hacker_snaps:
-  - amass
-  - john-the-ripper
-  - postman
-
 hacker_snaps_classic: []
+
+# UNUSED
+hacker_packages_ctf:
+  - hashcash
+
+# UNUSED
+hacker_packages_radio:
+  - bluez-hcidump
+
+# UNUSED
+hacker_packages_net_gui:
+  - wireshark
+
+# UNUSED
+hacker_snaps_gui:
+  - postman
 

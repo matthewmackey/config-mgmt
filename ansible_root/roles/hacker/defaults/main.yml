@@ -1,5 +1,6 @@
 ---
 hacker_tools_dir: "{{ home_dir }}/tools"
+hacker_tools_bin_dir: "{{ hacker_tools_dir }}/bin"
 hacker_install_burp: no
 
 #-------------------------------------------------------------------------------

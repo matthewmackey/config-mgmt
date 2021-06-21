@@ -36,6 +36,7 @@ hacker_vms:
   hosts:
     aws:
     kali:
+    mmlenovo:
     mmhacker:
     mmhp:
 

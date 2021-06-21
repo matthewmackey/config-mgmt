@@ -1,8 +1,8 @@
 ---
-- name: Create ~/tools directory
+- name: Create tools and tools/bin directories
   file:
     state: directory
-    dest: "{{ hacker_tools_dir }}"
+    dest: "{{ hacker_tools_bin_dir }}"
     owner: "{{ username }}"
     group: "{{ username }}"
     mode: 0755
@@ -35,6 +35,17 @@
     snap:
       state: present
       name: "{{ hacker_snaps_tools }}"
+
+
+#-------------------------------------------------------------------
+# Wordlists / Data
+#-------------------------------------------------------------------
+- name: Install "SecLists"
+  git:
+    repo: 'https://github.com/danielmiessler/SecLists.git'
+    version: '2021.2'
+    dest: "{{ hacker_tools_dir }}/SecLists"
+
 
 #-------------------------------------------------------------------
 # Pentest
@@ -73,7 +84,7 @@
     file:
       state: link
       src: "{{ hacker_tools_dir }}/exploitdb/searchsploit"
-      dest: /usr/local/bin/searchsploit
+      dest: "{{ hacker_tools_bin_dir }}/searchsploit"
 
 #-------------------------------------------------------------------
 # MISC

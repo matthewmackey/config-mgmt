@@ -7,8 +7,6 @@
   apt:
     state: present
     name: "{{ hacker_packages_common }}"
-    cache_valid_time: 3600
-    update_cache: yes
   tags:
     - hacker_common
 
@@ -20,8 +18,6 @@
   apt:
     state: present
     name: "{{ hacker_packages_tools }}"
-    cache_valid_time: 3600
-    update_cache: yes
   tags:
     - hacker_tools
 
@@ -41,8 +37,6 @@
   apt:
     state: present
     name: "{{ hacker_packages_pentest }}"
-    cache_valid_time: 3600
-    update_cache: yes
   tags:
     - hacker_pentest
 
@@ -57,32 +51,21 @@
 #-------------------------------------------------------------------
 # MISC
 #-------------------------------------------------------------------
-- name: Install Hacker "Forensics" packages
-  become: yes
-  apt:
-    state: present
-    name: "{{ hacker_packages_forensics }}"
-    cache_valid_time: 3600
-    update_cache: yes
-  tags:
-    - hacker_forensics
-
-- name: Install Hacker "Reverse Engineering" packages
-  become: yes
-  apt:
-    state: present
-    name: "{{ hacker_packages_reverse_engr }}"
-    cache_valid_time: 3600
-    update_cache: yes
-  tags:
-    - hacker_reverse_eng
-
-# - name: Install Hacker Snaps in --classic mode
+# - name: Install Hacker "Forensics" packages
 #   become: yes
-#   snap:
+#   apt:
 #     state: present
-#     name: "{{ hacker_snaps_classic }}"
-#     classic: yes
+#     name: "{{ hacker_packages_forensics }}"
+#   tags:
+#     - hacker_forensics
+
+# - name: Install Hacker "Reverse Engineering" packages
+#   become: yes
+#   apt:
+#     state: present
+#     name: "{{ hacker_packages_reverse_engr }}"
+#   tags:
+#     - hacker_reverse_eng
 
 #-------------------------------------------------------------------
 # Burp Suite

@@ -6,12 +6,15 @@ hacker_install_burp: no
 #-------------------------------------------------------------------------------
 hacker_packages_common:
   - ack-grep
+  - bzip2
   - curl
   - fd-find
   - fzf
   - git
+  - gzip
   - htop
   - jq
+  - pigz
   - p7zip-full
   - ripgrep
   - tmux
@@ -19,6 +22,7 @@ hacker_packages_common:
   - wget
   - xclip
   - xsel
+  - xz-utils
 
 hacker_packages_tools:
   - ascii

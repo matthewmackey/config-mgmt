@@ -9,7 +9,7 @@
     #- hptower
     #- docker
     #- server
-    - dnsmasq
+    #- dnsmasq
     #- qemu-kvm
     # - virtual_machines
       #    - xrdp

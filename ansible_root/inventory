@@ -34,8 +34,10 @@ dns_clients:
 
 hacker_vms:
   hosts:
+    aws:
     kali:
     mmhacker:
+    mmhp:
 
 local_vms:
   hosts:

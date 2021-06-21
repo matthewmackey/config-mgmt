@@ -1,0 +1,3 @@
+---
+username: vagrant
+home_dir: /home/{{ username }}

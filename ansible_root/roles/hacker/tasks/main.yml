@@ -1,4 +1,12 @@
 ---
+- name: Create ~/tools directory
+  file:
+    state: directory
+    dest: "{{ hacker_tools_dir }}"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: 0755
+
 #-------------------------------------------------------------------
 # Common
 #-------------------------------------------------------------------
@@ -13,40 +21,59 @@
 #-------------------------------------------------------------------
 # Tools
 #-------------------------------------------------------------------
-- name: Install Hacker "Tools" packages
-  become: yes
-  apt:
-    state: present
-    name: "{{ hacker_packages_tools }}"
-  tags:
-    - hacker_tools
+- name: Install Hacker "Tools"
+  tags: hacker_tools
+  block:
+  - name: Install Hacker "Tools" packages
+    become: yes
+    apt:
+      state: present
+      name: "{{ hacker_packages_tools }}"
 
-- name: Install Hacker "Tools" Snaps
-  become: yes
-  snap:
-    state: present
-    name: "{{ hacker_snaps_tools }}"
-  tags:
-    - hacker_tools
+  - name: Install Hacker "Tools" Snaps
+    become: yes
+    snap:
+      state: present
+      name: "{{ hacker_snaps_tools }}"
 
 #-------------------------------------------------------------------
 # Pentest
 #-------------------------------------------------------------------
-- name: Install Hacker "Pentest" packages
-  become: yes
-  apt:
-    state: present
-    name: "{{ hacker_packages_pentest }}"
-  tags:
-    - hacker_pentest
+- name: Install Hacker "Pentest" tools
+  tags: hacker_pentest
+  block:
+  - name: Install Hacker "Pentest" packages
+    become: yes
+    apt:
+      state: present
+      name: "{{ hacker_packages_pentest }}"
 
-- name: Install Hacker "Pentest" Snaps
-  become: yes
-  snap:
-    state: present
-    name: "{{ hacker_snaps_pentest }}"
-  tags:
-    - hacker_pentest
+  - name: Install Hacker "Pentest" Snaps
+    become: yes
+    snap:
+      state: present
+      name: "{{ hacker_snaps_pentest }}"
+
+  - name: Install metasploit via their omnibus installer
+    shell: |
+      curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > /tmp/msfinstall && \
+      chmod 755 /tmp/msfinstall && \
+      /tmp/msfinstall
+    args:
+      creates: /usr/bin/msfconsole
+
+  - name: Download exploitdb project w/ searchsploit tools
+    git:
+      repo: 'https://github.com/offensive-security/exploitdb.git'
+      version: '2021-06-19'
+      dest: "{{ hacker_tools_dir }}/exploitdb"
+
+  - name: Symlink searchsploit into PATH from exploitdb project
+    become: yes
+    file:
+      state: link
+      src: "{{ hacker_tools_dir }}/exploitdb/searchsploit"
+      dest: /usr/local/bin/searchsploit
 
 #-------------------------------------------------------------------
 # MISC

@@ -12,6 +12,7 @@
 
     # TODO: move to a role (required by golang role)
     - name: Setup downloads/srv directory
+      become_user: "{{ username }}"
       file:
         state: directory
         name: "{{ downloads_srv_dir }}"
@@ -19,4 +20,5 @@
   roles:
     - role: go
     - role: hacker
+    - role: docker
 

@@ -1,7 +1,11 @@
-#---
-#- import_tasks: docker.yml
-#- import_tasks: compose.yml
+---
+- import_tasks: docker.yml
+  tags:
+    - docker_cli
 
+- import_tasks: compose.yml
+  tags:
+    - docker_compose
 
 # No great documentation for installing/configuring the credential helpers, but
 # see here:
@@ -24,6 +28,7 @@
     creates: /usr/local/bin/docker-credential-pass
 
 - name: Set `docker-credential-pass` to be executable & proper user/group
+  become: yes
   file:
     path: /usr/local/bin/docker-credential-pass
     owner: root

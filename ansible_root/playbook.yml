@@ -12,7 +12,8 @@
     #- name: mmackey
     # - name: qemu-kvm
     # - name: resolvconf
-    - name: ruby
+    - name: python
+    # - name: ruby
     #- name: sudoers
     #- name: virtual_machines
     # - name: vim

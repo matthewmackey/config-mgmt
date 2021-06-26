@@ -8,27 +8,7 @@
   become: yes
   apt:
     state: present
-    name: "{{ item }}"
-  loop:
-    - build-essential
-    - curl
-    - git
-    - libbz2-dev
-    - libffi-dev
-    - liblzma-dev
-    - libncurses5-dev
-    - libncursesw5-dev
-    - libreadline-dev
-    - libsqlite3-dev
-    - libssl-dev
-    - llvm
-    - python-openssl
-    - tk-dev
-    - wget
-    - xz-utils
-    - zlib1g-dev
-  tags:
-    - pkg_install
+    name: "{{ python_python_build_deps }}"
 
 # TODO: change to https URL
 - name: Download python-build (part of pyenv)
@@ -47,7 +27,7 @@
     creates: /usr/local/bin/python-build
 
 - name: Create ~/pythons directory to store python-build Pythons
-  become: yes
+  become_user: "{{ username }}"
   file:
     state: directory
     path: "{{ home_dir }}/pythons"
@@ -60,10 +40,10 @@
   shell: ./python-build 3.8.2 "{{ home_dir }}/pythons/3.8.2"
   args:
     chdir: /usr/local/bin
-    creates: "{{ home_dir }}/pythons/3.8.2/bin/python"
+    creates: "{{ home_dir }}/pythons/3.8.2/bin/python3"
 
 - name: Set Python 3.8.2 as the 'default' Python with a symlink
-  become: yes
+  become_user: "{{ username }}"
   file:
     state: link
     src: "{{ home_dir }}/pythons/3.8.2"
@@ -76,4 +56,4 @@
   shell: ./pip3 install virtualenvwrapper
   args:
     chdir: "{{ home_dir }}/pythons/default/bin"
-    creates: "{{ home_dir }}/pythons/default/bin/virtualenvwrapper"
+    creates: "{{ home_dir }}/pythons/default/bin/virtualenvwrapper.sh"

@@ -21,10 +21,6 @@
   tags:
     - dotnet
 
-#- import_tasks: python.yml
-  #tags:
-    #- python
-
 - import_tasks: ansible_setup.yml  # Must be done after 'python.yml'
   tags:
     - ansible

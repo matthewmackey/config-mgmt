@@ -9,6 +9,8 @@
       apt:
         update_cache: yes
         cache_valid_time: 360
+      tags:
+        - always
 
     # TODO: move to a role (required by golang role)
     - name: Setup downloads/srv directory
@@ -16,9 +18,24 @@
       file:
         state: directory
         name: "{{ downloads_srv_dir }}"
+      tags:
+        - always
 
   roles:
+
     - role: go
+      tags:
+        - go
+
     - role: hacker
+      tags:
+        - hacker
+
     - role: docker
+      tags:
+        - docker
+
+    - role: python
+      tags:
+        - python
 

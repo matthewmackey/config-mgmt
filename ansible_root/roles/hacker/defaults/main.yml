@@ -29,9 +29,9 @@ hacker_packages_common:
 hacker_packages_tools:
   - ascii
 
-hacker_snaps_tools:
-  - amass
-  - john-the-ripper
+hacker_snaps_tools: []
+  # - amass
+  # - john-the-ripper
 
 hacker_packages_pentest:
   - arping
@@ -47,16 +47,14 @@ hacker_packages_pentest:
 
 hacker_snaps_pentest: []
 
-hacker_packages_forensics:
-  - binwalk
-  - foremost
-  - steghide
+# hacker_packages_forensics:
+#   - binwalk
+#   - foremost
+#   - steghide
 
-hacker_packages_reverse_engr:
-  - fs-uae
-  - fs-uae-launcher
-
-hacker_snaps_classic: []
+# hacker_packages_reverse_engr:
+#   - fs-uae
+#   - fs-uae-launcher
 
 # UNUSED
 hacker_packages_ctf:

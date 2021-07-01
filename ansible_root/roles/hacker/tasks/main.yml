@@ -15,8 +15,7 @@
   apt:
     state: present
     name: "{{ hacker_packages_common }}"
-  tags:
-    - hacker_common
+  tags: hacker_common
 
 #-------------------------------------------------------------------
 # Tools
@@ -24,6 +23,7 @@
 - name: Install Hacker "Tools"
   tags: hacker_tools
   block:
+
   - name: Install Hacker "Tools" packages
     become: yes
     apt:
@@ -41,6 +41,7 @@
 # Wordlists / Data
 #-------------------------------------------------------------------
 - name: Install "SecLists"
+  tags: hacker_seclists
   git:
     repo: 'https://github.com/danielmiessler/SecLists.git'
     version: '2021.2'
@@ -53,6 +54,7 @@
 - name: Install Hacker "Pentest" tools
   tags: hacker_pentest
   block:
+
   - name: Install Hacker "Pentest" packages
     become: yes
     apt:

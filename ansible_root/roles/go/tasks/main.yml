@@ -8,6 +8,7 @@
     checksum: "{{ go_tarball_checksum }}"
 
 - name: Make version-specific Go directory in /usr/local
+  become: yes
   file:
     state: directory
     dest: /usr/local/go-{{ go_version }}
@@ -26,6 +27,7 @@
     creates: /usr/local/go/{{ go_version }}/bin/go
 
 - name: Update /usr/local/go symlink to point to /usr/local/go-{{ go_version }}
+  become: yes
   file:
     state: link
     src: /usr/local/go-{{ go_version }}

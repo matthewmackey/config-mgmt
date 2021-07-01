@@ -34,7 +34,7 @@ dns_clients:
 
 hacker_vms:
   hosts:
-    aws:
+    hackpipe:
     kali:
     mmlenovo:
     mmhacker:

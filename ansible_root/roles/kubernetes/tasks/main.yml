@@ -1,0 +1,8 @@
+---
+- name: Download & install `minikube` executable
+  become: yes
+  get_url:
+    url:  'https://github.com/kubernetes/minikube/releases/download/v1.21.0/minikube-linux-amd64'
+    dest: /usr/local/bin/minikube
+    checksum: 'sha256:5d423a00a24fdfbb95627a3fadbf58540fc4463be2338619257c529f93cf061b'
+    mode: 0755

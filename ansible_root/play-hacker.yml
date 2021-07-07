@@ -39,3 +39,7 @@
       tags:
         - python
 
+    - role: kubernetes
+      tags:
+        - kubernetes
+

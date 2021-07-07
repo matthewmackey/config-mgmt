@@ -19,6 +19,7 @@ hacker_packages_common:
   - pigz
   - p7zip-full
   - ripgrep
+  - sqlite3
   - tmux
   - tree
   - wget

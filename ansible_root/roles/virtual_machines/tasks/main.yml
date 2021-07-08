@@ -52,6 +52,18 @@
 #-------------------------------------------------------------------------------
 # Virtualbox - Virtualbox provider works out of box with Vagrant
 #-------------------------------------------------------------------------------
+# `gcc` seems to be needed by VirtualBox to be able to build kernel modules
+# needed to run the virtualization software
+- name: Install dependencies required by VirtualBox to build its kernel modules
+  apt:
+    name: gcc
+    state: present
+  vars:
+    packages:
+      - gcc
+      - make
+      - perl
+
 - name: Download Oracle VirtualBox .deb SHA-256 checksum
   shell: |
     curl -s "{{ virtualbox_hash_url }}" \

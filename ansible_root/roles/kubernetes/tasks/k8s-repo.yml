@@ -1,0 +1,26 @@
+- name: Install packages that allow apt to be used over HTTPS
+  become: yes
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  vars:
+    packages:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+
+- name: Install Google Cloud public signing key for Kubernetes apt packages
+  become: yes
+  apt_key:
+    state: present
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+
+- name: Add Kubernetes apt repo
+  become: yes
+  apt_repository:
+    state: present
+    repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+    filename: kubernetes.list
+    update_cache: yes

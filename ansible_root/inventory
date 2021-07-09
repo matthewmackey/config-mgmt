@@ -54,3 +54,10 @@ k8s_cluster:
     k8s_master:
     k8s_node_1:
 
+k8s_masters:
+  hosts:
+    k8s_master:
+
+k8s_nodes:
+  hosts:
+    k8s_node_1:

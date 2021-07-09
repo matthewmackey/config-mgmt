@@ -1,4 +1,34 @@
 ---
+# BASED OFF:
+# - https://kubernetes.io/blog/2019/03/15/kubernetes-setup-using-ansible-and-vagrant/
+
+- name: Disable swap as required by `kubelet`
+  block:
+  - name: Remove swapfile from /etc/fstab
+    mount:
+      name: "{{ item }}"
+      fstype: swap
+      state: absent
+    with_items:
+      - swap
+      - none
+  - name: Disable swap on system
+    command: swapoff -a
+    when: ansible_swaptotal_mb > 0
+  become: yes
+
+# https://kubernetes.io/docs/setup/production-environment/container-runtimes/#docker
+- name: Configure Docker to use systemd to manage cgroups
+  become: yes
+  template:
+    src: docker_daemon.json.j2
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - docker_daemon_reload_restart
+
 - name: Install Google Cloud public signing key for Kubernetes APT packages
   become: yes
   apt_key:
@@ -42,4 +72,20 @@
     line: KUBELET_EXTRA_ARGS=--node-ip={{ k8s_kubelet_node_ip }}
     backup: yes
     create: yes
+  register: set_kubelet_node_ip
 
+- name: Restart `kubelet` service to pickup EXTRA_ARGS settings
+  become: yes
+  systemd:
+    name: kubelet
+    state: restarted
+    daemon_reload: yes
+  when: set_kubelet_node_ip.changed
+
+- name: Include tasks for master nodes
+  include_tasks: master.yml
+  when: "'k8s_masters' in group_names"
+
+- name: Include tasks for worker nodes
+  include_tasks: node.yml
+  when: "'k8s_nodes' in group_names"

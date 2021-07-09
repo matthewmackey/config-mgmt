@@ -1,0 +1,18 @@
+common_packages:
+  - ack-grep
+  - bzip2
+  - curl
+  - fd-find
+  - fzf
+  - git
+  - gzip
+  - htop
+  - jq
+  - pass
+  - p7zip-full
+  - ripgrep
+  - tmux
+  - tree
+  - vim
+  - wget
+  - xz-utils

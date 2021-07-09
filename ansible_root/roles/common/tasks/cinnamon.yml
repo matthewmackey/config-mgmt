@@ -1,6 +1,0 @@
----
-- name: Install 'sox' dependency for Cinnamon Pomodoro applet
-  become: true
-  apt:
-    name: sox
-    state: present

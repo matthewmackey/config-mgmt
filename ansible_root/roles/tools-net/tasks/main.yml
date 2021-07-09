@@ -1,0 +1,6 @@
+- name: Install common network tools
+  become: yes
+  apt:
+    name: "{{ tools_net_packages }}"
+    state: present
+

@@ -1,0 +1,7 @@
+tools_net_packages:
+  - bind9-dnsutils
+  - iputils-ping
+  - iputils-tracepath
+  - netcat-openbsd
+  - net-tools
+

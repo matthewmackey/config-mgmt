@@ -1,4 +1,35 @@
-- import_tasks: k8s-repo.yml
-- import_tasks: k8s-tools.yml
-- import_tasks: k8s-node.yml
+---
+- name: Install Google Cloud public signing key for Kubernetes APT packages
+  become: yes
+  apt_key:
+    state: present
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
 
+- name: Add Kubernetes APT repo
+  become: yes
+  apt_repository:
+    state: present
+    repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+    filename: kubernetes.list
+    update_cache: yes
+
+- name: Install kubernetes common packages
+  become: yes
+  apt:
+    name: "{{ kubernetes_packages }}"
+    state: present
+  vars:
+    kubernetes_packages:
+      - kubeadm
+      - kubectl
+      - kubelet
+
+- name: Hold kubernetes packages at current version
+  become: yes
+  dpkg_selections:
+    name: "{{ item }}"
+    selection: hold
+  with_items:
+      - kubeadm
+      - kubectl
+      - kubelet

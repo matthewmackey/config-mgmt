@@ -7,12 +7,10 @@ all:
       ansible_host: 10.3.236.137
       ansible_python_interpreter: /usr/bin/python3
       ansible_user: ubuntu
-    mmlenovo:
-      ansible_connection: local
-      ansible_host: 127.0.0.1
-      ansible_python_interpreter: /usr/bin/python3
     kali:
       ansible_python_interpreter: /usr/bin/python3
+    k8s-master:
+    k8s-node-1:
     mmhacker:
       ansible_python_interpreter: /usr/bin/python3
     mmhp:
@@ -20,6 +18,10 @@ all:
       sudoers_nopass_users:
         - mmachaj
         - mmackey
+    mmlenovo:
+      ansible_connection: local
+      ansible_host: 127.0.0.1
+      ansible_python_interpreter: /usr/bin/python3
     nymbusaz:
     postfix:
       ansible_python_interpreter: /usr/bin/python3
@@ -46,4 +48,9 @@ local_vms:
     cake:
     mmhacker:
     postfix:
+
+k8s_cluster:
+  hosts:
+    k8s-master:
+    k8s-node-1:
 

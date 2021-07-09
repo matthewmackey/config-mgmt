@@ -1,0 +1,7 @@
+- name: Configure Kubernetes cluster
+  hosts: k8s_cluster
+  roles:
+    - role: tools_common
+    - role: tools_net
+    - role: docker
+    - role: kubernetes

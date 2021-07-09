@@ -9,8 +9,8 @@ all:
       ansible_user: ubuntu
     kali:
       ansible_python_interpreter: /usr/bin/python3
-    k8s-master:
-    k8s-node-1:
+    k8s_master:
+    k8s_node_1:
     mmhacker:
       ansible_python_interpreter: /usr/bin/python3
     mmhp:
@@ -51,6 +51,6 @@ local_vms:
 
 k8s_cluster:
   hosts:
-    k8s-master:
-    k8s-node-1:
+    k8s_master:
+    k8s_node_1:
 

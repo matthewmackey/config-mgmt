@@ -5,3 +5,4 @@
     - role: tools_net
     - role: docker
     - role: kubernetes
+      tags: k8s

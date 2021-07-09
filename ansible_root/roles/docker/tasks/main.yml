@@ -1,36 +1,60 @@
 ---
-- import_tasks: docker.yml
-  tags:
-    - docker_cli
-
-- import_tasks: compose.yml
-  tags:
-    - docker_compose
-
-# No great documentation for installing/configuring the credential helpers, but
-# see here:
-#   - https://github.com/docker/docker-credential-helpers/issues/102
-- name: Download `docker-credential-pass` credential helper
-  get_url:
-    url: "https://github.com/docker/docker-credential-helpers/releases/download/v0.6.3/docker-credential-pass-v0.6.3-amd64.tar.gz"
-    dest: "{{ downloads_dir }}/docker-credential-pass-v0.6.3-amd64.tar.gz"
-    owner: "{{ username }}"
-    group: "{{ username }}"
-
-# Archive only contains a single, binary file
-- name: Unarchive `docker-credential-pass` binary tarball to /usr/local
+- name: Install Docker's APT repository key
   become: yes
-  unarchive:
-    src: "{{ downloads_dir }}/docker-credential-pass-v0.6.3-amd64.tar.gz"
-    dest: /usr/local/bin
-    remote_src: yes
-  args:
-    creates: /usr/local/bin/docker-credential-pass
+  apt_key:
+    state: present
+    url: https://download.docker.com/linux/ubuntu/gpg
 
-- name: Set `docker-credential-pass` to be executable & proper user/group
+- name: Add Docker's APT repository for Ubuntu 18.04
   become: yes
-  file:
-    path: /usr/local/bin/docker-credential-pass
-    owner: root
-    group: root
-    mode: "0755"
+  apt_repository:
+    state: present
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
+    update_cache: yes
+  when:
+    - ansible_facts['distribution'] == "Ubuntu"
+    - ansible_facts['distribution_major_version'] == "18"
+
+- name: Add Docker's APT repository for Ubuntu 20.04
+  become: yes
+  apt_repository:
+    state: present
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+    update_cache: yes
+  when:
+    - ansible_facts['distribution'] == "Ubuntu"
+    - ansible_facts['distribution_major_version'] == "20"
+
+- name: Install Docker from Docker's Ubuntu package repo
+  become: yes
+  apt:
+    state: present
+    name: "{{ docker_packages }}"
+  vars:
+    docker_packages:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+
+- name: Create 'docker' group
+  become: yes
+  group:
+    state: present
+    name: docker
+    system: yes
+
+- name: Add users to 'docker' group so they can run Docker commands w/o sudo
+  become: yes
+  user:
+    state: present
+    name: "{{ item }}"
+    append: yes
+    groups:
+      - docker
+  loop: "{{ docker_docker_users }}"
+
+- name: Enable Docker service to run on startup
+  become: yes
+  service:
+    name: docker
+    enabled: yes

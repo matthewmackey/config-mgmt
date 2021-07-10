@@ -1,10 +1,5 @@
 ---
-# - name: Setup kubeconfig for current user
-#   become: yes
-#   command: "{{ item }}"
-#   with_items:
-#    - "mkdir -p /home/{{ u }}/.kube"
-#    - "cp /etc/kubernetes/admin.conf /home/{{ u }}/.kube/config"
-#    - "chown {{ u }}:{{ u }} /home/{{ u }}/.kube/config"
-#   vars:
-#     u: "{{ ansible_user_id }}"
+- name: Pull control plane images used by `kubeadm`
+  become: yes
+  shell:
+    cmd: kubeadm config images pull

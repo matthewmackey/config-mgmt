@@ -64,28 +64,6 @@
       - kubectl
       - kubelet
 
-- name: Set node IP for `kubelet` service
-  become: yes
-  lineinfile:
-    state: present
-    path: /etc/default/kubelet
-    line: KUBELET_EXTRA_ARGS=--node-ip={{ k8s_kubelet_node_ip }}
-    backup: yes
-    create: yes
-  register: set_kubelet_node_ip
-
-- name: Restart `kubelet` service to pickup EXTRA_ARGS settings
-  become: yes
-  systemd:
-    name: kubelet
-    state: restarted
-    daemon_reload: yes
-  when: set_kubelet_node_ip.changed
-
 - name: Include tasks for master nodes
   include_tasks: master.yml
   when: "'k8s_masters' in group_names"
-
-- name: Include tasks for worker nodes
-  include_tasks: node.yml
-  when: "'k8s_nodes' in group_names"

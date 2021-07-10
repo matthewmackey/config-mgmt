@@ -1,8 +1,19 @@
-- name: Configure Kubernetes cluster
+- name: Configure Kubernetes nodes
   hosts: k8s_cluster
-  roles:
-    - role: tools_common
-    - role: tools_net
-    - role: docker
-    - role: kubernetes
-      tags: k8s
+  tasks:
+
+    - name: Install common tools
+      import_role:
+        name: tools_common
+
+    - name: Install common network tools
+      import_role:
+        name: tools_net
+
+    - name: Setup Docker
+      import_role:
+        name: docker
+
+    - name: Setup Kubernetes
+      import_role:
+        name: kubernetes

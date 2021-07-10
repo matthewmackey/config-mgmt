@@ -5,9 +5,3 @@
     dest: /usr/local/bin/minikube
     checksum: 'sha256:5d423a00a24fdfbb95627a3fadbf58540fc4463be2338619257c529f93cf061b'
     mode: 0755
-
-- name: Install `kubectl` tool
-  become: yes
-  apt:
-    name: kubectl
-    state: present

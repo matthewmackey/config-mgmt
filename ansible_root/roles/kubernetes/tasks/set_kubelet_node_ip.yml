@@ -1,0 +1,11 @@
+---
+- name: Set node IP for `kubelet` service
+  become: yes
+  lineinfile:
+    state: present
+    path: /etc/default/kubelet
+    line: KUBELET_EXTRA_ARGS=--node-ip={{ k8s_kubelet_node_ip }}
+    backup: yes
+    create: yes
+  notify: kubelet_daemon_reload_restart
+

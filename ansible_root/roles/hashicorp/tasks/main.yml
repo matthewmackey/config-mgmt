@@ -1,0 +1,34 @@
+---
+- name: Install Hashicorp's APT repository key
+  become: yes
+  apt_key:
+    state: present
+    url: https://apt.releases.hashicorp.com/gpg
+
+- name: Add Hashicorp's APT repository for Ubuntu 20.04
+  become: yes
+  apt_repository:
+    state: present
+    repo: deb [arch=amd64] https://apt.releases.hashicorp.com focal main
+    update_cache: yes
+  when:
+    - ansible_facts['distribution'] == "Ubuntu"
+    - ansible_facts['distribution_major_version'] == "20"
+
+- name: Install `packer`
+  become: yes
+  apt:
+    name: packer
+    state: present
+
+- name: Install `terraform`
+  become: yes
+  apt:
+    name: terraform
+    state: present
+
+- name: Install `vault`
+  become: yes
+  apt:
+    name: vault
+    state: present

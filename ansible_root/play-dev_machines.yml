@@ -1,0 +1,5 @@
+---
+- name: Configure development machines
+  hosts: dev_machines
+  roles:
+    - hashicorp

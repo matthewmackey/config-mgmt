@@ -1,0 +1,7 @@
+- name: Set kubernetes node IPs
+  hosts: k8s_cluster
+  tasks:
+    - name: Set node IP for `kubelet`
+      import_role:
+        name: kubernetes
+        tasks_from: set_kubelet_node_ip

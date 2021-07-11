@@ -1,5 +1,8 @@
 ---
 - name: Configure development machines
   hosts: dev_machines
-  roles:
-    - hashicorp
+  tasks:
+    - import_role:
+        name: python
+    - import_role:
+        name: hashicorp

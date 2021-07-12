@@ -2,7 +2,19 @@
 - name: Configure development machines
   hosts: dev_machines
   tasks:
+
+    - import_role:
+        name: tools_common
+      tags: common
+
+    - import_role:
+        name: tools_net
+      tags: common
+
     - import_role:
         name: python
+      tags: python
+
     - import_role:
         name: hashicorp
+      tags: hashicorp

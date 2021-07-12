@@ -3,5 +3,8 @@ tools_net_packages:
   - iputils-ping
   - iputils-tracepath
   - netcat-openbsd
+  # netstat
   - net-tools
+  - tcptraceroute
+  - traceroute
 

@@ -2,11 +2,11 @@
 dnsmasq_default_domain: mmloc
 dnsmasq_listen_addresses:
   - 127.0.0.1
-  - 192.168.1.253
+  - 192.168.86.253
 dnsmasq_domains_to_wildcard:
   - domain: mmlen
-    ip: 192.168.1.152
+    ip: 192.168.86.31
   - domain: mmloc
-    ip: 192.168.1.253
+    ip: 192.168.86.253
   - domain: pitt.devtosys.net
-    ip: 192.168.1.253
+    ip: 192.168.86.253

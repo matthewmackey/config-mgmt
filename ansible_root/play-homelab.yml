@@ -1,0 +1,18 @@
+---
+- name: Setup DNS server for lab
+  hosts: dns_servers
+  tasks:
+    - name: Setup dnsmasq to manage local DNS
+      import_role:
+        name: dnsmasq
+      tags:
+        - dnsmasq
+
+- name: Configure DNS resolution for lab clients
+  hosts: dns_clients
+  tasks:
+    - name: Manage resolv.conf for lab clients
+      import_role:
+        name: resolvconf
+      tags:
+        - resolvconf

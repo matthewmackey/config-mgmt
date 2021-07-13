@@ -16,5 +16,9 @@
       tags: python
 
     - import_role:
+        name: google_cloud_sdk
+      tags: google
+
+    - import_role:
         name: hashicorp
       tags: hashicorp

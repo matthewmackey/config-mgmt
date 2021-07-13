@@ -1,0 +1,23 @@
+---
+- name: Install Google Cloud public signing key for APT packages
+  become: yes
+  apt_key:
+    state: present
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+
+- name: Add Google Cloud SDK APT repo
+  become: yes
+  apt_repository:
+    state: present
+    repo: "deb https://packages.cloud.google.com/apt cloud-sdk main"
+    filename: google-cloud-sdk.list
+    update_cache: yes
+
+- name: Install Google Cloud SDK packages
+  become: yes
+  apt:
+    name: "{{ google_cloud_sdk_packages }}"
+    state: present
+  vars:
+    google_cloud_sdk_packages:
+      - google-cloud-sdk

@@ -13,7 +13,7 @@ all:
     k8s_node_1:
     mmhacker:
       ansible_python_interpreter: /usr/bin/python3
-    mmhp:
+    tower:
       ansible_python_interpreter: /usr/bin/python3
       sudoers_nopass_users:
         - mmachaj
@@ -29,16 +29,16 @@ all:
 dev_machines:
   hosts:
     mmlenovo:
-    mmhp:
+    tower:
 
 dns_servers:
   hosts:
-    mmhp:
+    tower:
 
 dns_clients:
   hosts:
     mmlenovo:
-    mmhp:
+    tower:
 
 hacker_vms:
   hosts:
@@ -46,7 +46,7 @@ hacker_vms:
     kali:
     mmlenovo:
     mmhacker:
-    mmhp:
+    tower:
 
 local_vms:
   hosts:

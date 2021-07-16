@@ -1,0 +1,14 @@
+#!/bin/bash
+
+NAME=$1
+IP=$2
+
+if [ -z "$NAME" -o -z "$IP" ]; then
+  printf "You must provide: <NAME> <IP>\n"
+  exit 1
+fi
+
+# SEE: https://doc.powerdns.com/authoritative/manpages/pdnsutil.1.html
+#   -> add-record ZONE NAME TYPE [TTL] CONTENT
+
+ssh tower 'sudo -u pdns pdnsutil add-record lab. '$NAME' A 300 '$IP

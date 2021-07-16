@@ -1,0 +1,50 @@
+---
+# SEE: https://doc.powerdns.com/authoritative/guides/basic-database.html
+
+- name: Install PowerDNS server
+  become: yes
+  apt:
+    name: pdns-server
+    state: present
+
+- name: Install PowerDNS server sqlite3 backend
+  become: yes
+  apt:
+    name: pdns-backend-sqlite3
+    state: present
+
+- name: Install sqlite3
+  become: yes
+  apt:
+    name: sqlite3
+    state: present
+
+- name: Test if PowerDNS sqlite3 database file exists
+  stat:
+    path: "{{ dnsmasq_powerdns_sqlite3_db }}"
+  register: powerdns_sqlite3_db
+
+- name: Create initial PowerDNS sqlite3 database if it doesn't exist
+  become: yes
+  shell:
+    sqlite3 {{ dnsmasq_powerdns_sqlite3_db }} < /usr/share/doc/pdns-backend-sqlite3/schema.sqlite3.sql
+  when: not powerdns_sqlite3_db.stat.exists
+
+- name: Ensure `pdns` user/group owns files in /var/lib/powerdns
+  file:
+    path: /var/lib/powerdns
+    state: directory
+    owner: pdns
+    group: pdns
+    recurse: yes
+
+- name: Setup initial pdns.conf
+  become: yes
+  template:
+    src: pdns.conf.j2
+    dest: /etc/powerdns/pdns.conf
+    mode: 0644
+    owner: root
+    group: root
+  notify:
+    - powerdns-enable-restart

@@ -1,12 +1,12 @@
 ---
-dnsmasq_default_domain: mmloc
+dnsmasq_default_domain: lab
+
 dnsmasq_listen_addresses:
   - 127.0.0.1
   - 192.168.86.253
-dnsmasq_domains_to_wildcard:
-  - domain: mmlen
-    ip: 192.168.86.31
-  - domain: mmloc
-    ip: 192.168.86.253
-  - domain: pitt.devtosys.net
-    ip: 192.168.86.253
+
+dnsmasq_powerdns_managed_domains:
+  - lab
+
+dnsmasq_powerdns_webserver_address: 192.168.86.253
+dnsmasq_powerdns_webserver_allow_from: "192.168.86.0/24,127.0.0.1,::1"

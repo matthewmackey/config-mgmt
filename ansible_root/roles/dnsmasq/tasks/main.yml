@@ -2,6 +2,11 @@
 #-------------------------------------------------------------------------------
 # SEE: https://kifarunix.com/configure-local-dns-server-using-dnsmasq-on-ubuntu-20-04/
 #-------------------------------------------------------------------------------
+
+- name: Install & Setup PowerDNS
+  include_tasks: powerdns.yml
+  tags: powerdns
+
 - name: Install dnsmasq from APT
   become: yes
   apt:
@@ -18,4 +23,3 @@
     group: root
   notify:
     - dnsmasq-enable-restart
-

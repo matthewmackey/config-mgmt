@@ -6,3 +6,10 @@
     state: restarted
     enabled: yes
 
+- name: powerdns-enable-restart
+  become: yes
+  service:
+    name: pdns
+    state: restarted
+    enabled: yes
+

@@ -3,3 +3,25 @@ dnsmasq_default_domain: ""
 dnsmasq_domains_to_wildcard: []
 dnsmasq_listen_addresses:
   - 127.0.0.1
+
+dnsmasq_powerdns_local_address: 127.0.0.1
+dnsmasq_powerdns_local_port: 9553
+
+dnsmasq_powerdns_sqlite3_db: /var/lib/powerdns/pdns.sqlite3
+dnsmasq_powerdns_launch: gsqlite3
+
+dnsmasq_powerdns_managed_domains: []
+
+# Must specifically be string 'yes' or 'no' otherwise Ansible converts to the
+# string True/False
+dnsmasq_powerdns_api: 'yes'
+dnsmasq_powerdns_api_key: pdnsmmapikey
+
+# Must specifically be string 'yes' or 'no' otherwise Ansible converts to the
+# string True/False
+dnsmasq_powerdns_webserver: 'yes'
+dnsmasq_powerdns_webserver_address: 127.0.0.1
+dnsmasq_powerdns_webserver_port: 9953
+dnsmasq_powerdns_webserver_allow_from: "127.0.0.1,::1"
+
+

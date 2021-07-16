@@ -1,4 +1,8 @@
 #jinja2: lstrip_blocks: "True"
+#------------------------------------------------------------------------------
+# START - Ansible Managed
+#------------------------------------------------------------------------------
+
 # An 'interface' or 'listen-address' configuration option is required b/c
 # otherwise it seems like dnsmasq tries to bind to port 53
 # of the *.*.*.1 IP address of ALL interfaces. This causes a failure b/c
@@ -47,10 +51,21 @@ address=/{{ d.domain }}/{{ d.ip }}
 #address=
 {% endif %}
 
+# Set PowerDNS as authoritative nameserver for specified domains
+{% if dnsmasq_powerdns_managed_domains|length > 0 %}
+  {% for d in dnsmasq_powerdns_managed_domains %}
+server=/{{ d }}/{{ dnsmasq_powerdns_local_address }}#{{ dnsmasq_powerdns_local_port }}
+  {% endfor %}
+{% else %}
+#server=
+{% endif %}
+
 # Size of cached domain names
 cache-size=1000
 
-
+#------------------------------------------------------------------------------
+# END - Ansible Managed
+#------------------------------------------------------------------------------
 
 ################################################################################
 # DEFAULT dnsmasq.conf content installed by APT is BELOW

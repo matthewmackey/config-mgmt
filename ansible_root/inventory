@@ -54,15 +54,15 @@ local_vms:
     mmhacker:
     postfix:
 
+k8s_masters:
+  hosts:
+    mmmaster:
+
+k8s_workers:
+  hosts:
+    mmworker:
+
 mmcluster:
   hosts:
     mmmaster:
     mmworker:
-
-k8s_masters:
-  hosts:
-    k8s_master:
-
-k8s_nodes:
-  hosts:
-    k8s_node_1:

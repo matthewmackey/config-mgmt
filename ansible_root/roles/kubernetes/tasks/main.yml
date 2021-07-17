@@ -66,4 +66,8 @@
 
 - name: Include tasks for master nodes
   include_tasks: master.yml
-  when: "'k8s_masters' in group_names"
+  when: k8s_is_master
+
+- name: Include tasks for worker nodes
+  include_tasks: worker.yml
+  when: k8s_is_worker

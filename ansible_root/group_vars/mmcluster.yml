@@ -1,1 +1,6 @@
-kubelet_bind_interface: enp0s8
+---
+k8s_kubelet_bind_interface: enp0s8
+
+api_server_ip: "{{ ansible_enp0s8.ipv4.address }}"
+cluster_pod_network_cidr: 10.100.0.0/16
+cluster_service_cidr: 10.200.0.0/24

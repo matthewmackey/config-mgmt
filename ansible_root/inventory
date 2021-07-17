@@ -10,7 +10,7 @@ all:
     kali:
       ansible_python_interpreter: /usr/bin/python3
     mmmaster:
-    mmworker:
+    mmworker0:
     mmhacker:
       ansible_python_interpreter: /usr/bin/python3
     tower:
@@ -54,15 +54,16 @@ local_vms:
     mmhacker:
     postfix:
 
-k8s_masters:
-  hosts:
-    mmmaster:
-
-k8s_workers:
-  hosts:
-    mmworker:
-
 mmcluster:
   hosts:
     mmmaster:
-    mmworker:
+    mmworker0:
+
+mmmasters:
+  hosts:
+    mmmaster:
+
+mmworkers:
+  hosts:
+    mmworker0:
+

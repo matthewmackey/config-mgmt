@@ -1,0 +1,1 @@
+k8s_worker_pod_network_cidr: 10.100.0.0/24

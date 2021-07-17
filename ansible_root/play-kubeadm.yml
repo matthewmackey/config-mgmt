@@ -1,0 +1,77 @@
+---
+- name: Configure kubelet IP addresses to be bridged IP address for all nodes
+  hosts: mmcluster
+  tasks:
+    - name: Set node IP for `kubelet`
+      import_role:
+        name: kubernetes
+        tasks_from: set_kubelet_node_ip
+
+
+- name: Start cluster with kubeadm
+  hosts: mmmasters
+  vars:
+    user: vagrant
+  tasks:
+    - name: Initialize the Kubernetes cluster using kubeadm
+      become: yes
+      shell: |
+        kubeadm init \
+          --apiserver-advertise-address="{{ api_server_ip }}" \
+          --apiserver-cert-extra-sans="{{ api_server_ip }}" \
+          --pod-network-cidr="{{ cluster_pod_network_cidr }}" \
+          --service-cidr="{{ cluster_service_cidr }}"
+      args:
+        creates: /etc/kubernetes/admin.conf
+
+    - name: Create ~/.kube directory
+      file:
+        state: directory
+        path: /home/{{ user }}/.kube
+        owner: "{{ user }}"
+        group: "{{ user }}"
+        mode: '0755'
+
+    - name: Copy kubeconfig for cluster to ~/.kube for kubectl
+      become: yes
+      copy:
+        src: /etc/kubernetes/admin.conf
+        dest: /home/{{ user }}/.kube/config
+        owner: "{{ user }}"
+        group: "{{ user }}"
+        mode: '0755'
+        remote_src: yes
+
+    - name: Generate join command
+      command: kubeadm token create --print-join-command
+      register: join_command
+
+    - name: Copy join command to local file
+      delegate_to: localhost
+      copy:
+        content: "{{ join_command.stdout_lines[0] }}"
+        dest: ./join-command.sh
+
+
+- name: Configure worker nodes
+  hosts: mmworkers
+  tasks:
+    - name: Copy the join command to the worker nodes
+      copy:
+        src: ./join-command.sh
+        dest: /tmp/join-command.sh
+        mode: '0755'
+
+    - name: Run the join command to join the cluster
+      become: yes
+      shell:
+        cmd: /tmp/join-command.sh
+
+
+- name: Set CNI as network add-on
+  hosts: mmworkers
+  tasks:
+    - name: Run kubernetes role to install CNI as network add-on
+      import_role:
+        name: kubernetes
+        tasks_from: set_cni_as_network_addon

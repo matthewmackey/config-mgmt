@@ -4,7 +4,7 @@
   lineinfile:
     state: present
     path: /etc/default/kubelet
-    line: KUBELET_EXTRA_ARGS=--node-ip={{ k8s_kubelet_node_ip }}
+    line: KUBELET_EXTRA_ARGS=--node-ip={{ vars['ansible_' ~ kubelet_bind_interface].ipv4.address }}
     backup: yes
     create: yes
   notify: kubelet_daemon_reload_restart

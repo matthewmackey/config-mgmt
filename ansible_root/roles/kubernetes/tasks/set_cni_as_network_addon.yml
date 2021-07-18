@@ -20,8 +20,9 @@
 #-------------------------------------------------------------------------------
 # In order for master nodes to consider themselves to have had their container
 # runtime's network add-on successfully activated (and thus have themselves
-# appear as "Ready"), it seems that all you need to do is (a) create the
-# /etc/cni/net.d directory, and then (b) restart the kubelet service
+# appear as "Ready"), it seems that all you need to do is (a) create a CNI
+# loopback interface in the /etc/cni/net.d directory, and then (b) restart the
+# kubelet service
 #-------------------------------------------------------------------------------
 - name: Create CNI config file directory
   become: yes
@@ -42,8 +43,8 @@
     group: root
     mode: '0644'
   notify: kubelet_restart
-  when: k8s_is_worker
 
+# Only for worker nodes so they can run pods
 - name: Setup bridge CNI interface configuration
   become: yes
   template:

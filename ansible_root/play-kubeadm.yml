@@ -66,10 +66,12 @@
       become: yes
       shell:
         cmd: /tmp/join-command.sh
+      args:
+        creates: /etc/kubernetes/kubelet.conf
 
 
 - name: Set CNI as network add-on
-  hosts: mmworkers
+  hosts: mmcluster
   tasks:
     - name: Run kubernetes role to install CNI as network add-on
       import_role:

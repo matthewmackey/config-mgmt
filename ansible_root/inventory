@@ -54,6 +54,16 @@ local_vms:
     mmhacker:
     postfix:
 
+# General Group for k8s masters
+k8s_masters:
+  hosts:
+    mmmaster:
+
+# General Group for k8s workers
+k8s_workers:
+  hosts:
+    mmworker0:
+
 mmcluster:
   hosts:
     mmmaster:
@@ -66,4 +76,3 @@ mmmasters:
 mmworkers:
   hosts:
     mmworker0:
-

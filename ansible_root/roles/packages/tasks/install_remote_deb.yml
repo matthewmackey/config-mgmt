@@ -1,4 +1,19 @@
 ---
+#-------------------------------------------------------------------------------
+# HOW TO USE:
+#
+# - name: Install remote .debs
+#   include_role:
+#     name: packages
+#     tasks_from: install_remote_deb.yml
+#   vars:
+#     pkg_deb_name: "{{ item.name }}"
+#     pkg_deb_url: "{{ item.url }}"
+#     pkg_deb_filename: "{{ item.filename }}"
+#     pkg_deb_checksum: "{{ item.checksum | default('') }}"
+#   loop: "{{ LIST_OF_REMOTE_DEBS }}"
+#
+#-------------------------------------------------------------------------------
 - name: Download .deb file w/ checksum ({{ pkg_deb_name }})
   get_url:
     url: "{{ pkg_deb_url }}"

@@ -1,5 +1,8 @@
 common_packages:
   - ack-grep
+  # Issue: can't enable until some issue is fixed w/ package unless I can learn
+  # how to do some force flag for just this package in Ansible
+  #  - bat
   - bzip2
   - curl
   - fd-find
@@ -18,3 +21,10 @@ common_packages:
   - vim
   - wget
   - xz-utils
+  - zsh
+
+common_remote_debs:
+  - name: duf-0.6.2
+    url: https://github.com/muesli/duf/releases/download/v0.6.2/duf_0.6.2_linux_amd64.deb
+    filename: duf_0.6.2_linux_amd64.deb
+    checksum: sha256:a73f3190aa0e6e78d3ee55d51f680df8c8fa2045ee1ac862c4afe662af19759f

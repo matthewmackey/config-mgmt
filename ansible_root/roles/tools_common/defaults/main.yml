@@ -11,8 +11,10 @@ common_packages:
   - pass
   - p7zip-full
   - ripgrep
+  - silversearcher-ag
   - tmux
   - tree
+  - universal-ctags
   - vim
   - wget
   - xz-utils

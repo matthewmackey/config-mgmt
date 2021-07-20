@@ -1,0 +1,19 @@
+---
+- name: Download .deb file w/ checksum ({{ pkg_deb_name }})
+  get_url:
+    url: "{{ pkg_deb_url }}"
+    dest: "{{ downloads_srv_dir }}/{{ pkg_deb_filename }}"
+    checksum: "{{ pkg_deb_checksum }}"
+  when: pkg_deb_checksum is defined and pkg_deb_checksum != ""
+
+- name: Download .deb file w/o checksum ({{ pkg_deb_name }})
+  get_url:
+    url: "{{ pkg_deb_url }}"
+    dest: "{{ downloads_srv_dir }}/{{ pkg_deb_filename }}"
+  when: pkg_deb_checksum is not defined or pkg_deb_checksum == ""
+
+- name: Install package via .deb ({{ pkg_deb_name }})
+  become: yes
+  apt:
+    state: present
+    deb: "{{ downloads_srv_dir }}/{{ pkg_deb_filename }}"

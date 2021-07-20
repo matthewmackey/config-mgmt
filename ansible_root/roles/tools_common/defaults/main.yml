@@ -6,7 +6,6 @@ common_packages:
   - bzip2
   - curl
   - fd-find
-  - fzf
   - git
   - gzip
   - htop

@@ -1,13 +1,13 @@
 ---
-- name: Install common utility packages
-  become: yes
-  apt:
-    name: "{{ common_packages }}"
-    state: present
-    update_cache: yes
-    cache_valid_time: 3600
+# - name: Install common utility packages
+#   become: yes
+#   apt:
+#     name: "{{ common_packages }}"
+#     state: present
+#     update_cache: yes
+#     cache_valid_time: 3600
 
-- name: Install common tools via remote .debs
+- name: Install common tools from remote .debs
   include_role:
     name: packages
     tasks_from: install_remote_deb.yml
@@ -17,3 +17,17 @@
     pkg_deb_filename: "{{ item.filename }}"
     pkg_deb_checksum: "{{ item.checksum | default('') }}"
   loop: "{{ common_remote_debs }}"
+
+- name: Install common tools from remote archives
+  include_role:
+    name: packages
+    tasks_from: install_remote_archive.yml
+  vars:
+    pkg_archive_name: "{{ item.name }}"
+    pkg_archive_version: "{{ item.version }}"
+    pkg_archive_url: "{{ item.url }}"
+    pkg_archive_filename: "{{ item.filename }}"
+    pkg_archive_checksum: "{{ item.checksum | default('') }}"
+    pkg_archive_binary_path: "{{ item.binary_path }}"
+    pkg_archive_install_dir: "{{ item.install_dir }}"
+  loop: "{{ common_remote_archives }}"

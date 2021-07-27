@@ -7,7 +7,7 @@
 # packages nor any .deb packages.
 #------------------------------------------------------------------------------
 
-TMP_PYTHON_DIR=~/ansible_tmp_python
+TMP_PYTHON_DIR=/tmp/ansible_tmp_python
 TMP_PYTHON_BIN=${TMP_PYTHON_DIR}/bin/python3.8
 GET_PIP_SCRIPT=${TMP_PYTHON_DIR}/get-pip.py
 
@@ -44,7 +44,7 @@ make_tmp_python_from_system_python() {
   echo "Creating tmp python dir at: [${TMP_PYTHON_DIR}]"
 
   mkdir -p ${TMP_PYTHON_DIR}/{bin,lib}
-  cp -r /usr/lib/python3.8             ${TMP_PYTHON_DIR}/lib 
+  cp -r /usr/lib/python3.8             ${TMP_PYTHON_DIR}/lib
   cp -r /usr/lib/python3/dist-packages ${TMP_PYTHON_DIR}/lib/python3.8/
   cp    /usr/bin/python3.8             ${TMP_PYTHON_BIN}
 }
@@ -91,7 +91,7 @@ create_ansible_bin_script() {
 
   cat > ${ANSIBLE_BIN_SCRIPT} <<END
 #!/bin/sh
-PYTHONPATH=${PYTHONPATH} ${TMP_PYTHON_DIR}/local/bin/ansible-playbook
+PYTHONPATH=${PYTHONPATH} ${TMP_PYTHON_DIR}/local/bin/ansible-playbook "\$@"
 END
 
   chmod +x ${ANSIBLE_BIN_SCRIPT}
@@ -163,4 +163,3 @@ main() {
 }
 
 main
-

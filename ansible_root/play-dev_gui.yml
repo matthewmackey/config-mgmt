@@ -1,0 +1,8 @@
+---
+- name: Configure development machines for Desktop
+  hosts: dev_machines
+  tasks:
+
+    - import_role:
+        name: tools_common_gui
+      tags: common_gui

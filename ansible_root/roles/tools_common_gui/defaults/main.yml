@@ -1,0 +1,6 @@
+tools_common_gui_packages:
+  - parcellite
+  - synapse
+  - xclip
+  - wireshark
+tools_common_gui_remote_debs: []

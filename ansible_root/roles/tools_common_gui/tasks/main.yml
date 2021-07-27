@@ -1,0 +1,19 @@
+---
+- name: Install common packages for Desktop enivronments
+  become: yes
+  apt:
+    name: "{{ tools_common_gui_packages }}"
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install common toolsfor Desktop enivronments from remote .debs
+  include_role:
+    name: packages
+    tasks_from: install_remote_deb.yml
+  vars:
+    pkg_deb_name: "{{ item.name }}"
+    pkg_deb_url: "{{ item.url }}"
+    pkg_deb_filename: "{{ item.filename }}"
+    pkg_deb_checksum: "{{ item.checksum | default('') }}"
+  loop: "{{ tools_common_gui_remote_debs }}"

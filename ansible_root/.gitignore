@@ -1,3 +1,7 @@
 cake-playbook.yml
-localinventory
 vault.yml
+
+# Files for local inventory and host vars for a "local" host that I don't want
+# committed to VCS
+local
+host_vars/local

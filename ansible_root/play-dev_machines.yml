@@ -22,3 +22,30 @@
     - import_role:
         name: hashicorp
       tags: hashicorp
+
+    - import_role:
+        name: docker
+      tags: docker
+
+    - import_role:
+        name: docker_compose
+      tags: docker_compose
+
+    - import_role:
+        name: docker_credentials_helper
+      tags: docker_credentials
+
+    - import_role:
+        name: qemu-kvm
+      tags: kvm
+
+    - include_role:
+        name: kubernetes
+        tasks_from: repos.yml
+
+    - name: Install kubectl
+      become: yes
+      apt:
+        name: kubectl
+        state: present
+      tags: kubernetes

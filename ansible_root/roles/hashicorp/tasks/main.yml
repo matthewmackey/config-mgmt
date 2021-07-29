@@ -4,6 +4,11 @@
   apt_key:
     state: present
     url: https://apt.releases.hashicorp.com/gpg
+  tags:
+    - packer
+    - terraform
+    - vagrant
+    - vault
 
 - name: Add Hashicorp's APT repository for Ubuntu 20.04
   become: yes
@@ -14,21 +19,35 @@
   when:
     - ansible_facts['distribution'] == "Ubuntu"
     - ansible_facts['distribution_major_version'] == "20"
+  tags:
+    - packer
+    - terraform
+    - vault
 
 - name: Install `packer`
   become: yes
   apt:
     name: packer
     state: present
+  tags: packer
 
 - name: Install `terraform`
   become: yes
   apt:
     name: terraform
     state: present
+  tags: terraform
+
+- name: Install `vagrant`
+  become: yes
+  apt:
+    name: vagrant
+    state: present
+  tags: vagrant
 
 - name: Install `vault`
   become: yes
   apt:
     name: vault
     state: present
+  tags: vault

@@ -1,4 +1,6 @@
+---
 - name: Ensure '/etc/sudoers' has include for '/etc/sudoers.d'
+  become: yes
   lineinfile:
     state: present
     line: "#includedir /etc/sudoers.d"

@@ -12,6 +12,10 @@
       tags: common
 
     - import_role:
+        name: sudoers
+      tags: sudoers
+
+    - import_role:
         name: python
       tags: python
 
@@ -42,10 +46,15 @@
     - include_role:
         name: kubernetes
         tasks_from: repos.yml
+        apply:
+          tags:
+             - kubectl
+      tags:
+        - always
 
     - name: Install kubectl
       become: yes
       apt:
         name: kubectl
         state: present
-      tags: kubernetes
+      tags: kubectl

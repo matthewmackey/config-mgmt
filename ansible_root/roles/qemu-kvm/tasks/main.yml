@@ -12,6 +12,7 @@
     name: libvirt-daemon-system
 
 - name: Ensure 'libvirtd' service is enabled and running
+  become: yes
   service:
     name: libvirtd
     state: started
@@ -52,3 +53,40 @@
   apt:
     state: present
     name: libosinfo-bin
+
+- name: Register if `vagrant`is installed
+  shell: which vagrant
+  register: vagrant_installed_check
+  tags: vagrant_libvirt
+
+- name: Register if `vagrant-libvirt` plugin is installed
+  shell: vagrant plugin list | grep vagrant-libvirt
+  register: vagrant_libvirt_plugin_installed
+  tags: vagrant_libvirt
+
+# Vagrant Libvirt Plugin
+# DO NOT USE the vagrant-libvirt APT package to instal the plugin; it doesn't
+# seem to work and/or will conflict with this method here
+# SEE: https://github.com/vagrant-libvirt/vagrant-libvirt
+- name: Install `vagrant-libvirt` plugin dependencies
+  become: yes
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - ebtables
+      - libguestfs-tools
+      - libvirt-dev
+      - libxml2-dev
+      - libxslt-dev
+      - ruby-dev
+      - zlib1g-dev
+  when: vagrant_installed_check.rc == 0 and vagrant_libvirt_plugin_installed.rc == 1
+  tags: vagrant_libvirt
+
+- name: Install `vagrant-libvirt` plugin
+  become: yes
+  shell: vagrant plugin install vagrant-libvirt
+  when: vagrant_installed_check.rc == 0 and vagrant_libvirt_plugin_installed.rc == 1
+  tags: vagrant_libvirt

@@ -1,5 +1,8 @@
 tools_common_gui_packages:
   - parcellite
+  - remmina
+  # Logitech Unifying Rx tool (CLI & GUI)
+  - solaar
   - synapse
   - xclip
   - wireshark

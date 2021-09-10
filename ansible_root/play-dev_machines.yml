@@ -16,6 +16,10 @@
       tags: sudoers
 
     - import_role:
+        name: go
+      tags: go
+
+    - import_role:
         name: python
       tags: python
 

@@ -9,7 +9,8 @@
 # NOTE: NM updates resolv.conf everytime the network connection changes, which
 # is why this is needed to deploy resolv.conf changes that persist even after
 # network connections changes OR reboots
-- name: Disable NetworkManager DNS so it won't overwrite /etc/resolv.conf
+- name: Disable NetworkManager DNS so it won't overwrite /etc/resolv.conf - dns setting
+  become: yes
   ini_file:
     state: present
     path: /etc/NetworkManager/NetworkManager.conf
@@ -17,6 +18,22 @@
     section: main
     option: dns
     value: none
+    owner: root
+    group: root
+    mode: 0644
+
+# NOTE: for some reason, even though the docs say that all that is needed is to
+# set dns=none in NetworkManager.conf, I have found that this setting also needs
+# to be set sometimes
+- name: Disable NetworkManager DNS so it won't overwrite /etc/resolv.conf - rc-manager setting
+  become: yes
+  ini_file:
+    state: present
+    path: /etc/NetworkManager/NetworkManager.conf
+    no_extra_spaces: yes
+    section: main
+    option: rc-manager
+    value: unmanaged
     owner: root
     group: root
     mode: 0644

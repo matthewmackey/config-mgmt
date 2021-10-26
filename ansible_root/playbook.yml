@@ -1,14 +1,12 @@
 ---
-- name: Configure Lenovo Ubuntu 20.04 laptop (locally)
+- name: Configure local machine
   hosts: local
   connection: local
   vars:
-    role_name: awsvpn
+    role: awsvpn
   tasks:
     - import_role:
-        name: "{{ role_name }}"
-      tags:
-        - "{{ role_name }}"
+        name: "{{ role }}"
   # roles:
     #- name: awscli
     # - name: common

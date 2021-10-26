@@ -16,6 +16,8 @@
   git:
     repo: "https://github.com/powerline/fonts.git"
     dest: /tmp/powerline-fonts
+  tags:
+    - vim-powerline
 
 - name: Run powerline install script to install fonts to ~/.local/share/fonts
   become_user: "{{ username }}"
@@ -24,6 +26,8 @@
     chdir: /tmp/powerline-fonts
     # Just picked a random font to test for install success
     creates: "{{ home_dir }}/.local/share/fonts/DejaVu\ Sans\ Mono\ for\ Powerline.ttf"
+  tags:
+    - vim-powerline
 
 #-------------------------------------------------------------------------------
 # YouCompleteMe plugin setup

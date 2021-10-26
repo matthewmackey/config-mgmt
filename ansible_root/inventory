@@ -9,6 +9,9 @@ all:
       ansible_user: ubuntu
     kali:
       ansible_python_interpreter: /usr/bin/python3
+    local:
+      ansible_connection: local
+      ansible_host: 127.0.0.1
     mmmaster:
     mmworker0:
     mmhacker:

@@ -1,8 +1,15 @@
 ---
 - name: Configure Lenovo Ubuntu 20.04 laptop (locally)
-  hosts: mmlenovo
+  hosts: local
   connection: local
-  roles:
+  vars:
+    role_name: awsvpn
+  tasks:
+    - import_role:
+        name: "{{ role_name }}"
+      tags:
+        - "{{ role_name }}"
+  # roles:
     #- name: awscli
     # - name: common
     #- name: docker
@@ -12,7 +19,7 @@
     #- name: mmackey
     # - name: qemu-kvm
     # - name: resolvconf
-    - name: python
+    # - name: python
     # - name: ruby
     #- name: sudoers
     #- name: virtual_machines

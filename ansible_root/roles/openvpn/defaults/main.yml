@@ -1,0 +1,3 @@
+---
+openvpn__easyrsa_user: ubuntu
+openvpn__easyrsa_dir: /home/{{ openvpn__easyrsa_user }}/easy-rsa

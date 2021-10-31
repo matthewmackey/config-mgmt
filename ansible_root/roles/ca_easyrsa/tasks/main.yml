@@ -1,0 +1,48 @@
+---
+- name: Install Easy-RSA
+  become: yes
+  become_user: root
+  apt:
+    name: easy-rsa
+    state: present
+
+- name: Create Easy-RSA PKI folder in home directory
+  file:
+    path: ~/easy-rsa
+    state: directory
+    mode: '0700'
+
+- name: Symlink Easy-RSA package files to Easy-RSA PKI folder
+  shell: |
+    ln -s /usr/share/easy-rsa/* ~/easy-rsa/
+  args:
+    creates: ~/easy-rsa/easyrsa
+
+- name: Initiailze the Easy-RSA PKI
+  shell: |
+    ./easyrsa init-pki
+  args:
+    chdir: ~/easy-rsa
+    creates: ~/easy-rsa/pki
+
+- name: Create 'vars' file for use in creating CA
+  template:
+    src: vars.j2
+    dest: ~/easy-rsa/vars
+
+- name: Create CA
+  shell: |
+    ./easyrsa build-ca nopass
+  args:
+    chdir: ~/easy-rsa
+    creates: ~/easy-rsa/pki/ca.crt
+  environment:
+    EASYRSA_BATCH: 1
+
+- name: Make ca.crt and ca.key files read-only to help prevent deletion
+  file:
+    path: "{{ item }}"
+    mode: '0400'
+  loop:
+    - ~/easy-rsa/pki/ca.crt
+    - ~/easy-rsa/pki/private/ca.key

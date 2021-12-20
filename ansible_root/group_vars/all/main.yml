@@ -9,6 +9,9 @@ drivers_dir: "{{ home_dir }}/downloads/drivers"
 
 ansible_bash_dir: "/home/{{ username }}/.local/ansible_bash"
 
+go_version: 1.17.5
+go_tarball_checksum: sha256:bd78114b0d441b029c8fe0341f4910370925a4d270a6a590668840675b0c653e
+
 nfs_mount_dir: /mnt/mmackey-sync
 nfs_mount_str: 192.168.1.253:/{{ nfs_mount_dir }}
 nfs_exports_str: "{{ nfs_mount_dir }} 192.168.1.0/24(rw,sync,no_subtree_check)"

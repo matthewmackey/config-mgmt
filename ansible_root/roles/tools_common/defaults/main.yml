@@ -4,6 +4,8 @@ common_packages:
   # how to do some force flag for just this package in Ansible
   #  - bat
   - bzip2
+  # Used for making cloud-init seed ISOs
+  - cloud-utils
   - curl
   - fd-find
   - git
@@ -21,6 +23,8 @@ common_packages:
   - universal-ctags
   - vim
   - wget
+  # Contains mkpasswd utility
+  - whois
   - xz-utils
   - zsh
 

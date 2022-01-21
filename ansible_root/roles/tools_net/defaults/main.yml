@@ -1,11 +1,13 @@
 ---
 tools_net_packages:
   - bind9-dnsutils
+  - httpie
   - iputils-ping
   - iputils-tracepath
   - netcat-openbsd
   # Provides: `netstat`
   - net-tools
+  - nmap
   - socat
   - tcptraceroute
   - traceroute

@@ -1,0 +1,40 @@
+---
+- name: Create ansible srv directory
+  become: yes
+  become_user: root
+  ansible.builtin.file:
+    state: directory
+    path: "{{ common__ansible_srv_dir }}"
+    mode: 0755
+    owner: "{{ common__user }}"
+    group: "{{ common__user }}"
+
+- name: Create ansible bin directory
+  become: yes
+  become_user: root
+  ansible.builtin.file:
+    state: directory
+    path: "{{ common__bin_dir }}"
+    mode: 0755
+    owner: "{{ common__user }}"
+    group: "{{ common__user }}"
+
+- name: Create ansible downloads directory
+  become: yes
+  become_user: root
+  ansible.builtin.file:
+    state: directory
+    path: "{{ common__downloads_dir }}"
+    mode: 0755
+    owner: "{{ common__user }}"
+    group: "{{ common__user }}"
+
+- name: Create ansible git directory
+  become: yes
+  become_user: root
+  ansible.builtin.file:
+    state: directory
+    path: "{{ common__git_dir }}"
+    mode: 0755
+    owner: "{{ common__user }}"
+    group: "{{ common__user }}"

@@ -1,6 +1,14 @@
 ---
-username: mmackey
+username: mmachaj
 home_dir: /home/{{ username }}
+
+common__ansible_srv_dir: /srv/ansible
+common__bin_dir: /srv/ansible/bin
+common__downloads_dir: /srv/ansible/downloads
+common__git_dir: /srv/ansible/git
+
+sudoers_nopass_users:
+  - mmachaj
 
 # TODO: replace one of these two variables since they ared dups
 downloads_dir: "{{ home_dir }}/downloads/srv"

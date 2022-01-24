@@ -1,0 +1,6 @@
+---
+- name: Bootstrap local machine for other playbooks to run
+  hosts: local
+  connection: local
+  roles:
+    - name: sudoers

@@ -142,6 +142,8 @@ PYTHONPATH=${PYTHONPATH} ${TMP_PYTHON_DIR}/bin/pip3.8 list -v
 To run ansible use:
 
 ${ANSIBLE_BIN_SCRIPT}
+
+You should run the bootstrap playbook first to setup sudoers access on your machine.
 END
 
 }

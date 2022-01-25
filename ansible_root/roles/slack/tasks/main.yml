@@ -1,0 +1,15 @@
+
+---
+- name: Install Slack remote .deb
+  include_role:
+    name: packages
+    tasks_from: install_remote_deb.yml
+  vars:
+    pkg_deb_name: "{{ item.name }}"
+    pkg_deb_url: "{{ item.url }}"
+    pkg_deb_filename: "{{ item.filename }}"
+    pkg_deb_checksum: "{{ item.checksum | default('') }}"
+  loop:
+    - name: slack
+      url: https://downloads.slack-edge.com/releases/linux/4.23.0/prod/x64/slack-desktop-4.23.0-amd64.deb
+      filename: slack-desktop-4.23.0-amd64.deb

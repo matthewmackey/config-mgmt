@@ -2,14 +2,21 @@
 - name: Configure local machine
   hosts: local
   connection: local
-  vars:
-    role: awsvpn
-  tasks:
-    - import_role:
-        name: "{{ role }}"
-  # roles:
+  # vars:
+  #   role: awsvpn
+  # tasks:
+  #   - import_role:
+  #       name: "{{ role }}"
+  roles:
+    - name: common
+    - name: kubectl
+    # - name: alacritty
+    # - name: google_cloud_sdk
+    # - name: rust
+    # - name: slack
+
+
     #- name: awscli
-    # - name: common
     #- name: docker
     #- name: epson_scanner
     # - name: go

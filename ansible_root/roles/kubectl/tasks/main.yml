@@ -1,0 +1,23 @@
+---
+- name: Install Google Cloud public signing key for Kubernetes APT packages
+  become: yes
+  become_user: root
+  ansible.builtin.apt_key:
+    state: present
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+
+- name: Add Kubernetes APT repo
+  become: yes
+  become_user: root
+  ansible.builtin.apt_repository:
+    state: present
+    repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+    filename: kubernetes.list
+    update_cache: yes
+
+- name: Install kubernetes common packages
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    name: kubectl
+    state: present

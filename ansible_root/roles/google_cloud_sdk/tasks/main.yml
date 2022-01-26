@@ -1,13 +1,15 @@
 ---
 - name: Install Google Cloud public signing key for APT packages
   become: yes
-  apt_key:
+  become_user: root
+  ansible.builtin.apt_key:
     state: present
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
 
 - name: Add Google Cloud SDK APT repo
   become: yes
-  apt_repository:
+  become_user: root
+  ansible.builtin.apt_repository:
     state: present
     repo: "deb https://packages.cloud.google.com/apt cloud-sdk main"
     filename: google-cloud-sdk.list
@@ -15,9 +17,27 @@
 
 - name: Install Google Cloud SDK packages
   become: yes
-  apt:
+  become_user: root
+  ansible.builtin.apt:
     name: "{{ google_cloud_sdk_packages }}"
     state: present
   vars:
     google_cloud_sdk_packages:
       - google-cloud-sdk
+
+- name: Download Google Cloud SQL Auth proxy binary
+  ansible.builtin.shell: |
+    wget -q https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O {{ common__bin_dir }}/cloud_sql_proxy
+  args:
+    creates: "{{ common__bin_dir }}/cloud_sql_proxy"
+
+- name: Symlink cloud_sql_proxy binary into /usr/local/bin
+  become: yes
+  become_user: root
+  ansible.builtin.file:
+    state: link
+    src: "{{ common__bin_dir }}/cloud_sql_proxy"
+    dest: /usr/local/bin/cloud_sql_proxy
+    owner: root
+    group: root
+    mode: 0755

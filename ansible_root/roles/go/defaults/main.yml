@@ -3,4 +3,4 @@ go_version: 1.16.4
 go_tarball_checksum: sha256:7154e88f5a8047aad4b80ebace58a059e36e7e2e4eb3b383127a28c711b4ff59
 go_arch: linux-amd64
 go_tarball_filename: "go{{ go_version }}.{{ go_arch }}.tar.gz"
-go_downloaded_tarball_file: "{{ downloads_srv_dir }}/{{ go_tarball_filename }}"
+go_downloaded_tarball_file: "{{ common__downloads_dir }}/{{ go_tarball_filename }}"

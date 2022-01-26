@@ -1,0 +1,5 @@
+---
+# This qemu-kvm role has a vagrant plugin so we want Hashicorp's vagrant
+# installed first
+dependencies:
+  - role: hashicorp

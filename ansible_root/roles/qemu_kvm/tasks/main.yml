@@ -1,67 +1,77 @@
----
+# ---
 - name: Install QEMU emulator for KVM hypervisor
   become: yes
-  apt:
+  become_user: root
+  ansible.builtin.apt:
     state: present
     name: qemu-kvm
 
 - name: Install 'libvirtd' daemon for managing VMs
   become: yes
-  apt:
+  become_user: root
+  ansible.builtin.apt:
     state: present
     name: libvirt-daemon-system
 
 - name: Ensure 'libvirtd' service is enabled and running
   become: yes
-  service:
+  become_user: root
+  ansible.builtin.service:
     name: libvirtd
     state: started
     enabled: yes
 
 - name: Install libvirt client tools
   become: yes
-  apt:
+  become_user: root
+  ansible.builtin.apt:
     state: present
     name: libvirt-clients
 
 - name: Install 'virt-manager' GUI for managing VMs
   become: yes
-  apt:
+  become_user: root
+  ansible.builtin.apt:
     state: present
     name: virt-manager
 
 - name: Install 'virt-viewer' utility for viewing graphical console of VMs
   become: yes
-  apt:
+  become_user: root
+  ansible.builtin.apt:
     state: present
     name: virt-viewer
 
 - name: Install 'virt-list-filesystems' utility for viewing vdisk filesystems
   become: yes
-  apt:
+  become_user: root
+  ansible.builtin.apt:
     state: present
     name: libguestfs-tools
 
 - name: Install 'bridge-utils' for creating Linux Ethernet bridges
   become: yes
-  apt:
+  become_user: root
+  ansible.builtin.apt:
     state: present
     name: bridge-utils
 
 - name: Install 'osinfo-query' tool for querying osinfo DB
   become: yes
-  apt:
+  become_user: root
+  ansible.builtin.apt:
     state: present
     name: libosinfo-bin
 
 - name: Register if `vagrant`is installed
-  shell: which vagrant
+  ansible.builtin.shell: which vagrant
   register: vagrant_installed_check
   tags: vagrant_libvirt
 
 - name: Register if `vagrant-libvirt` plugin is installed
-  shell: vagrant plugin list | grep vagrant-libvirt
+  ansible.builtin.shell: vagrant plugin list | grep vagrant-libvirt
   register: vagrant_libvirt_plugin_installed
+  ignore_errors: yes
   tags: vagrant_libvirt
 
 # Vagrant Libvirt Plugin
@@ -70,23 +80,27 @@
 # SEE: https://github.com/vagrant-libvirt/vagrant-libvirt
 - name: Install `vagrant-libvirt` plugin dependencies
   become: yes
-  apt:
+  become_user: root
+  ansible.builtin.apt:
     name: "{{ packages }}"
     state: present
   vars:
     packages:
+      - dnsmasq-base
       - ebtables
       - libguestfs-tools
       - libvirt-dev
       - libxml2-dev
       - libxslt-dev
       - ruby-dev
+      - ruby-libvirt
       - zlib1g-dev
   when: vagrant_installed_check.rc == 0 and vagrant_libvirt_plugin_installed.rc == 1
   tags: vagrant_libvirt
 
+# NOTE: we don't use 'become_user' here b/c if we do it will install the plugin
+# for the root user's vagrant "instance" (ie - plugins are user-specific)
 - name: Install `vagrant-libvirt` plugin
-  become: yes
-  shell: vagrant plugin install vagrant-libvirt
+  ansible.builtin.shell: vagrant plugin install vagrant-libvirt
   when: vagrant_installed_check.rc == 0 and vagrant_libvirt_plugin_installed.rc == 1
   tags: vagrant_libvirt

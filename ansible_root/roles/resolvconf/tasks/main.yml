@@ -1,7 +1,8 @@
 ---
 - name: Disable system-resolved
   become: yes
-  service:
+  become_user: root
+  ansible.builtin.service:
     name: systemd-resolved
     state: stopped
     enabled: false
@@ -11,7 +12,8 @@
 # network connections changes OR reboots
 - name: Disable NetworkManager DNS so it won't overwrite /etc/resolv.conf - dns setting
   become: yes
-  ini_file:
+  become_user: root
+  ansible.builtin.ini_file:
     state: present
     path: /etc/NetworkManager/NetworkManager.conf
     no_extra_spaces: yes
@@ -27,7 +29,8 @@
 # to be set sometimes
 - name: Disable NetworkManager DNS so it won't overwrite /etc/resolv.conf - rc-manager setting
   become: yes
-  ini_file:
+  become_user: root
+  ansible.builtin.ini_file:
     state: present
     path: /etc/NetworkManager/NetworkManager.conf
     no_extra_spaces: yes
@@ -40,7 +43,8 @@
 
 - name: Replace resolv.conf that was managed by system-resolved/NetworkManager
   become: yes
-  template:
+  become_user: root
+  ansible.builtin.template:
     src: resolv.conf.j2
     dest: /etc/resolv.conf
     mode: 0644

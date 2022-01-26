@@ -1,26 +1,3 @@
 ---
-# No great documentation for installing/configuring the credential helpers, but
-# see here:
-#   - https://github.com/docker/docker-credential-helpers/issues/102
-- name: Download `docker-credential-pass` credential helper
-  get_url:
-    url: "https://github.com/docker/docker-credential-helpers/releases/download/v0.6.3/docker-credential-pass-v0.6.3-amd64.tar.gz"
-    dest: "{{ downloads_dir }}/docker-credential-pass-v0.6.3-amd64.tar.gz"
-
-# Archive only contains a single, binary file
-- name: Unarchive `docker-credential-pass` binary tarball to /usr/local
-  become: yes
-  unarchive:
-    src: "{{ downloads_dir }}/docker-credential-pass-v0.6.3-amd64.tar.gz"
-    dest: /usr/local/bin
-    remote_src: yes
-  args:
-    creates: /usr/local/bin/docker-credential-pass
-
-- name: Set `docker-credential-pass` to be executable & proper user/group
-  become: yes
-  file:
-    path: /usr/local/bin/docker-credential-pass
-    owner: root
-    group: root
-    mode: "0755"
+- name: Install 'pass' credential helper
+  include_tasks: pass.yml

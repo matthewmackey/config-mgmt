@@ -15,7 +15,7 @@
   git:
     repo: git://github.com/pyenv/pyenv.git
     dest: /tmp/pyenv
-    version: v1.2.18
+    version: v2.2.3
 
 # NOTE: this also installs `pyenv-install` & `pyenv-uninstall` to /usr/local,
 #       which we don't use
@@ -34,24 +34,23 @@
     owner: "{{ username }}"
     group: "{{ username }}"
 
-# As of 5/12/2020, 3.8.2 is the Python version installed with base Ubuntu 20.04
-- name: Install Python version 3.8.2 to ~/pythons with 'python-build'
+- name: Install Python version 3.8.9 to ~/pythons with 'python-build'
   become_user: "{{ username }}"
-  shell: ./python-build 3.8.2 "{{ home_dir }}/pythons/3.8.2"
+  shell: ./python-build 3.8.9 "{{ home_dir }}/pythons/3.8.9"
   args:
     chdir: /usr/local/bin
-    creates: "{{ home_dir }}/pythons/3.8.2/bin/python3"
+    creates: "{{ home_dir }}/pythons/3.8.9/bin/python3"
 
-- name: Set Python 3.8.2 as the 'default' Python with a symlink
+- name: Set Python 3.8.9 as the 'default' Python with a symlink
   become_user: "{{ username }}"
   file:
     state: link
-    src: "{{ home_dir }}/pythons/3.8.2"
+    src: "{{ home_dir }}/pythons/3.8.9"
     dest: "{{ home_dir }}/pythons/default"
     owner: "{{ username }}"
     group: "{{ username }}"
 
-- name: Install 'virtualenvwrapper' into default (3.8.2) Python in ~/pythons
+- name: Install 'virtualenvwrapper' into default (3.8.9) Python in ~/pythons
   become_user: "{{ username }}"
   shell: ./pip3 install virtualenvwrapper
   args:

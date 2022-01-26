@@ -1,23 +1,19 @@
 ---
-- name: Install & configure `docker-compose`
-  block:
-    - name: Build 'docker-compose' URL
-      shell: |
-        echo "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-$(uname -s)-$(uname -m)"
-      register: docker_compose_url
-      changed_when: False
+- name: Build 'docker-compose' URL
+  shell: |
+    echo "https://github.com/docker/compose/releases/download/{{ docker_compose__version }}/docker-compose-$(uname -s)-$(uname -m)"
+  register: docker_compose_url
+  changed_when: False
 
-    - name: Download & install 'docker-compose'
-      become: yes
-      get_url:
-        url: "{{ docker_compose_url.stdout }}"
-        dest: /usr/local/bin/docker-compose
-        mode: "ugo+x"
+- name: Download & install 'docker-compose'
+  become: yes
+  get_url:
+    url: "{{ docker_compose_url.stdout }}"
+    dest: /usr/local/bin/docker-compose
+    mode: "ugo+x"
 
-    - name: Download & install 'docker-compose' Bash completion
-      become: yes
-      get_url:
-        url: https://raw.githubusercontent.com/docker/compose/{{ docker_compose_version }}/contrib/completion/bash/docker-compose
-        dest: "/etc/bash_completion.d/docker-compose"
-  vars:
-      docker_compose_version: 1.27.4
+- name: Download & install 'docker-compose' Bash completion
+  become: yes
+  get_url:
+    url: https://raw.githubusercontent.com/docker/compose/{{ docker_compose__version }}/contrib/completion/bash/docker-compose
+    dest: "/etc/bash_completion.d/docker-compose"

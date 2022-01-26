@@ -18,41 +18,42 @@
 #
 #-------------------------------------------------------------------------------
 - name: Download archive file w/ checksum ({{ pkg_archive_name }}-{{pkg_archive_version }})
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ pkg_archive_url }}"
-    dest: "{{ downloads_srv_dir }}/{{ pkg_archive_filename }}"
+    dest: "{{ common__downloads_dir }}/{{ pkg_archive_filename }}"
     checksum: "{{ pkg_archive_checksum }}"
   when: pkg_archive_checksum is defined and pkg_archive_checksum != ""
 
 - name: Download archive file w/o checksum ({{ pkg_archive_name }}-{{pkg_archive_version }})
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ pkg_archive_url }}"
-    dest: "{{ downloads_srv_dir }}/{{ pkg_archive_filename }}"
+    dest: "{{ common__downloads_dir }}/{{ pkg_archive_filename }}"
   when: pkg_archive_checksum is not defined or pkg_archive_checksum == ""
 
 - name: Extract archive to /tmp ({{ pkg_archive_name }}-{{pkg_archive_version }})
-  unarchive:
-    src: "{{ downloads_srv_dir }}/{{ pkg_archive_filename }}"
+  ansible.builtin.unarchive:
+    src: "{{ common__downloads_dir }}/{{ pkg_archive_filename }}"
     dest: /tmp
     remote_src: yes
   args:
     creates: /tmp/{{ pkg_archive_binary_path }}
 
-- name: Install versioned copy of binary ({{ pkg_archive_name }}-{{ pkg_archive_version }})
+- name: Install versioned copy of binary ({{ pkg_archive_name }}-{{ pkg_archive_version }}) to ansible bin directory
   become: yes
-  copy:
+  become_user: root
+  ansible.builtin.copy:
     src: /tmp/{{ pkg_archive_binary_path }}
     dest: "{{ pkg_archive_install_dir }}/{{ pkg_archive_name }}-{{ pkg_archive_version }}"
-    owner: root
-    group: root
+    dest: "{{ common__bin_dir }}/{{ pkg_archive_name }}-{{ pkg_archive_version }}"
     mode: '0755'
     remote_src: yes
 
 - name: Symlink versioned copy of binary to be main one ({{ pkg_archive_name }}-{{ pkg_archive_version }})
   become: yes
-  file:
+  become_user: root
+  ansible.builtin.file:
     state: link
-    src: "{{ pkg_archive_install_dir }}/{{ pkg_archive_name }}-{{ pkg_archive_version }}"
+    src: "{{ common__bin_dir }}/{{ pkg_archive_name }}-{{ pkg_archive_version }}"
     dest: "{{ pkg_archive_install_dir }}/{{ pkg_archive_name }}"
     owner: root
     group: root

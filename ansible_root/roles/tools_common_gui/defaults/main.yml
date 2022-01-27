@@ -4,6 +4,8 @@ tools_common_gui_packages:
   # Logitech Unifying Rx tool (CLI & GUI)
   - solaar
   - synapse
+  # In oreder to get +clipboard support
+  - vim-gtk3
   - xclip
   - wireshark
 tools_common_gui_remote_debs: []

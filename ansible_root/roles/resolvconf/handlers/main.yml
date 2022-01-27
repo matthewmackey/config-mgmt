@@ -1,0 +1,8 @@
+---
+- name: resolvconf--reload-network-manager
+  become: yes
+  become_user: root
+  service:
+    name: NetworkManager
+    state: reloaded
+

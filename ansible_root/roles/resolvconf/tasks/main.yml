@@ -1,5 +1,5 @@
 ---
-- name: Disable system-resolved
+- name: Disable systemd-resolved
   become: yes
   become_user: root
   ansible.builtin.service:
@@ -23,6 +23,7 @@
     owner: root
     group: root
     mode: 0644
+  notify: resolvconf--restart-network-manager
 
 # NOTE: for some reason, even though the docs say that all that is needed is to
 # set dns=none in NetworkManager.conf, I have found that this setting also needs
@@ -40,6 +41,7 @@
     owner: root
     group: root
     mode: 0644
+  notify: resolvconf--reload-network-manager
 
 - name: Replace resolv.conf that was managed by system-resolved/NetworkManager
   become: yes

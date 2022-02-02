@@ -1,5 +1,5 @@
 ---
-tools_net_packages:
+tools_net__packages:
   - bind9-dnsutils
   - httpie
   - iputils-ping

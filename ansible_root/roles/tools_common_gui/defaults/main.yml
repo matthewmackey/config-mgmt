@@ -1,4 +1,5 @@
-tools_common_gui_packages:
+---
+tools_common_gui__packages:
   - parcellite
   - remmina
   # Logitech Unifying Rx tool (CLI & GUI)
@@ -8,4 +9,7 @@ tools_common_gui_packages:
   - vim-gtk3
   - xclip
   - wireshark
-tools_common_gui_remote_debs: []
+tools_common_gui__remote_debs:
+  - name: teamviewer
+    url: https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
+    filename: teamviewer_amd64.deb

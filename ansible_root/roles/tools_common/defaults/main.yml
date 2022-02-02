@@ -35,7 +35,7 @@ tools_common__remote_debs:
     checksum: sha256:a73f3190aa0e6e78d3ee55d51f680df8c8fa2045ee1ac862c4afe662af19759f
 
 tools_common__remote_archives:
-  - name: zoxide
+  - name: zoxide-0.7.2
     version: 0.7.2
     url: https://github.com/ajeetdsouza/zoxide/releases/download/v0.7.2/zoxide-x86_64-unknown-linux-musl.tar.gz
     filename: zoxide-x86_64-unknown-linux-musl.tar.gz

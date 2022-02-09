@@ -18,3 +18,17 @@
     pkg_deb_filename: "{{ item.filename }}"
     pkg_deb_checksum: "{{ item.checksum | default('') }}"
   loop: "{{ tools_common_gui__remote_debs }}"
+
+- name: Determine if gnome-shell is installed
+  ansible.builtin.shell: |
+    dpkg -l | grep '^ii  gnome-shell '
+  ignore_errors: yes
+  register: is_gnome_shell_installed
+
+- name: Install Gnome Shell-related packages
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    name: "{{ tools_common_gui__gnome_shell_packages }}"
+    state: present
+  when: is_gnome_shell_installed.rc == 0

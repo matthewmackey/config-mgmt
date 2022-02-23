@@ -29,22 +29,40 @@ tools_common__packages:
   - zsh
 
 tools_common__remote_debs:
-  - name: duf-0.6.2
+  -
+    name: duf-0.6.2
     url: https://github.com/muesli/duf/releases/download/v0.6.2/duf_0.6.2_linux_amd64.deb
     filename: duf_0.6.2_linux_amd64.deb
     checksum: sha256:a73f3190aa0e6e78d3ee55d51f680df8c8fa2045ee1ac862c4afe662af19759f
-  - name: sops-3.7.1
+  -
+    name: sops-3.7.1
     url: https://github.com/mozilla/sops/releases/download/v3.7.1/sops_3.7.1_amd64.deb
     filename: sops_3.7.1_amd64.deb
 
 tools_common__remote_archives:
-  - name: yh
+  -
+    name: kubectx
+    version: v0.9.4
+    url: https://github.com/ahmetb/kubectx/releases/download/v0.9.4/kubectx_v0.9.4_linux_x86_64.tar.gz
+    filename: kubectx_v0.9.4_linux_x86_64.tar.gz
+    binary_path: ./kubectx
+    install_dir: /usr/local/bin
+  -
+    name: kubens
+    version: v0.9.4
+    url: https://github.com/ahmetb/kubectx/releases/download/v0.9.4/kubens_v0.9.4_linux_x86_64.tar.gz
+    filename: kubens_v0.9.4_linux_x86_64.tar.gz
+    binary_path: ./kubens
+    install_dir: /usr/local/bin
+  -
+    name: yh
     version: v0.4.0
     url: https://github.com/andreazorzetto/yh/releases/download/v0.4.0/yh-linux-amd64.zip
     filename: yh-linux-amd64.zip
     binary_path: ./yh
     install_dir: /usr/local/bin
-  - name: zoxide
+  -
+    name: zoxide
     version: 0.7.2
     url: https://github.com/ajeetdsouza/zoxide/releases/download/v0.7.2/zoxide-x86_64-unknown-linux-musl.tar.gz
     filename: zoxide-x86_64-unknown-linux-musl.tar.gz

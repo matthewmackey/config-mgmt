@@ -33,6 +33,9 @@ tools_common__remote_debs:
     url: https://github.com/muesli/duf/releases/download/v0.6.2/duf_0.6.2_linux_amd64.deb
     filename: duf_0.6.2_linux_amd64.deb
     checksum: sha256:a73f3190aa0e6e78d3ee55d51f680df8c8fa2045ee1ac862c4afe662af19759f
+  - name: sops-3.7.1
+    url: https://github.com/mozilla/sops/releases/download/v3.7.1/sops_3.7.1_amd64.deb
+    filename: sops_3.7.1_amd64.deb
 
 tools_common__remote_archives:
   - name: zoxide-0.7.2

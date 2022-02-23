@@ -38,7 +38,13 @@ tools_common__remote_debs:
     filename: sops_3.7.1_amd64.deb
 
 tools_common__remote_archives:
-  - name: zoxide-0.7.2
+  - name: yh
+    version: v0.4.0
+    url: https://github.com/andreazorzetto/yh/releases/download/v0.4.0/yh-linux-amd64.zip
+    filename: yh-linux-amd64.zip
+    binary_path: ./yh
+    install_dir: /usr/local/bin
+  - name: zoxide
     version: 0.7.2
     url: https://github.com/ajeetdsouza/zoxide/releases/download/v0.7.2/zoxide-x86_64-unknown-linux-musl.tar.gz
     filename: zoxide-x86_64-unknown-linux-musl.tar.gz

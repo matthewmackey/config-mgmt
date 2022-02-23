@@ -20,15 +20,16 @@
     # - name: kubectl
     # - name: qemu_kvm
     # - name: python
+    # - name: resolvconf
     # - name: rust
     # - name: slack
-    # - name: tools_common
+    - name: tools_common
+    # - name: tools_common_gui
     # - name: tools_net
 
 
     #- name: awscli
     # - name: qemu-kvm
-    # - name: resolvconf
     # - name: ruby
     #- name: virtual_machines
     # - name: vim

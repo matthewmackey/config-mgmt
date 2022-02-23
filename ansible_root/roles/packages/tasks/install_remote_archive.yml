@@ -43,7 +43,6 @@
   become_user: root
   ansible.builtin.copy:
     src: /tmp/{{ pkg_archive_binary_path }}
-    dest: "{{ pkg_archive_install_dir }}/{{ pkg_archive_name }}-{{ pkg_archive_version }}"
     dest: "{{ common__bin_dir }}/{{ pkg_archive_name }}-{{ pkg_archive_version }}"
     mode: '0755'
     remote_src: yes

@@ -5,6 +5,7 @@ tools_common_gui__packages:
   # Logitech Unifying Rx tool (CLI & GUI)
   - solaar
   - synapse
+  - usb-creator-gtk
   # In oreder to get +clipboard support
   - vim-gtk3
   - xclip

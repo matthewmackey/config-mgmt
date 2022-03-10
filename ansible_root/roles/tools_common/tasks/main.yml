@@ -31,4 +31,5 @@
     pkg_archive_checksum: "{{ item.checksum | default('') }}"
     pkg_archive_binary_path: "{{ item.binary_path }}"
     pkg_archive_install_dir: "{{ item.install_dir }}"
+    pkg_archive_install_filename: "{{ item.install_filename | default(None) }}"
   loop: "{{ tools_common__remote_archives }}"

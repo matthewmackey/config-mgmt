@@ -47,6 +47,7 @@ tools_common__remote_archives:
     filename: bw-linux-1.21.1.zip
     binary_path: ./bw
     install_dir: /usr/local/bin
+    install_filename: bw
   -
     name: kubectx
     version: v0.9.4

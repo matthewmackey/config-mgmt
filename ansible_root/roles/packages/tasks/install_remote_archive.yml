@@ -14,6 +14,7 @@
 #     pkg_archive_checksum: "{{ item.checksum | default('') }}"
 #     pkg_archive_binary_path: "{{ item.binary }}"
 #     pkg_archive_install_dir: "{{ item.install_dir }}"
+#     pkg_archive_install_filename: "{{ item.install_filename }}"
 #   loop: "{{ LIST_OF_REMOTE_ARCHIVES }}"
 #
 #-------------------------------------------------------------------------------
@@ -56,3 +57,15 @@
     dest: "{{ pkg_archive_install_dir }}/{{ pkg_archive_name }}"
     owner: root
     group: root
+  when: pkg_archive_install_filename == ''
+
+- name: Symlink versioned copy of binary to be main one ({{ pkg_archive_name }}-{{ pkg_archive_version }}) w/ custom binary filename
+  become: yes
+  become_user: root
+  ansible.builtin.file:
+    state: link
+    src: "{{ common__bin_dir }}/{{ pkg_archive_name }}-{{ pkg_archive_version }}"
+    dest: "{{ pkg_archive_install_dir }}/{{ pkg_archive_install_filename }}"
+    owner: root
+    group: root
+  when: pkg_archive_install_filename != ''

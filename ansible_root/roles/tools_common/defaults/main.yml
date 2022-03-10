@@ -41,6 +41,13 @@ tools_common__remote_debs:
 
 tools_common__remote_archives:
   -
+    name: bitwarden
+    version: 1.21.1
+    url: https://github.com/bitwarden/cli/releases/download/v1.21.1/bw-linux-1.21.1.zip
+    filename: bw-linux-1.21.1.zip
+    binary_path: ./bw
+    install_dir: /usr/local/bin
+  -
     name: kubectx
     version: v0.9.4
     url: https://github.com/ahmetb/kubectx/releases/download/v0.9.4/kubectx_v0.9.4_linux_x86_64.tar.gz

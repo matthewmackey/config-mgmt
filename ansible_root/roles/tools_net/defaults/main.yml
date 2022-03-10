@@ -1,5 +1,6 @@
 ---
 tools_net__packages:
+  - arp-scan
   - bind9-dnsutils
   - httpie
   - iputils-ping

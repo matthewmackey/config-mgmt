@@ -8,7 +8,7 @@
     update_cache: yes
     cache_valid_time: 3600
 
-- name: Install common toolsfor Desktop enivronments from remote .debs
+- name: Install common tools for Desktop enivronments from remote .debs
   include_role:
     name: packages
     tasks_from: install_remote_deb.yml

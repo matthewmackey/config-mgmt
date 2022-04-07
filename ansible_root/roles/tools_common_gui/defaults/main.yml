@@ -16,3 +16,6 @@ tools_common_gui__remote_debs:
   - name: teamviewer
     url: https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
     filename: teamviewer_amd64.deb
+  - name: zoom
+    url: https://zoom.us/client/latest/zoom_amd64.deb
+    filename: zoom_amd64.deb

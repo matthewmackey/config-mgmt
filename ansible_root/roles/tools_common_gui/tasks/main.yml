@@ -22,6 +22,7 @@
 - name: Determine if gnome-shell is installed
   ansible.builtin.shell: |
     dpkg -l | grep '^ii  gnome-shell '
+  changed_when: False
   ignore_errors: yes
   register: is_gnome_shell_installed
 

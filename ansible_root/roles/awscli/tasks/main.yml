@@ -1,29 +1,20 @@
 ---
 - name: Download AWS CLI .zip archive
   get_url:
-    url: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-{{ awscli_version }}.zip"
-    dest: "{{ downloads_dir }}/awscliv{{ awscli_version }}.zip"
+    url: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+    dest: "{{ common__downloads_dir }}/awscliv2.zip"
 
 # 'creates' is used but this actually a hack b/c the value it is looking for
 # comes from a path the installer creates in the following step
 - name: Unzip AWS CLI .zip archive to /tmp
   unarchive:
-    src: "{{ downloads_dir }}/awscliv{{ awscli_version }}.zip"
+    src: "{{ common__downloads_dir }}/awscliv2.zip"
     dest: /tmp
     remote_src: yes
     creates: /usr/local/aws-cli
 
 - name: Run AWS CLI installer
   become: yes
-  shell: /tmp/aws/install
+  shell: /tmp/aws/install --install-dir /usr/local/aws-cli --bin-dir /usr/local/bin
   args:
     creates: /usr/local/bin/aws
-
-- name: Create Bash file with AWS CLI Bash completer command
-  copy:
-    src: awscli.bash
-    dest: "{{ awscli_bash_file }}"
-    mode: 0644
-    owner: "{{ username }}"
-    group: "{{ username }}"
-

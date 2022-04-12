@@ -8,8 +8,9 @@
   #   - import_role:
   #       name: "{{ role }}"
   roles:
-    - name: common
+    # - name: common
     # - name: alacritty
+    - name: awscli
     # - name: awsvpn
     # - name: docker
     # - name: docker_compose
@@ -23,7 +24,7 @@
     # - name: resolvconf
     # - name: rust
     # - name: slack
-    - name: tools_common
+    # - name: tools_common
     # - name: tools_common_gui
     # - name: tools_net
 

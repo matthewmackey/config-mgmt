@@ -7,6 +7,7 @@ tools_common__packages:
   # Used for making cloud-init seed ISOs
   - cloud-utils
   - curl
+  - encfs
   - fd-find
   - git
   - gzip
@@ -16,6 +17,7 @@ tools_common__packages:
   - p7zip-full
   - pass
   - postgresql-client
+  - redis-tools
   - ripgrep
   - silversearcher-ag
   - tmux

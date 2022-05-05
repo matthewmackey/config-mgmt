@@ -7,6 +7,8 @@
     state: present
     update_cache: yes
     cache_valid_time: 3600
+  tags:
+    - packages
 
 - name: Install common tools from remote .debs
   include_role:
@@ -18,6 +20,8 @@
     pkg_deb_filename: "{{ item.filename }}"
     pkg_deb_checksum: "{{ item.checksum | default('') }}"
   loop: "{{ tools_common__remote_debs }}"
+  tags:
+    - remote_debs
 
 - name: Install common tools from remote archives
   include_role:
@@ -33,3 +37,5 @@
     pkg_archive_install_dir: "{{ item.install_dir }}"
     pkg_archive_install_filename: "{{ item.install_filename | default(None) }}"
   loop: "{{ tools_common__remote_archives }}"
+  tags:
+    - remote_archives

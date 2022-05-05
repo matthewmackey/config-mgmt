@@ -21,6 +21,7 @@ tools_common__packages:
   - redis-tools
   - ripgrep
   - silversearcher-ag
+  - sqlite3
   - tmux
   - tree
   - universal-ctags

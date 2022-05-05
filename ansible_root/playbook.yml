@@ -2,38 +2,97 @@
 - name: Configure local machine
   hosts: local
   connection: local
-  # vars:
-  #   role: awsvpn
-  # tasks:
-  #   - import_role:
-  #       name: "{{ role }}"
   roles:
-    # - name: common
-    # - name: alacritty
+    - name: common
+      tags:
+        - common
+
+    - name: alacritty
+      tags:
+        - alacritty
+
     - name: awscli
-    # - name: awsvpn
-    # - name: docker
-    # - name: docker_compose
-    # - name: docker_credentials_helper
-    # - name: go
-    # - name: hashicorp
-    # - name: google_cloud_sdk
-    # - name: kubectl
-    # - name: qemu_kvm
-    # - name: python
-    # - name: resolvconf
-    # - name: rust
-    # - name: slack
-    # - name: tools_common
-    # - name: tools_common_gui
-    # - name: tools_net
+      tags:
+        - awscli
 
+    - name: awsvpn
+      tags:
+        - awsvpn
 
-    #- name: awscli
-    # - name: qemu-kvm
-    # - name: ruby
-    #- name: virtual_machines
-    # - name: vim
+    - name: docker
+      tags:
+        - docker
+
+    - name: docker_compose
+      tags:
+        - docker
+        - docker_compose
+
+    - name: docker_credentials_helper
+      tags:
+        - docker
+        - docker_credentials_helper
+
+    - name: go
+      tags:
+        - go
+
+    - name: hashicorp
+      tags:
+        - hashicorp
+
+    - name: google_cloud_sdk
+      tags:
+        - google_cloud_sdk
+
+    - name: kubectl
+      tags:
+        - kubectl
+
+    - name: qemu_kvm
+      tags:
+        - qemu_kvm
+
+    - name: python
+      tags:
+        - python
+
+    - name: resolvconf
+      tags:
+        - resolvconf
+
+    - name: ruby
+      tags:
+        - ruby
+
+    - name: rust
+      tags:
+        - rust
+
+    - name: slack
+      tags:
+        - slack
+
+    - name: tools_common
+      tags:
+        - tools_common
+
+    - name: tools_common_gui
+      tags:
+        - tools_common_gui
+
+    - name: tools_net
+      tags:
+        - tools_net
+
+    - name: virtual_machines
+      tags:
+        - virtual_machines
+        - vms
+
+    - name: vim
+      tags:
+        - vim
 
 #- name: Setup managed resolv.conf on DNS clients
   #hosts: dns_clients

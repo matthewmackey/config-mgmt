@@ -1,5 +1,6 @@
 tools_common__packages:
   - ack-grep
+  - at
   # Issue: can't enable until some issue is fixed w/ package unless I can learn
   # how to do some force flag for just this package in Ansible
   #  - bat

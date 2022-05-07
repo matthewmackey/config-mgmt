@@ -8,6 +8,8 @@ tools_common__packages:
   # Used for making cloud-init seed ISOs
   - cloud-utils
   - curl
+  # Installs debconf-get-selections
+  - debconf-utils
   - encfs
   - fd-find
   - git

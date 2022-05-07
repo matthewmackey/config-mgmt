@@ -1,37 +1,4 @@
 ---
-#-------------------------------------------------------------------------------
-# Vagrant
-#-------------------------------------------------------------------------------
-- name: Download Vagrant .deb SHA-256 checksum
-  shell: |
-    curl -s https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_SHA256SUMS \
-      | grep vagrant_2.2.9_x86_64.deb \
-      | cut -d ' ' -f 1
-  args:
-    warn: no
-  register: vagrant_deb_sha256_task
-  tags:
-    - install
-    - vagrant
-
-- name: Download Vagrant .deb
-  get_url:
-    url: https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_x86_64.deb
-    dest: "{{ common__downloads_dir }}/vagrant_2.2.9_x86_64.deb"
-    checksum: sha256:{{ vagrant_deb_sha256_task.stdout }}
-  tags:
-    - install
-    - vagrant
-
-- name: Install Vagrant via .deb
-  become: yes
-  apt:
-    state: present
-    deb: "{{ common__downloads_dir }}/vagrant_2.2.9_x86_64.deb"
-  tags:
-    - install
-    - vagrant
-
 #--------------------------------------------------------------
 # Vagrant's libvirt provider
 # From: https://github.com/vagrant-libvirt/vagrant-libvirt#installation
@@ -45,7 +12,6 @@
     - ruby-libvirt
   tags:
     - install
-    - vagrant
     - vagrant_libvirt
 
 - name: Install Vagrant libvirt provider dependencies
@@ -63,7 +29,6 @@
     - zlib1g-dev
   tags:
     - install
-    - vagrant
     - vagrant_libvirt
 
 #-------------------------------------------------------------------------------
@@ -73,7 +38,7 @@
   become: yes
   apt:
     state: present
-  name: virtualbox
+    name: virtualbox
   tags:
     - install
     - virtualbox
@@ -88,7 +53,7 @@
       - vboxusers
   tags:
     - install
-    - virtualbox
+    # - virtualbox
 
 #-------------------------------------------------------------------------------
 # Multipass
@@ -99,7 +64,7 @@
     state: present
     name: multipass
     classic: yes
-  when: virtual_machines_install_multipass
+  when: virtual_machines__install_multipass
   tags:
     - install
     - multipass
@@ -107,27 +72,37 @@
 #-------------------------------------------------------------------------------
 # VMware-related
 #-------------------------------------------------------------------------------
-# Download requires website login, EULA acceptance, etc.; so is a real pain
+# Download requires website login, EULA acceptance, etc.; so is a real pain.
 # Thus, this requires a download of both bundle & its checksum file *outside of Ansible*
 # to the same directory
+- name: Check if VMware ovftool has been downloaded outside of Ansible
+  ansible.builtin.shell: |
+    ls {{ virtual_machines__vmware_ovftool_installer }}
+  changed_when: False
+  ignore_errors: yes
+  register: vmware_ovftool_installer_downloaded_check
+  tags:
+    - vmware
+
 - name: Verify checksum on Pre-Downloaded VMware ovftool installer
-  shell: shasum -a 256 -c VMware-ovftool-4.4.0-16360108-lin.x86_64.bundle.shasum
+  shell: shasum -a 256 -c {{ virtual_machines__vmware_ovftool_installer }}.sha256sum
   changed_when: False
   args:
     chdir: "{{ common__downloads_dir }}"
+  when: vmware_ovftool_installer_downloaded_check.rc == 0
   tags:
     - vmware
 
 - name: Run VMware ovftool installer
   become: yes
   shell: |
-    ./VMware-ovftool-4.4.0-16360108-lin.x86_64.bundle \
+    {{ virtual_machines__vmware_ovftool_installer }} \
       --console \
       --required \
       --eulas-agreed
   args:
-    chdir: "{{ common__downloads_dir }}"
     creates: /usr/bin/ovftool
+  when: vmware_ovftool_installer_downloaded_check.rc == 0
   tags:
     - install
     - vmware

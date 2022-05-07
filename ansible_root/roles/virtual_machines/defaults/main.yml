@@ -1,2 +1,3 @@
 ---
-virtual_machines_install_multipass: no
+virtual_machines__install_multipass: no
+virtual_machines__vmware_ovftool_installer: "{{ common__downloads_dir }}/vmware_ovftool_installer.bundle"

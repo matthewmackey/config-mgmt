@@ -1,4 +1,26 @@
 ---
+- name: Install httpie APT signing key
+  become: yes
+  become_user: root
+  ansible.builtin.apt_key:
+    state: present
+    url: https://packages.httpie.io/deb/KEY.gpg
+    keyring: /etc/apt/trusted.gpg.d/httpie.gpg
+  tags:
+    - httpie
+    - packages
+
+- name: Install httpie APT repo
+  become: yes
+  become_user: root
+  ansible.builtin.apt_repository:
+    state: present
+    repo: deb https://packages.httpie.io/deb ./
+    filename: httpie
+  tags:
+    - httpie
+    - packages
+
 - name: Install common utility packages
   become: yes
   become_user: root

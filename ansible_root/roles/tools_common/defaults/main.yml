@@ -15,6 +15,7 @@ tools_common__packages:
   - git
   - gzip
   - htop
+  - httpie
   - jq
   - mysql-client
   - p7zip-full

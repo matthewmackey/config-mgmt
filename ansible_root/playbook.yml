@@ -5,93 +5,115 @@
   roles:
     - name: common
       tags:
+        - never
         - common
 
     - name: alacritty
       tags:
+        - never
         - alacritty
 
     - name: awscli
       tags:
+        - never
         - awscli
 
     - name: awsvpn
       tags:
+        - never
         - awsvpn
 
     - name: docker
       tags:
+        - never
         - docker
 
     - name: docker_compose
       tags:
+        - never
         - docker
         - docker_compose
 
     - name: docker_credentials_helper
       tags:
+        - never
         - docker
         - docker_credentials_helper
 
     - name: go
       tags:
+        - never
         - go
 
     - name: hashicorp
       tags:
+        - never
         - hashicorp
 
     - name: google_cloud_sdk
       tags:
+        - never
         - google_cloud_sdk
 
     - name: kubectl
       tags:
+        - never
         - kubectl
 
     - name: qemu_kvm
       tags:
+        - never
         - qemu_kvm
 
     - name: python
       tags:
+        - never
         - python
 
     - name: resolvconf
       tags:
+        - never
         - resolvconf
 
     - name: ruby
       tags:
+        - never
         - ruby
 
     - name: rust
       tags:
+        - never
         - rust
 
     - name: slack
       tags:
+        - never
         - slack
 
     - name: tools_common
       tags:
+        - never
         - tools_common
 
     - name: tools_common_gui
       tags:
+        - never
         - tools_common_gui
 
     - name: tools_net
       tags:
+        - never
         - tools_net
 
     - name: virtual_machines
       tags:
+        - never
         - virtual_machines
         - vms
 
     - name: vim
       tags:
+        - never
         - vim
 
 #- name: Setup managed resolv.conf on DNS clients

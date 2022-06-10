@@ -13,6 +13,9 @@ tools_common_gui__packages:
 tools_common_gui__gnome_shell_packages:
   - gnome-shell-pomodoro
 tools_common_gui__remote_debs:
+  - name: microsoft-teams
+    url: https://packages.microsoft.com/repos/ms-teams/pool/main/t/teams/teams_1.5.00.10453_amd64.deb
+    filename: teams_1.5.00.10453_amd64.deb
   - name: teamviewer
     url: https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
     filename: teamviewer_amd64.deb

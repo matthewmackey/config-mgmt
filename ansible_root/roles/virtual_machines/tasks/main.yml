@@ -5,7 +5,8 @@
 #--------------------------------------------------------------
 - name: Install Vagrant libvirt provider build-dep dependencies
   become: yes
-  apt:
+  become_user: root
+  ansible.builtin.apt:
     state: build-dep
     name: "{{ item }}"
   with_items:
@@ -16,7 +17,8 @@
 
 - name: Install Vagrant libvirt provider dependencies
   become: yes
-  apt:
+  become_user: root
+  ansible.builtin.apt:
     state: present
     name: "{{ item }}"
   with_items:
@@ -33,34 +35,93 @@
 
 #-------------------------------------------------------------------------------
 # Virtualbox - Virtualbox provider works out of box with Vagrant
+#
+# IMPORTANT: do NOT update this role to install the package from the Ubuntu
+#            repositories; only install the package from the Oracle VirtualBox
+#            repositories or else you will run into a ton of various issues
 #-------------------------------------------------------------------------------
-- name: Install Oracle VirtualBox
+- name: Install VirtualBox APT signing key
   become: yes
-  apt:
+  become_user: root
+  ansible.builtin.apt_key:
     state: present
-    name: virtualbox
+    url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+  tags:
+    - config
+    - install
+    - virtualbox
+
+- name: Install VirtualBox APT repository
+  become: yes
+  become_user: root
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian focal contrib
+    state: present
+    filename: virtualbox
+  tags:
+    - config
+    - install
+    - virtualbox
+
+- name: Install Oracle VirtualBox version from VirtualBox APT repository
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    state: present
+    name: virtualbox-6.1
   tags:
     - install
     - virtualbox
 
 - name: Add "{{ username }}" to 'vboxusers' group
   become: yes
-  user:
+  become_user: root
+  ansible.builtin.user:
     state: present
     name: "{{ username }}"
     append: yes
     groups:
       - vboxusers
   tags:
+    - config
     - install
-    # - virtualbox
+    - virtualbox
+
+# Sometimes it seems that the `virtualbox` package will also require the `linux-headers-generic`
+# package to be installed, though that might only be when using the bad
+# packages from the Ubuntu repos.
+#
+# In those cases, if using Secure Boot, then this installation will (sometimes) require
+# signing VirtualBox 3rd-party kernel modules, which will need to be done with an MOK (Machine-Owner Key).
+# If such a key doesn't exist, then one will need to be generated.
+#
+# If installing the `linux-headers-generic` package does not sign the modules, then you can manually
+# trigger re-signing them via:
+#
+#    sudo dpkg-reconfigure virtualbox-dkms
+#    sudo dpkg-reconfigure virtualbox
+#
+# SEE: https://stackoverflow.com/questions/60350358/how-do-i-resolve-the-character-device-dev-vboxdrv-does-not-exist-error-in-ubu
+#
+- name: Install linux-headers-generic dependency (if needed)
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    state: present
+    name: linux-headers-generic
+  tags:
+    - install
+    - virtualbox
+  # Turning this off permanently so we can leave the task in case needed in the future
+  when: False
 
 #-------------------------------------------------------------------------------
 # Multipass
 #-------------------------------------------------------------------------------
 - name: Install Multipass Ubuntu VM manager by Canonical
   become: yes
-  snap:
+  become_user: root
+  ansible.builtin.snap:
     state: present
     name: multipass
     classic: yes
@@ -95,7 +156,8 @@
 
 - name: Run VMware ovftool installer
   become: yes
-  shell: |
+  become_user: root
+  ansible.builtin.shell: |
     {{ virtual_machines__vmware_ovftool_installer }} \
       --console \
       --required \

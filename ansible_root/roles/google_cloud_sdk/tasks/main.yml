@@ -24,6 +24,7 @@
   vars:
     google_cloud_sdk_packages:
       - google-cloud-sdk
+      - google-cloud-sdk-gke-gcloud-auth-plugin
 
 - name: Download Google Cloud SQL Auth proxy binary
   ansible.builtin.shell: |

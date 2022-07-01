@@ -28,6 +28,7 @@
         - never
         - docker
 
+    # DEPRECATED - just use `docker`
     - name: docker_compose
       tags:
         - never

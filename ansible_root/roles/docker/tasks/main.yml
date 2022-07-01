@@ -1,13 +1,15 @@
 ---
 - name: Install Docker's APT repository key
   become: yes
-  apt_key:
+  become_user: root
+  ansible.builtin.apt_key:
     state: present
     url: https://download.docker.com/linux/ubuntu/gpg
 
 - name: Add Docker's APT repository for Ubuntu 18.04
   become: yes
-  apt_repository:
+  become_user: root
+  ansible.builtin.apt_repository:
     state: present
     repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
     update_cache: yes
@@ -17,7 +19,8 @@
 
 - name: Add Docker's APT repository for Ubuntu 20.04
   become: yes
-  apt_repository:
+  become_user: root
+  ansible.builtin.apt_repository:
     state: present
     repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
     update_cache: yes
@@ -27,25 +30,35 @@
 
 - name: Install Docker from Docker's Ubuntu package repo
   become: yes
-  apt:
+  become_user: root
+  ansible.builtin.apt:
     state: present
     name: "{{ docker_packages }}"
   vars:
     docker_packages:
+      - containerd.io
       - docker-ce
       - docker-ce-cli
-      - containerd.io
+
+- name: Install Docker Compose Plugin from Docker's Ubuntu package repo
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    state: present
+    name: docker-compose-plugin
 
 - name: Create 'docker' group
   become: yes
-  group:
+  become_user: root
+  ansible.builtin.group:
     state: present
     name: docker
     system: yes
 
 - name: Add users to 'docker' group so they can run Docker commands w/o sudo
   become: yes
-  user:
+  become_user: root
+  ansible.builtin.user:
     state: present
     name: "{{ item }}"
     append: yes
@@ -55,6 +68,7 @@
 
 - name: Enable Docker service to run on startup
   become: yes
-  service:
+  become_user: root
+  ansible.builtin.service:
     name: docker
     enabled: yes

@@ -1,9 +1,6 @@
 tools_common__packages:
   - ack-grep
   - at
-  # Issue: can't enable until some issue is fixed w/ package unless I can learn
-  # how to do some force flag for just this package in Ansible
-  #  - bat
   - bzip2
   # Used for making cloud-init seed ISOs
   - cloud-utils
@@ -11,19 +8,15 @@ tools_common__packages:
   # Installs debconf-get-selections
   - debconf-utils
   - encfs
-  - fd-find
   - git
   - gzip
   - htop
-  - httpie
   - jq
   - mysql-client
   - p7zip-full
   - pass
   - postgresql-client
   - redis-tools
-  - ripgrep
-  - silversearcher-ag
   - sqlite3
   - tmux
   - tree
@@ -35,16 +28,30 @@ tools_common__packages:
   - xz-utils
   - zsh
 
+tools_common__packages_modern:
+  - fd-find
+  - httpie
+  - ripgrep
+  - silversearcher-ag
+
+
 tools_common__remote_debs:
+  -
+    name: sops-3.7.1
+    url: https://github.com/mozilla/sops/releases/download/v3.7.1/sops_3.7.1_amd64.deb
+    filename: sops_3.7.1_amd64.deb
+
+tools_common__remote_debs_modern:
+  -
+    name: bat-0.21.0
+    url: https://github.com/sharkdp/bat/releases/download/v0.21.0/bat_0.21.0_amd64.deb
+    filename: bat_0.21.0_amd64.deb
   -
     name: duf-0.6.2
     url: https://github.com/muesli/duf/releases/download/v0.6.2/duf_0.6.2_linux_amd64.deb
     filename: duf_0.6.2_linux_amd64.deb
     checksum: sha256:a73f3190aa0e6e78d3ee55d51f680df8c8fa2045ee1ac862c4afe662af19759f
-  -
-    name: sops-3.7.1
-    url: https://github.com/mozilla/sops/releases/download/v3.7.1/sops_3.7.1_amd64.deb
-    filename: sops_3.7.1_amd64.deb
+
 
 tools_common__remote_archives:
   -
@@ -69,6 +76,8 @@ tools_common__remote_archives:
     filename: kubens_v0.9.4_linux_x86_64.tar.gz
     binary_path: ./kubens
     install_dir: /usr/local/bin
+
+tools_common__remote_archives_modern:
   -
     name: yh
     version: v0.4.0

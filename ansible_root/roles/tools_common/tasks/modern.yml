@@ -1,9 +1,32 @@
+
 ---
+- name: Install httpie APT signing key
+  become: yes
+  become_user: root
+  ansible.builtin.apt_key:
+    state: present
+    url: https://packages.httpie.io/deb/KEY.gpg
+    keyring: /etc/apt/trusted.gpg.d/httpie.gpg
+  tags:
+    - httpie
+    - packages
+
+- name: Install httpie APT repo
+  become: yes
+  become_user: root
+  ansible.builtin.apt_repository:
+    state: present
+    repo: deb https://packages.httpie.io/deb ./
+    filename: httpie
+  tags:
+    - httpie
+    - packages
+
 - name: Install common utility packages
   become: yes
   become_user: root
   ansible.builtin.apt:
-    name: "{{ tools_common__packages }}"
+    name: "{{ tools_common__packages_modern }}"
     state: present
     update_cache: yes
     cache_valid_time: 3600
@@ -19,7 +42,7 @@
     pkg_deb_url: "{{ item.url }}"
     pkg_deb_filename: "{{ item.filename }}"
     pkg_deb_checksum: "{{ item.checksum | default('') }}"
-  loop: "{{ tools_common__remote_debs }}"
+  loop: "{{ tools_common__remote_debs_modern }}"
   tags:
     - remote_debs
 
@@ -36,8 +59,6 @@
     pkg_archive_binary_path: "{{ item.binary_path }}"
     pkg_archive_install_dir: "{{ item.install_dir }}"
     pkg_archive_install_filename: "{{ item.install_filename | default(None) }}"
-  loop: "{{ tools_common__remote_archives }}"
+  loop: "{{ tools_common__remote_archives_modern }}"
   tags:
     - remote_archives
-
-- include_tasks: modern.yml

@@ -3,4 +3,6 @@
   hosts: local
   connection: local
   roles:
+    # Setup default Python w/ virtualenvwrapper installed
+    - name: python
     - name: sudoers

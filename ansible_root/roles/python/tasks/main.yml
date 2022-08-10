@@ -13,7 +13,7 @@
 # TODO: change to https URL
 - name: Download python-build (part of pyenv)
   git:
-    repo: git://github.com/pyenv/pyenv.git
+    repo: https://github.com/pyenv/pyenv.git
     dest: /tmp/pyenv
     version: v2.2.3
 

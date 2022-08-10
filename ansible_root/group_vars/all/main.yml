@@ -2,6 +2,8 @@
 username: mmachaj
 home_dir: /home/{{ username }}
 
+common__user: "{{ username }}"
+
 common__ansible_srv_dir: /srv/ansible
 common__bin_dir: /srv/ansible/bin
 common__downloads_dir: /srv/ansible/downloads

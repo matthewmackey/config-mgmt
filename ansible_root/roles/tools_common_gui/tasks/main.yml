@@ -19,8 +19,9 @@
     pkg_deb_checksum: "{{ item.checksum | default('') }}"
   loop: "{{ tools_common_gui__remote_debs }}"
 
+# This won't work with 'ansible.builtin.shell' for some reason??
 - name: Determine if gnome-shell is installed
-  ansible.builtin.shell: |
+  shell: |
     dpkg -l | grep '^ii  gnome-shell '
   changed_when: False
   ignore_errors: yes

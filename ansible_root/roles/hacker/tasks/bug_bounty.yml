@@ -44,6 +44,18 @@
     - hacker__ffuf
 
 #-------------------------------------------------------------------
+# gobuster
+#-------------------------------------------------------------------
+- name: hacker | install gobuster
+  shell: |
+    go install github.com/OJ/gobuster/v3@latest
+  args:
+    creates: "/home/{{ ansible_ssh_user }}/go/bin/gobuster"
+  tags:
+    - hacker
+    - hacker__gobuster
+
+#-------------------------------------------------------------------
 # httprobe
 #-------------------------------------------------------------------
 - name: hacker | install httprobe

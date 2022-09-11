@@ -64,12 +64,12 @@
     name: libosinfo-bin
 
 - name: Register if `vagrant`is installed
-  ansible.builtin.shell: which vagrant
+  shell: which vagrant
   register: vagrant_installed_check
   tags: vagrant_libvirt
 
 - name: Register if `vagrant-libvirt` plugin is installed
-  ansible.builtin.shell: vagrant plugin list | grep vagrant-libvirt
+  shell: vagrant plugin list | grep vagrant-libvirt
   register: vagrant_libvirt_plugin_installed
   ignore_errors: yes
   tags: vagrant_libvirt
@@ -101,6 +101,6 @@
 # NOTE: we don't use 'become_user' here b/c if we do it will install the plugin
 # for the root user's vagrant "instance" (ie - plugins are user-specific)
 - name: Install `vagrant-libvirt` plugin
-  ansible.builtin.shell: vagrant plugin install vagrant-libvirt
+  shell: vagrant plugin install vagrant-libvirt
   when: vagrant_installed_check.rc == 0 and vagrant_libvirt_plugin_installed.rc == 1
   tags: vagrant_libvirt

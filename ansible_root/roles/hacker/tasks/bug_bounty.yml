@@ -32,6 +32,18 @@
         dest: "{{ hacker__tools_bin_dir }}/searchsploit"
 
 #-------------------------------------------------------------------
+# ffuf
+#-------------------------------------------------------------------
+- name: hacker | install ffuf
+  shell: |
+    go install github.com/ffuf/ffuf@latest
+  args:
+    creates: "/home/{{ ansible_ssh_user }}/go/bin/ffuf"
+  tags:
+    - hacker
+    - hacker__ffuf
+
+#-------------------------------------------------------------------
 # Metasploit
 #
 # The `msfinstall` program will install APT keys and the `metasploit-framework` package.

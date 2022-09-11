@@ -104,6 +104,18 @@
   when: hacker__install_metasploit | bool
 
 #-------------------------------------------------------------------
+# subfinder
+#-------------------------------------------------------------------
+- name: hacker | install subfinder
+  shell: |
+    go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+  args:
+    creates: "/home/{{ ansible_ssh_user }}/go/bin/subfinder"
+  tags:
+    - hacker
+    - hacker__subfinder
+
+#-------------------------------------------------------------------
 # Wordlists / Data
 #-------------------------------------------------------------------
 - name: hacker | install packages - wordlists

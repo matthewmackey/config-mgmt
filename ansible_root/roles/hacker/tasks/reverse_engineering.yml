@@ -56,7 +56,7 @@
         chdir: "{{ hacker__john_home }}/src"
         creates: "{{ hacker__john_home }}/run/john"
 
-    - name: hacker | symlink John the Ripper into PATH
+    - name: hacker | symlink John the Ripper binary into the PATH
       ansible.builtin.file:
         state: link
         src: "{{ hacker__john_home }}/run/john"

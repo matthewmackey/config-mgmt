@@ -9,3 +9,4 @@ hacker__install_wordlists: no
 
 hacker__exploitdb_version: 2022-09-02
 hacker__john_version: bleeding-jumbo
+hacker__massdns_version:  v1.0.0

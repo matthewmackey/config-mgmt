@@ -56,6 +56,34 @@
     - hacker__httprobe
 
 #-------------------------------------------------------------------
+# massdns
+#-------------------------------------------------------------------
+- name: hacker | Block for massdns
+  tags:
+    - hacker
+    - hacker__massdns
+  vars:
+    hacker__massdns_home: "{{ hacker__tools_dir }}/massdns"
+  block:
+    - name: hacker | clone massdns repository
+      ansible.builtin.git:
+        repo: https://github.com/blechschmidt/massdns
+        dest: "{{ hacker__massdns_home }}"
+        version: "{{ hacker__massdns_version }}"
+
+    - name: hacker | build massdns from source
+      command: make
+      args:
+        chdir: "{{ hacker__massdns_home }}"
+        creates: "{{ hacker__massdns_home }}/bin/massdns"
+
+    - name: hacker | symlink massdns binary into the PATH
+      ansible.builtin.file:
+        state: link
+        src: "{{ hacker__massdns_home }}/bin/massdns"
+        dest: "{{ hacker__tools_bin_dir }}/massdns"
+
+#-------------------------------------------------------------------
 # Metasploit
 #
 # The `msfinstall` program will install APT keys and the `metasploit-framework` package.
@@ -80,7 +108,7 @@
 #-------------------------------------------------------------------
 - name: hacker | install packages - wordlists
   ansible.builtin.git:
-    repo: 'https://github.com/danielmiessler/SecLists.git'
+    repo: https://github.com/danielmiessler/SecLists.git
     version: '2021.2'
     dest: "{{ hacker__tools_dir }}/SecLists"
   tags:

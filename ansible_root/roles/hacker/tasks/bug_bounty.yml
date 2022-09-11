@@ -44,6 +44,18 @@
     - hacker__ffuf
 
 #-------------------------------------------------------------------
+# httprobe
+#-------------------------------------------------------------------
+- name: hacker | install httprobe
+  shell: |
+    go install github.com/tomnomnom/httprobe@latest
+  args:
+    creates: "/home/{{ ansible_ssh_user }}/go/bin/httprobe"
+  tags:
+    - hacker
+    - hacker__httprobe
+
+#-------------------------------------------------------------------
 # Metasploit
 #
 # The `msfinstall` program will install APT keys and the `metasploit-framework` package.

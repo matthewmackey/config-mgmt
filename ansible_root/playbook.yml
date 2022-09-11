@@ -46,6 +46,11 @@
         - never
         - go
 
+    - name: hacker
+      tags:
+        - never
+        - hacker
+
     - name: hashicorp
       tags:
         - never

@@ -1,0 +1,66 @@
+#-------------------------------------------------------------------
+# amass
+#-------------------------------------------------------------------
+- name: hacker | install amass
+  shell: |
+    go install -v github.com/OWASP/Amass/v3/...@master
+  args:
+    creates: "/home/{{ ansible_ssh_user }}/go/bin/amass"
+  tags:
+    - hacker
+    - hacker__amass
+
+#-------------------------------------------------------------------
+# ExploitDB: Searchsploit
+#-------------------------------------------------------------------
+- name: hacker - install exploitdb/searchsploit
+  tags:
+    - hacker
+    - hacker__searchsploit
+  when: hacker__install_searchsploit | bool
+  block:
+    - name: hacker | download exploitdb project w/ searchsploit tools
+      ansible.builtin.git:
+        repo: 'https://github.com/offensive-security/exploitdb.git'
+        version: "{{ hacker__exploitdb_version }}"
+        dest: "{{ hacker__tools_dir }}/exploitdb"
+
+    - name: hacker | symlink searchsploit into PATH from exploitdb project
+      ansible.builtin.file:
+        state: link
+        src: "{{ hacker__tools_dir }}/exploitdb/searchsploit"
+        dest: "{{ hacker__tools_bin_dir }}/searchsploit"
+
+#-------------------------------------------------------------------
+# Metasploit
+#
+# The `msfinstall` program will install APT keys and the `metasploit-framework` package.
+#
+# See: https://docs.metasploit.com/docs/using-metasploit/getting-started/nightly-installers.html
+#-------------------------------------------------------------------
+- name: hacker | install metasploit via their omnibus installer
+  shell: |
+    curl \
+      https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > /tmp/msfinstall && \
+    chmod 755 /tmp/msfinstall && \
+    /tmp/msfinstall
+  args:
+    creates: /opt/metasploit-framework/bin/msfconsole
+  tags:
+    - hacker
+    - hacker__metasploit
+  when: hacker__install_metasploit | bool
+
+#-------------------------------------------------------------------
+# Wordlists / Data
+#-------------------------------------------------------------------
+- name: hacker | install packages - wordlists
+  ansible.builtin.git:
+    repo: 'https://github.com/danielmiessler/SecLists.git'
+    version: '2021.2'
+    dest: "{{ hacker__tools_dir }}/SecLists"
+  tags:
+    - hacker
+    - hacker__wordlists
+  when: hacker__install_wordlists | bool
+

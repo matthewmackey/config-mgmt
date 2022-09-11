@@ -1,75 +1,11 @@
 ---
-hacker_tools_dir: "{{ home_dir }}/tools"
-hacker_tools_bin_dir: "{{ hacker_tools_dir }}/bin"
-hacker_install_burp: no
+hacker__tools_dir: "/opt/hacker"
+hacker__tools_bin_dir: "{{ hacker__tools_dir }}/bin"
 
-#-------------------------------------------------------------------------------
-# PACKAGES / SNAPS
-#-------------------------------------------------------------------------------
-hacker_packages_common:
-  - ack-grep
-  - bzip2
-  - curl
-  - fd-find
-  - fzf
-  - git
-  - gzip
-  - htop
-  - jq
-  - pigz
-  - p7zip-full
-  - ripgrep
-  - sqlite3
-  - tmux
-  - tree
-  - wget
-  - xclip
-  - xsel
-  - xz-utils
+hacker__install_burp: no
+hacker__install_metasploit: no
+hacker__install_searchsploit: no
+hacker__install_wordlists: no
 
-hacker_packages_tools:
-  - ascii
-
-hacker_snaps_tools: []
-  # - amass
-  # - john-the-ripper
-
-hacker_packages_pentest:
-  - arping
-  - arp-scan
-  - iputils-ping
-  - iputils-tracepath
-  - mysql-client
-  - net-tools
-  - nikto
-  - nmap
-  - tshark
-  - whois
-
-hacker_snaps_pentest: []
-
-# hacker_packages_forensics:
-#   - binwalk
-#   - foremost
-#   - steghide
-
-# hacker_packages_reverse_engr:
-#   - fs-uae
-#   - fs-uae-launcher
-
-# UNUSED
-hacker_packages_ctf:
-  - hashcash
-
-# UNUSED
-hacker_packages_radio:
-  - bluez-hcidump
-
-# UNUSED
-hacker_packages_net_gui:
-  - wireshark
-
-# UNUSED
-hacker_snaps_gui:
-  - postman
-
+hacker__exploitdb_version: 2022-09-02
+hacker__john_version: bleeding-jumbo

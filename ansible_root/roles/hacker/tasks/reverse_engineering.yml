@@ -1,0 +1,80 @@
+#-------------------------------------------------------------------
+# Forensics
+#-------------------------------------------------------------------
+- name: hacker | install packages - forensics
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    state: present
+    name: "{{ hacker__packages_forensics }}"
+  vars:
+    hacker__packages_forensics:
+      - binwalk
+      - foremost
+      - steghide
+  tags:
+    - hacker
+    - hacker__forensics
+
+#-------------------------------------------------------------------
+# John the Ripper
+#-------------------------------------------------------------------
+- name: hacker | Block for John the Ripper
+  tags:
+    - hacker
+    - hacker__john
+  vars:
+    hacker__john_home: "{{ hacker__tools_dir }}/john"
+    hacker__packages_john_dependencies:
+      - build-essential
+      - git
+      - libbz2-dev
+      - libgmp-dev
+      - libpcap-dev
+      - libssl-dev
+      - pkg-config
+      - yasm
+      - zlib1g-dev
+  block:
+    - name: hacker | install John the Ripper dependencies
+      become: yes
+      become_user: root
+      ansible.builtin.apt:
+        state: present
+        name: "{{ hacker__packages_john_dependencies }}"
+
+    - name: hacker | checkout latest John the Ripper source code
+      ansible.builtin.git:
+        repo: https://github.com/openwall/john
+        dest: "{{ hacker__john_home }}"
+        version: "{{ hacker__john_version }}"
+
+    - name: hacker | build John the Ripper from source
+      shell: |
+        ./configure && make -s clean && make -sj4
+      args:
+        chdir: "{{ hacker__john_home }}/src"
+        creates: "{{ hacker__john_home }}/run/john"
+
+    - name: hacker | symlink John the Ripper into PATH
+      ansible.builtin.file:
+        state: link
+        src: "{{ hacker__john_home }}/run/john"
+        dest: "{{ hacker__tools_bin_dir }}/john"
+
+#-------------------------------------------------------------------
+# Reverse Engineering
+#-------------------------------------------------------------------
+- name: hacker | install packages - reverse engineering
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    state: present
+    name: "{{ hacker__packages_reverse_engr }}"
+  vars:
+    hacker__packages_reverse_engr:
+      - fs-uae
+      - fs-uae-launcher
+  tags:
+    - hacker
+    - hacker__reverse_engr

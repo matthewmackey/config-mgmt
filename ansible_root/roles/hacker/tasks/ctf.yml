@@ -1,0 +1,15 @@
+#-------------------------------------------------------------------
+# CTF Tools
+#-------------------------------------------------------------------
+- name: hacker | install packages - CTF tools
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    state: present
+    name: "{{ hacker__packages_ctf }}"
+  vars:
+    hacker__packages_ctf:
+      - hashcash
+  tags:
+    - hacker
+    - hacker__ctf

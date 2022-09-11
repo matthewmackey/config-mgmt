@@ -1,117 +1,153 @@
----
-- name: Create tools and tools/bin directories
-  file:
-    state: directory
-    dest: "{{ hacker_tools_bin_dir }}"
-    owner: "{{ username }}"
-    group: "{{ username }}"
-    mode: 0755
+#-------------------------------------------------------------------
+# Setup tools directories
+#-------------------------------------------------------------------
+- name: hacker | setup hacker directories
+  become: yes
+  become_user: root
+  tags:
+    - hacker
+    - hacker__setup
+  block:
+    - name: hacker | create "hacker" group
+      ansible.builtin.group:
+        name: hacker
+        state: present
+
+    - name: hacker | add developer user ({{ common__user }}) to "hacker" group
+      ansible.builtin.user:
+        name: "{{ common__user }}"
+        groups: hacker
+        append: yes
+
+    - name: hacker | create hacker tools directory
+      ansible.builtin.file:
+        state: directory
+        dest: "{{ hacker__tools_dir }}"
+        owner:  root
+        group:  hacker
+        mode: 0775
+
+    - name: hacker | create tools bin directory
+      ansible.builtin.file:
+        state: directory
+        dest: "{{ hacker__tools_bin_dir }}"
+        owner: root
+        group: hacker
+        mode: 0775
 
 #-------------------------------------------------------------------
 # Common
 #-------------------------------------------------------------------
-- name: Install Hacker "Common" packages
+- name: hacker | install packages - common
   become: yes
-  apt:
+  become_user: root
+  ansible.builtin.apt:
     state: present
-    name: "{{ hacker_packages_common }}"
-  tags: hacker_common
+    name: "{{ hacker__packages_common }}"
+  vars:
+    hacker__packages_common:
+      - ack-grep
+      - ascii
+      - bzip2
+      - curl
+      - fd-find
+      - fzf
+      - git
+      - gzip
+      - htop
+      - jq
+      - pigz
+      - p7zip-full
+      - ripgrep
+      - tmux
+      - tree
+      - wget
+      - xclip
+      - xsel
+      - xz-utils
+  tags:
+    - hacker
+    - hacker__common
 
 #-------------------------------------------------------------------
-# Tools
+# DB
 #-------------------------------------------------------------------
-- name: Install Hacker "Tools"
-  tags: hacker_tools
+- name: hacker | install packages - DB
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    state: present
+    name: "{{ hacker__packages_db }}"
+  vars:
+    hacker__packages_db:
+      - mysql-client
+      - sqlite3
+  tags:
+    - hacker
+    - hacker__db
+
+#-------------------------------------------------------------------
+# Network
+#-------------------------------------------------------------------
+- name: hacker - network tools
+  become: yes
+  become_user: root
+  vars:
+    hacker__packages_net_tools:
+      - arping
+      - arp-scan
+      - iputils-ping
+      - iputils-tracepath
+      - net-tools
+      - nikto
+      - nmap
+      - tshark
+      - whois
+    hacker__packages_net_tools_gui:
+      - wireshark
   block:
+    - name: hacker | install packages - network tools
+      ansible.builtin.apt:
+        state: present
+        name: "{{ hacker__packages_net_tools }}"
+      tags:
+        - hacker
+        - hacker__net_tools
 
-  - name: Install Hacker "Tools" packages
-    become: yes
-    apt:
-      state: present
-      name: "{{ hacker_packages_tools }}"
-
-  - name: Install Hacker "Tools" Snaps
-    become: yes
-    snap:
-      state: present
-      name: "{{ hacker_snaps_tools }}"
-
-
-#-------------------------------------------------------------------
-# Wordlists / Data
-#-------------------------------------------------------------------
-- name: Install "SecLists"
-  tags: hacker_seclists
-  git:
-    repo: 'https://github.com/danielmiessler/SecLists.git'
-    version: '2021.2'
-    dest: "{{ hacker_tools_dir }}/SecLists"
-
+    - name: hacker | install packages - network tools (GUI)
+      ansible.builtin.apt:
+        state: present
+        name: "{{ hacker__packages_net_tools_gui }}"
+      vars:
+      tags:
+        - hacker
+        - hacker__net_tools_gui
+        - gui
 
 #-------------------------------------------------------------------
-# Pentest
+# Bug Bounty
 #-------------------------------------------------------------------
-- name: Install Hacker "Pentest" tools
-  tags: hacker_pentest
-  block:
-
-  - name: Install Hacker "Pentest" packages
-    become: yes
-    apt:
-      state: present
-      name: "{{ hacker_packages_pentest }}"
-
-  - name: Install Hacker "Pentest" Snaps
-    become: yes
-    snap:
-      state: present
-      name: "{{ hacker_snaps_pentest }}"
-
-  - name: Install metasploit via their omnibus installer
-    shell: |
-      curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > /tmp/msfinstall && \
-      chmod 755 /tmp/msfinstall && \
-      /tmp/msfinstall
-    args:
-      creates: /usr/bin/msfconsole
-
-  - name: Download exploitdb project w/ searchsploit tools
-    git:
-      repo: 'https://github.com/offensive-security/exploitdb.git'
-      version: '2021-06-19'
-      dest: "{{ hacker_tools_dir }}/exploitdb"
-
-  - name: Symlink searchsploit into PATH from exploitdb project
-    become: yes
-    file:
-      state: link
-      src: "{{ hacker_tools_dir }}/exploitdb/searchsploit"
-      dest: "{{ hacker_tools_bin_dir }}/searchsploit"
+- import_tasks: bug_bounty.yml
 
 #-------------------------------------------------------------------
-# MISC
+# CTF
 #-------------------------------------------------------------------
-# - name: Install Hacker "Forensics" packages
-#   become: yes
-#   apt:
-#     state: present
-#     name: "{{ hacker_packages_forensics }}"
-#   tags:
-#     - hacker_forensics
+- import_tasks: ctf.yml
 
-# - name: Install Hacker "Reverse Engineering" packages
-#   become: yes
-#   apt:
-#     state: present
-#     name: "{{ hacker_packages_reverse_engr }}"
-#   tags:
-#     - hacker_reverse_eng
+#-------------------------------------------------------------------
+# Hardware
+#-------------------------------------------------------------------
+- import_tasks: hardware.yml
+
+#-------------------------------------------------------------------
+# Reverse Engineering / Forensics
+#-------------------------------------------------------------------
+- import_tasks: reverse_engineering.yml
 
 #-------------------------------------------------------------------
 # Burp Suite
 #-------------------------------------------------------------------
 - import_tasks: burp.yml
   tags:
-    - burp
-  when: hacker_install_burp
-
+    - gui
+  when: hacker__install_burp

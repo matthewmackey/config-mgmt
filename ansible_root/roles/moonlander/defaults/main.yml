@@ -1,0 +1,4 @@
+moonlander__wally_version: 2.1.3
+moonlander__wally_bin_url: https://github.com/zsa/wally/releases/download/{{ moonlander__wally_version }}-linux/wally
+moonlander__wally_desktop_url: https://raw.githubusercontent.com/zsa/wally/{{ moonlander__wally_version }}-linux/dist/linux64/wally.desktop
+moonlander__wally_icon_url: https://raw.githubusercontent.com/zsa/wally/{{ moonlander__wally_version }}-linux/appicon.png

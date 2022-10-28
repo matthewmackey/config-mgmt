@@ -66,6 +66,11 @@
         - never
         - kubectl
 
+    - name: moonlander
+      tags:
+        - never
+        - moonlander
+
     - name: qemu_kvm
       tags:
         - never

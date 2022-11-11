@@ -5,3 +5,5 @@ vault.yml
 # committed to VCS
 local
 host_vars/local.yml
+
+local-mmlenovo

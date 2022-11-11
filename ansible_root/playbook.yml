@@ -1,7 +1,6 @@
 ---
-- name: Configure local machine
-  hosts: local
-  connection: local
+- name: Run any roles selectively against all hosts
+  hosts: all
   roles:
     - name: common
       tags:
@@ -100,6 +99,11 @@
       tags:
         - never
         - slack
+
+    - name: sudoers
+      tags:
+        - never
+        - sudoers
 
     - name: tools_common
       tags:

@@ -79,3 +79,5 @@ mmmasters:
 mmworkers:
   hosts:
     mmworker0:
+
+# vim: set ft=yaml:

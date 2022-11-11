@@ -1,0 +1,8 @@
+# `localhost` Inventory File:
+#
+# This is an example of an inventory file that can be used to run playbooks
+# against the `localhost` machine.
+all:
+  hosts:
+    local:
+      ansible_connection: local

@@ -16,7 +16,7 @@ all:
     mmworker0:
     mmhacker:
       ansible_python_interpreter: /usr/bin/python3
-    tower:
+    mmtower:
       ansible_python_interpreter: /usr/bin/python3
       sudoers_nopass_users:
         - mmachaj
@@ -32,16 +32,16 @@ all:
 dev_machines:
   hosts:
     mmlenovo:
-    tower:
+    mmtower:
 
 dns_servers:
   hosts:
-    tower:
+    mmtower:
 
 dns_clients:
   hosts:
     mmlenovo:
-    tower:
+    mmtower:
 
 hacker_vms:
   hosts:
@@ -49,7 +49,7 @@ hacker_vms:
     kali:
     mmlenovo:
     mmhacker:
-    tower:
+    mmtower:
 
 local_vms:
   hosts:

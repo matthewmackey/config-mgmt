@@ -1,0 +1,3 @@
+---
+sudoers_nopass_users:
+  - cm

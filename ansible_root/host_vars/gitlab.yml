@@ -1,3 +1,11 @@
 ---
 sudoers_nopass_users:
   - cm
+  - gitlab
+users:
+  - name: cm
+    gecos: Config Management
+    groups: []
+  - name: gitlab
+    gecos: Gitlab
+    groups: []

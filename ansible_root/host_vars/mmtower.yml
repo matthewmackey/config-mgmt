@@ -6,3 +6,11 @@ sudoers_nopass_users:
   - cm
   - mmachaj
   - mmackey
+users:
+  - name: app
+    gecos: App
+    groups:
+      - docker
+  - name: cm
+    gecos: Config Management
+    groups: []

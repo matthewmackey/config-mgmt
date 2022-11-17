@@ -1,0 +1,23 @@
+#-------------------------------------------------------------------------------
+# This is just a simple playbook to setup user accounts and NOPASSWD sudo access
+# mainly on VMs as I need them for various dev tasks.
+#-------------------------------------------------------------------------------
+- name: Setup user accounts
+  hosts: all
+  become: yes
+  become_user: root
+  tasks:
+    - name: Create user accounts
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        state: present
+        comment: "{{ item.gecos }}"
+        shell: /bin/bash
+        groups: "{{ item.groups }}"
+        append: yes
+      loop: "{{ users }}"
+      tags: users
+
+    - import_role:
+        name: sudoers
+      tags: sudoers

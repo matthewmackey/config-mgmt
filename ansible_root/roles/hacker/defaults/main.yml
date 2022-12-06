@@ -7,6 +7,10 @@ hacker__install_metasploit: no
 hacker__install_searchsploit: no
 hacker__install_wordlists: no
 
+hacker__burp_installer_checksum: sha256:862f61a79bfe4dc6812e0cb4f64987b3bd4d17973cfb1887e86ad0570d781317
+hacker__burp_installer_filename: burpsuite_community_linux_v2022_11_4.sh
+hacker__burp_installer_url: https://portswigger-cdn.net/burp/releases/download?product=community&version=2022.11.4&type=Linux
+
 hacker__exploitdb_version: 2022-09-02
 hacker__john_version: bleeding-jumbo
 hacker__massdns_version:  v1.0.0

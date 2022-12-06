@@ -149,5 +149,6 @@
 #-------------------------------------------------------------------
 - import_tasks: burp.yml
   tags:
+    - burp
     - gui
   when: hacker__install_burp

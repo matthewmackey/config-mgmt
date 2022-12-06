@@ -1,0 +1,2 @@
+epson_scanner__tarball_url: https://download2.ebz.epson.net/epsonscan2/common/deb/x64/epsonscan2-bundle-6.7.0.0.x86_64.deb.tar.gz
+epson_scanner__tarball_install_script_path: epsonscan2-bundle-6.7.0.0.x86_64.deb/install.sh

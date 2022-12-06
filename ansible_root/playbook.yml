@@ -40,6 +40,11 @@
         - docker
         - docker_credentials_helper
 
+    - name: epson_scanner
+      tags:
+        - never
+        - epson
+
     - name: go
       tags:
         - never

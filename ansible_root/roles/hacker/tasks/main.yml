@@ -152,3 +152,12 @@
     - burp
     - gui
   when: hacker__install_burp
+
+#-------------------------------------------------------------------
+# OWASP ZAP
+#-------------------------------------------------------------------
+- import_tasks: zap.yml
+  tags:
+    - zap
+    - gui
+  when: hacker__install_zap

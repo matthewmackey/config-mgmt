@@ -6,6 +6,7 @@ hacker__install_burp: no
 hacker__install_metasploit: no
 hacker__install_searchsploit: no
 hacker__install_wordlists: no
+hacker__install_zap: no
 
 hacker__burp_installer_checksum: sha256:862f61a79bfe4dc6812e0cb4f64987b3bd4d17973cfb1887e86ad0570d781317
 hacker__burp_installer_filename: burpsuite_community_linux_v2022_11_4.sh
@@ -14,3 +15,9 @@ hacker__burp_installer_url: https://portswigger-cdn.net/burp/releases/download?p
 hacker__exploitdb_version: 2022-09-02
 hacker__john_version: bleeding-jumbo
 hacker__massdns_version:  v1.0.0
+
+hacker__zap_install_dir: /opt/zaproxy
+hacker__zap_install_symlink_dir: /usr/local/bin
+hacker__zap_installer_checksum: sha256:26d4885e133155197052719dcbba5c259d2d25ff8dc6cc7d6e2cebb52b124f4d
+hacker__zap_installer_filename: ZAP_2_12_0_unix.sh
+hacker__zap_installer_url: https://github.com/zaproxy/zaproxy/releases/download/v2.12.0/ZAP_2_12_0_unix.sh

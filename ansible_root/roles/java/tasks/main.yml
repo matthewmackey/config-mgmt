@@ -1,0 +1,29 @@
+# SEE: https://petewan.com/blog-post/install-and-manage-multiple-java-jdk-and-jre-versions-on-ubuntu-20-04/
+
+- name: java | Install Java 11 OpenJDK Development Kit (JDK) (headless)
+  become: yes
+  become_user: root
+  apt:
+    state: present
+    name:
+      - openjdk-11-jdk-headless
+
+- name: java | Install Java 13 OpenJDK Development Kit (JDK) (headless)
+  become: yes
+  become_user: root
+  apt:
+    state: present
+    name:
+      - openjdk-13-jdk-headless
+
+# We picked this latest version to use for any GUI Java applications
+# Implicitly includes the headless .deb package
+- name: java | Install Java 17 OpenJDK Development Kit (JDK) (non-headless)
+  become: yes
+  become_user: root
+  apt:
+    state: present
+    name:
+      - openjdk-17-jdk
+  tags:
+    - gui

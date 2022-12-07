@@ -65,6 +65,11 @@
         - never
         - google_cloud_sdk
 
+    - name: java
+      tags:
+        - never
+        - java
+
     - name: kubectl
       tags:
         - never

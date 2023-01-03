@@ -34,3 +34,11 @@
     name: "{{ tools_common_gui__gnome_shell_packages }}"
     state: present
   when: is_gnome_shell_installed.rc == 0
+
+#-------------------------------------------------------------------
+# 1Password
+#-------------------------------------------------------------------
+- import_tasks: 1password.yml
+  tags:
+    - 1password
+    - gui

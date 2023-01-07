@@ -8,7 +8,7 @@
   apt_repository:
     state: present
     repo: deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ focal main
-    filename: azure-cli.list
+    filename: azure-cli
     update_cache: yes
 
 - name: Install Azure CLI pre-requistes

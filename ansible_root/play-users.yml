@@ -1,12 +1,23 @@
 #-------------------------------------------------------------------------------
 # This is just a simple playbook to setup user accounts and NOPASSWD sudo access
 # mainly on VMs as I need them for various dev tasks.
+#
+# This whole thing is super hacky and needs to be thought out more.  It
+# currently gets the job done though for setting up users, groups and sudo for
+# hosts quickly.
 #-------------------------------------------------------------------------------
-- name: Setup user accounts
+- name: Setup users and groups
   hosts: all
   become: yes
   become_user: root
   tasks:
+    - name: Create groups
+      ansible.builtin.group:
+        name: "{{ item.name }}"
+        state: present
+      loop: "{{ groups_to_create }}"
+      tags: groups
+
     - name: Create user accounts
       ansible.builtin.user:
         name: "{{ item.name }}"

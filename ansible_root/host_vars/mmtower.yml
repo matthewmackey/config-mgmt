@@ -6,11 +6,16 @@ sudoers_nopass_users:
   - cm
   - mmachaj
   - mmackey
+# Can't use `groups` as variable name b/c that conflicts with built-in `groups`
+# variable used by Ansible
+groups_to_create:
+  - name: gitlab
 users:
   - name: app
     gecos: App
     groups:
       - docker
+      - gitlab
   - name: cm
     gecos: Config Management
     groups: []

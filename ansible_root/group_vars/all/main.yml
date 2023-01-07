@@ -42,7 +42,6 @@ packages_common:
   - tmux
   - tree
   - vim
-  - wine
   - wireshark
   - wmctrl
   - xclip

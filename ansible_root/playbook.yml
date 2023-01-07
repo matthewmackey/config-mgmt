@@ -50,6 +50,11 @@
         - never
         - go
 
+    - name: google_cloud_sdk
+      tags:
+        - never
+        - google_cloud_sdk
+
     - name: hacker
       tags:
         - never
@@ -60,10 +65,10 @@
         - never
         - hashicorp
 
-    - name: google_cloud_sdk
+    - name: ivpn
       tags:
         - never
-        - google_cloud_sdk
+        - ivpn
 
     - name: java
       tags:

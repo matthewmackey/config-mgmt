@@ -1,0 +1,40 @@
+- name: Install IVPN APT public key
+  become: yes
+  become_user: root
+  apt_key:
+    state: present
+    url: https://repo.ivpn.net/stable/ubuntu/generic.gpg
+    keyring: /usr/share/keyrings/ivpn-archive-keyring.gpg
+  tags:
+    - ivpn
+
+- name: Add IVPN APT repository
+  become: yes
+  become_user: root
+  apt_repository:
+    state: present
+    # From: curl -fsSL https://repo.ivpn.net/stable/ubuntu/generic.list
+    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/ivpn-archive-keyring.gpg] https://repo.ivpn.net/stable/ubuntu ./generic main"
+    filename: ivpn
+    update_cache: yes
+  tags:
+    - ivpn
+
+- name: Install IVPN CLI package
+  become: yes
+  become_user: root
+  apt:
+    state: present
+    name: ivpn
+  tags:
+    - ivpn
+
+- name: Install IVPN GUI package
+  become: yes
+  become_user: root
+  apt:
+    state: present
+    name: ivpn-ui
+  tags:
+    - ivpn
+    - gui

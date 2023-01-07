@@ -24,7 +24,8 @@
   become: yes
   become_user: root
   apt:
-    state: present
+    # using latest b/c pkg updates frequently and we want to re-run this role often
+    state: latest
     name: ivpn
   tags:
     - ivpn
@@ -33,7 +34,8 @@
   become: yes
   become_user: root
   apt:
-    state: present
+    # using latest b/c pkg updates frequently and we want to re-run this role often
+    state: latest
     name: ivpn-ui
   tags:
     - ivpn

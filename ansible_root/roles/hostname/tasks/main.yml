@@ -1,0 +1,42 @@
+#------------------------------------------------------------------------------
+# TODO:
+#   - make looking /etc/hosts IP address more intelligent so you don't have to
+#   provide the interface name to grab the IP from
+#
+# SEE:
+#   - https://serverfault.com/questions/331936/setting-the-hostname-fqdn-or-short-name
+#------------------------------------------------------------------------------
+- name: hostname | Verify an interface to grab the IP for /etc/hosts has been provided
+  fail:
+    msg: "hostname__etc_hosts_interace is not defined"
+  when: hostname__etc_hosts_interface is not defined
+  tags:
+    - setup
+
+- name: hostname | Lookup IP of /etc/hosts network interface
+  set_fact:
+    hostname__etc_hosts_ip: "{{ hostvars[inventory_hostname]['ansible_'~hostname__etc_hosts_interface].ipv4.address }}"
+  tags:
+    - hostname
+    - setup
+
+- name: hostname | Set hostname to non-FQDN via system utility
+  become: yes
+  become_user: root
+  hostname:
+    name: "{{ hostname__hostname }}"
+  tags:
+    - hostname
+
+- name: hostname | Add /etc/hosts entry mapping host's IPv4 address to FQDN and non-FQDN
+  become: yes
+  become_user: root
+  lineinfile:
+    state: present
+    dest: /etc/hosts
+    line: "{{ hostname__etc_hosts_ip }} {{ hostname__hostname_fqdn }} {{ hostname__hostname }}"
+    regexp: "^{{ hostname__etc_hosts_ip }}"
+    # line: "{{ ansible_default_ipv4.address }} {{ hostname__hostname_fqdn }} {{ hostname__hostname }}"
+    # regexp: "^{{ ansible_default_ipv4.address }}"
+  tags:
+    - hostname

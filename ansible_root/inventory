@@ -7,9 +7,9 @@ all:
       ansible_host: 10.3.236.137
       ansible_python_interpreter: /usr/bin/python3
       ansible_user: ubuntu
-    gitlab:
-      ansible_user: cm
-      ansible_ssh_private_key_file: /home/mmackey/.ssh/ansible
+    # gitlab:
+    #   ansible_user: cm
+    #   ansible_ssh_private_key_file: /home/mmackey/.ssh/ansible
     gitlab14100:
       ansible_user: cm
       ansible_ssh_private_key_file: /home/mmackey/.ssh/ansible
@@ -48,6 +48,10 @@ dns_clients:
   hosts:
     mmlenovo:
     mmtower:
+
+gitlab:
+  hosts:
+    gitlab14100:
 
 hacker_vms:
   hosts:

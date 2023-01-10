@@ -1,0 +1,36 @@
+---
+- name: Configure Gitlab (CE)
+  hosts: gitlab
+  become: yes
+  become_user: root
+  vars:
+    gitlab_domain: xpwn.net
+    gitlab__version: 14.10.5
+
+  pre_tasks:
+    - name: Update APT cache
+      ansible.builtin.apt:
+        update_cache: yes
+        cache_valid_time: 360
+
+    - name: Get Gitlab non-FQDN hostname
+      set_fact:
+        gitlab__hostname: "gitlab{{ gitlab__version | replace('.', '') }}"
+      tags:
+        - setup
+
+    - name: Get Gitlab FQDN hostname
+      set_fact:
+        gitlab__hostname_fqdn: "{{ gitlab__hostname }}.{{ gitlab_domain }}"
+      tags:
+        - setup
+
+  roles:
+    - role: hostname
+      vars:
+        hostname__hostname: "{{ gitlab__hostname }}"
+        hostname__hostname_fqdn: "{{ gitlab__hostname_fqdn }}"
+      tags:
+        - setup
+
+    - role: gitlab

@@ -1,0 +1,37 @@
+- name: Install Gitlab dependencies
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - ca-certificates
+    - curl
+    - openssh-server
+    - perl
+    - tzdata
+  tags:
+    - gitlab
+    - config
+
+- name: Run custom Gitlab (CE) script to setup APT configuration
+  become: yes
+  become_user: root
+  shell: |
+    curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
+  tags:
+    - gitlab
+    - config
+
+- name: Install Gitlab (CE)
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    name: gitlab-ce={{ gitlab__version }}-ce.0
+    state: present
+  environment:
+    EXTERNAL_URL: "{{ gitlab__hostname_fqdn }}"
+    GITLAB_ROOT_PASSWORD: "{{ gitlab__root_password }}"
+  tags:
+    - gitlab
+    - install

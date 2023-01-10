@@ -42,7 +42,7 @@
   become: yes
   apt:
     name: vagrant
-    state: present
+    state: latest
   tags: vagrant
 
 - name: Install `vault`

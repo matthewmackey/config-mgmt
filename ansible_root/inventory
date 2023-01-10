@@ -10,6 +10,9 @@ all:
     gitlab:
       ansible_user: cm
       ansible_ssh_private_key_file: /home/mmackey/.ssh/ansible
+    gitlab14100:
+      ansible_user: cm
+      ansible_ssh_private_key_file: /home/mmackey/.ssh/ansible
     kali:
       ansible_python_interpreter: /usr/bin/python3
     local:

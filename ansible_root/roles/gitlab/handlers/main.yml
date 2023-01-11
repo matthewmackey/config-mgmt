@@ -1,0 +1,7 @@
+- name: gitlab | reconfigure
+  become: yes
+  become_user: root
+  shell: |
+    gitlab-ctl reconfigure
+  tags:
+    - gitlab

@@ -1,4 +1,4 @@
-- name: Install Gitlab dependencies
+- name: gitlab | Install Gitlab dependencies
   become: yes
   become_user: root
   ansible.builtin.apt:
@@ -12,18 +12,18 @@
     - tzdata
   tags:
     - gitlab
-    - config
+    - pre-install
 
-- name: Run custom Gitlab (CE) script to setup APT configuration
+- name: gitlab | Run custom Gitlab (CE) script to setup APT configuration
   become: yes
   become_user: root
   shell: |
     curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
   tags:
     - gitlab
-    - config
+    - pre-install
 
-- name: Install Gitlab (CE)
+- name: gitlab | Install Gitlab (CE)
   become: yes
   become_user: root
   ansible.builtin.apt:
@@ -35,3 +35,31 @@
   tags:
     - gitlab
     - install
+
+- name: gitlab | Bind Redis to an IP address (0.0.0.0) to enable Redis TCP support
+  become: yes
+  become_user: root
+  ansible.builtin.lineinfile:
+    state: present
+    path: /etc/gitlab/gitlab.rb
+    line: "redis['bind'] = '0.0.0.0'"
+    insertafter: "^# redis\\['bind'\\].*"
+  tags:
+    - gitlab
+    - configure
+  notify:
+    - gitlab | reconfigure
+
+- name: gitlab | Set exposed Redis TCP port
+  become: yes
+  become_user: root
+  ansible.builtin.lineinfile:
+    state: present
+    path: /etc/gitlab/gitlab.rb
+    line: "redis['port'] = 6379"
+    insertafter: "^# redis\\['port'\\].*"
+  tags:
+    - gitlab
+    - configure
+  notify:
+    - gitlab | reconfigure

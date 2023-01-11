@@ -1,0 +1,39 @@
+- name: Manage DNS entries in /etc/hosts
+  hosts: lab_hosts
+  become: yes
+  become_user: root
+  # pre_tasks:
+  #   # See: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_delegation.html#delegating-facts
+  #   - name: Gather facts from all Lab hosts
+  #     ansible.builtin.setup:
+  #     delegate_to: "{{ item }}"
+  #     delegate_facts: True
+  #     # See: https://stackoverflow.com/questions/30024664/force-fact-gathering-on-all-hosts
+  #     when: hostvars[item]['ansible_default_ipv4']['address'] is not defined
+  #     run_once: True
+  #     loop: "{{ groups['lab_hosts'] }}"
+  #     # loop: "{{ groups['all'] }}"
+
+  tasks:
+    - name: Add DNS entries to /etc/hosts
+      ansible.builtin.lineinfile:
+        state: present
+        path: /etc/hosts
+        line: "{{ item.ip }} {{ ' '.join(item.dns_names) }}"
+        regexp: "^{{ item.ip }} .*"
+      loop: "{{ lab_dns_entries }}"
+
+  vars:
+    lab_dns_entries:
+      - ip: "{{ hostvars['mmlenovo']['ansible_default_ipv4']['address'] }}"
+        dns_names:
+          - mmlenovo.xpwn.net
+          - github.xpwn.net
+      # Should be: 192.168.86.253
+      - ip: "{{ hostvars['mmtower']['ansible_default_ipv4']['address'] }}"
+        dns_names:
+          - tower.xpwn.net
+      # Can't use default IP for VM reliably b/c private & public IP on VMs
+      - ip: 192.168.86.250
+        dns_names:
+          - gitlab14105.xpwn.net

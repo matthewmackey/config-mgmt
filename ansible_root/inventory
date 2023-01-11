@@ -61,6 +61,12 @@ hacker_vms:
     mmhacker:
     mmtower:
 
+lab_hosts:
+  hosts:
+    mmlenovo:
+    mmtower:
+    gitlab14105:
+
 local_vms:
   hosts:
     cake:

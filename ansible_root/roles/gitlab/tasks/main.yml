@@ -19,6 +19,8 @@
   become_user: root
   shell: |
     curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
+  args:
+    creates: /usr/share/keyrings/gitlab_gitlab-ce-archive-keyring.gpg
   tags:
     - gitlab
     - pre-install

@@ -7,10 +7,18 @@
     gitlab_domain: xpwn.net
 
   pre_tasks:
+    - name: Verify Gitlab root password is provided
+      assert:
+        that:
+          - gitlab__root_password is defined
+        fail_msg: 'Variable not provided: gitlab__root_password'
+
     - name: Update APT cache
       ansible.builtin.apt:
         update_cache: yes
         cache_valid_time: 360
+      tags:
+        - setup
 
     - name: Get Gitlab non-FQDN hostname
       set_fact:

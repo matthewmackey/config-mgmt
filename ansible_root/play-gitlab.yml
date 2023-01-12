@@ -7,11 +7,49 @@
     gitlab_domain: xpwn.net
 
   pre_tasks:
-    - name: Verify Gitlab root password is provided
-      assert:
-        that:
-          - gitlab__root_password is defined
-        fail_msg: 'Variable not provided: gitlab__root_password'
+    #--------------------------------------------------------------------------
+    # TODO: Validate Root Password
+    #
+    # At least starting in 15.7.3 there are more stringent password
+    # requirements than what I was using for 14.10.5.  I couldn't use my usual
+    # test environment basic password.
+    #
+    # This made the `apt-get install gitlab-ce=XXX` to fail with the following
+    # message when I tried to use my usual test env pw on 15.7.3:
+    #
+    #   - "Password must not contain commonly used combinations of words and letters."
+    #
+    # This is the message for a "weak" password as explained here:
+    #
+    #   - https://docs.gitlab.com/ee/user/profile/user_passwords.html#block-weak-passwords
+    #
+    # I figured out a test env password that will work with the weak password
+    # requirements, but I don't have a way to validate a given password against
+    # those requirements because the check involves testing against a known
+    # passwords list which we don't have access to.  The only way to check is
+    # via doing some trial-and-error to figure this out.
+    #
+    # I couldn't find a `gitlab-rake` task to test passwords, but there is one
+    # to reset a password which is what I used to figure out an acceptable
+    # password.  See the folowing link for more info:
+    #
+    #   - https://docs.gitlab.com/ee/security/reset_user_password.html#reset-the-root-password
+    #
+    # For the time being, since we cannot validate a provided password, I am
+    # going to just always fail this playbook with a message about needing a
+    # non-weak password and then the user can decide to allow their password by
+    # setting the `ignore_gitlab_root_password_check` flag to True.
+    #--------------------------------------------------------------------------
+    # - name: Verify Gitlab root password is provided
+    #   assert:
+    #     that:
+    #       - gitlab__root_password is defined
+    #     fail_msg: 'Variable not provided: gitlab__root_password'
+
+    - name: Fail the playbook with message about weak root passwords
+      fail:
+        msg: 'You must provide a non-weak root password.  See coments in playbook and then disable this check if desired with `ignore_gitlab_root_password_check=True`.'
+      when: (ignore_gitlab_root_password_check is not defined) or (not ignore_gitlab_root_password_check|bool)
 
     - name: Update APT cache
       ansible.builtin.apt:

@@ -33,7 +33,12 @@
       - ip: "{{ hostvars['mmtower']['ansible_default_ipv4']['address'] }}"
         dns_names:
           - tower.xpwn.net
+      #------------------------------------------------------------------------
       # Can't use default IP for VM reliably b/c private & public IP on VMs
+      #------------------------------------------------------------------------
+      - ip: 192.168.86.249
+        dns_names:
+          - gitlab1573.xpwn.net
       - ip: 192.168.86.250
         dns_names:
           - gitlab14105.xpwn.net

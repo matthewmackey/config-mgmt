@@ -5,7 +5,6 @@
   become_user: root
   vars:
     gitlab_domain: xpwn.net
-    gitlab__version: 14.10.5
 
   pre_tasks:
     - name: Update APT cache

@@ -13,6 +13,9 @@ all:
     gitlab14105:
       ansible_user: cm
       ansible_ssh_private_key_file: /home/mmackey/.ssh/ansible
+    gitlab1573:
+      ansible_user: cm
+      ansible_ssh_private_key_file: /home/mmackey/.ssh/ansible
     kali:
       ansible_python_interpreter: /usr/bin/python3
     local:
@@ -52,6 +55,7 @@ dns_clients:
 gitlab:
   hosts:
     gitlab14105:
+    gitlab1573:
 
 hacker_vms:
   hosts:
@@ -66,6 +70,7 @@ lab_hosts:
     mmlenovo:
     mmtower:
     gitlab14105:
+    gitlab1573:
 
 local_vms:
   hosts:

@@ -1,0 +1,4 @@
+gitlab__sql_user: gitlab
+# Gitlab doesn't want the usual "md5" prefix on the hash value
+gitlab__sql_user_password_pg_hash: "{{ (gitlab__sql_user_password ~ gitlab__sql_user) | md5 }}"
+gitlab__db_port: 5432

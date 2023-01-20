@@ -38,6 +38,61 @@
     - gitlab
     - install
 
+# SEE: https://docs.gitlab.com/omnibus/settings/database.html#configure-packaged-postgresql-server-to-listen-on-tcpip
+- name: gitlab | Setup Postgres to bind to a TCP port
+  become: yes
+  become_user: root
+  ansible.builtin.lineinfile:
+    state: present
+    path: /etc/gitlab/gitlab.rb
+    line: "postgresql['{{ item.key }}'] = {{ item.val }}"
+    insertafter: "^# postgresql\\['{{ item.key }}'\\].*"
+  tags:
+    - gitlab
+    - configure
+  notify:
+    - gitlab | reconfigure
+    - gitlab | restart postgres
+  # NOTE: pay attention to how quotes are being used on string values vs. Ruby code and integers
+  loop:
+    - key: listen_address
+      val: "\"0.0.0.0\""
+    - key: port
+      val: "{{ gitlab__db_port }}"
+    - key: md5_auth_cidr_addresses
+      val: "%w({{ ' '.join(gitlab__db_extra_md5_auth_cidrs) }})"
+    - key: trust_auth_cidr_addresses
+      val: "%w(127.0.0.1/24)"
+    - key: sql_user
+      val: "\"{{ gitlab__sql_user }}\""
+    - key: sql_user_password
+      val: "\"{{ gitlab__sql_user_password_pg_hash }}\""
+
+- name: gitlab | Setup Rails to connect to Postgres on it's TCP port
+  become: yes
+  become_user: root
+  ansible.builtin.lineinfile:
+    state: present
+    path: /etc/gitlab/gitlab.rb
+    line: "gitlab_rails['{{ item.key }}'] = {{ item.val }}"
+    insertafter: "^# gitlab_rails\\['{{ item.key }}'\\].*"
+  tags:
+    - gitlab
+    - configure
+  notify:
+    - gitlab | reconfigure
+    - gitlab | restart postgres
+  # NOTE: how quotes are being used on string values
+  loop:
+    - key: db_host
+      val: "\"127.0.0.1\""
+    - key: db_port
+      val: "{{ gitlab__db_port }}"
+    - key: db_username
+      val: "\"{{ gitlab__sql_user }}\""
+    - key: db_password
+      val: "\"{{ gitlab__sql_user_password }}\""
+
 - name: gitlab | Bind Redis to an IP address (0.0.0.0) to enable Redis TCP support
   become: yes
   become_user: root

@@ -1,2 +1,5 @@
 gitlab__version: 15.7.3
+gitlab__db_extra_md5_auth_cidrs:
+  - "192.168.86.0/24"
+
 hostname__etc_hosts_interface: enp0s8

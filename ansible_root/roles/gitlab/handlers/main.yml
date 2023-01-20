@@ -5,3 +5,12 @@
     gitlab-ctl reconfigure
   tags:
     - gitlab
+
+- name: gitlab | restart postgres
+  become: yes
+  become_user: root
+  # Note the name difference 'postges' vs. 'postgresql'
+  shell: |
+    gitlab-ctl restart postgresql
+  tags:
+    - gitlab

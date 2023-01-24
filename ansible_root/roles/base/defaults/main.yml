@@ -26,7 +26,6 @@ base__packages:
 
 base__packages_modern:
   - fd-find
-  - httpie
   - ripgrep
   - silversearcher-ag
 

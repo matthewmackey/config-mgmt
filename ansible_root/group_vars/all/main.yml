@@ -1,4 +1,7 @@
 ---
+install_type: minimal
+has_gui: no
+
 username: mmackey
 home_dir: /home/{{ username }}
 

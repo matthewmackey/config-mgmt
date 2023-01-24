@@ -1,13 +1,9 @@
----
 tools_net__packages:
   - arp-scan
-  - bind9-dnsutils
-  - iputils-ping
+  # Provides: tracepath
   - iputils-tracepath
-  - netcat-openbsd
-  # Provides: `netstat`
-  - net-tools
   - nmap
   - socat
   - tcptraceroute
+  # Provides: traceroute
   - traceroute

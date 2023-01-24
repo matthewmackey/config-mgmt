@@ -1,5 +1,5 @@
 # TODO: clean-up this role and put vars into defaults
-- name: Install bitwarden CLI from remote archive
+- name: bitwarden | Install CLI from remote archive
   include_role:
     name: packages
     tasks_from: install_remote_archive.yml

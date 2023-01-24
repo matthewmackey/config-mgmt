@@ -40,12 +40,10 @@
   tags:
     - remote_archives
 
-- include_tasks: modern.yml
-
-- name: Install golang tools
-  shell: |
-    go install {{ item }}
-  with_items:
-    - sigs.k8s.io/kind@v0.14.0
-  tags:
-    - go_tools
+# - name: Install golang tools
+#   shell: |
+#     go install {{ item }}
+#   with_items:
+#     - sigs.k8s.io/kind@v0.14.0
+#   tags:
+#     - go_tools

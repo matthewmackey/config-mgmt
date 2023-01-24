@@ -21,3 +21,36 @@
   ansible.builtin.apt:
     name: kubectl
     state: present
+
+# TODO: clean-up this role and put vars into defaults & maybe add install_kubetools flag
+- name: Install kubernetes CLI utilties from remote archives
+  include_role:
+    name: packages
+    tasks_from: install_remote_archive.yml
+  vars:
+    pkg_archive_name: "{{ item.name }}"
+    pkg_archive_version: "{{ item.version }}"
+    pkg_archive_url: "{{ item.url }}"
+    pkg_archive_filename: "{{ item.filename }}"
+    pkg_archive_checksum: "{{ item.checksum | default('') }}"
+    pkg_archive_binary_path: "{{ item.binary_path }}"
+    pkg_archive_install_dir: "{{ item.install_dir }}"
+    pkg_archive_install_filename: "{{ item.install_filename | default(None) }}"
+  loop:
+    -
+      name: kubectx
+      version: v0.9.4
+      url: https://github.com/ahmetb/kubectx/releases/download/v0.9.4/kubectx_v0.9.4_linux_x86_64.tar.gz
+      filename: kubectx_v0.9.4_linux_x86_64.tar.gz
+      binary_path: ./kubectx
+      install_dir: /usr/local/bin
+    -
+      name: kubens
+      version: v0.9.4
+      url: https://github.com/ahmetb/kubectx/releases/download/v0.9.4/kubens_v0.9.4_linux_x86_64.tar.gz
+      filename: kubens_v0.9.4_linux_x86_64.tar.gz
+      binary_path: ./kubens
+      install_dir: /usr/local/bin
+  tags:
+    - kubectl
+    - remote_archives

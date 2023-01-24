@@ -1,8 +1,7 @@
----
-- name: Bootstrap local machine for other playbooks to run
-  hosts: local
-  connection: local
+- name: Bootstrap machine for other playbooks to run
+  hosts: all
   roles:
-    # Setup default Python w/ virtualenvwrapper installed
-    - name: python
-    - name: sudoers
+    # # Setup default Python w/ virtualenvwrapper installed
+    # - name: python
+    # Setup `cm` user w/ sudoers access
+    - name: bootstrap

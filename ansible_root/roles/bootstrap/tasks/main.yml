@@ -1,0 +1,21 @@
+- name: bootstrap | Create `cm` user for Ansible
+  become: yes
+  become_user: root
+  ansible.builtin.user:
+    name: cm
+    state: present
+    append: yes
+    comment: "Config Management"
+    create_home: yes
+    groups: []
+    home: /home/cm
+    password_lock: yes
+    shell: /bin/bash
+    system: no
+
+# NOT SURE IF THIS WORKS w/ vars properly
+- include_role:
+    name: sudoers
+  vars:
+    sudoers__nopass_users:
+      - cm

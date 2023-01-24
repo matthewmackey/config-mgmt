@@ -1,0 +1,18 @@
+# TODO: clean-up this role and put vars into defaults
+- name: microsoft_teams | Install GUI from remote .deb
+  include_role:
+    name: packages
+    tasks_from: install_remote_deb.yml
+  vars:
+    pkg_deb_name: "{{ item.name }}"
+    pkg_deb_url: "{{ item.url }}"
+    pkg_deb_filename: "{{ item.filename }}"
+    pkg_deb_checksum: "{{ item.checksum | default('') }}"
+  loop:
+    - name: microsoft-teams
+      url: https://packages.microsoft.com/repos/ms-teams/pool/main/t/teams/teams_1.5.00.10453_amd64.deb
+      filename: teams_1.5.00.10453_amd64.deb
+      checksum: sha256:7cb570d9ac5231eb6e6a84738e0fb1e0345863c58fe5341b2fb2db7c5e8b15f0
+  tags:
+    - microsoft_teams
+    - remote_archives

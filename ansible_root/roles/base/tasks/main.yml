@@ -1,0 +1,93 @@
+- name: base | Install base utility packages
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    name: "{{ base__packages }}"
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  tags:
+    - base
+    - install
+    - packages
+
+- name: base | Install base tools from remote .debs
+  include_role:
+    name: packages
+    tasks_from: install_remote_deb.yml
+  vars:
+    pkg_deb_name: "{{ item.name }}"
+    pkg_deb_url: "{{ item.url }}"
+    pkg_deb_filename: "{{ item.filename }}"
+    pkg_deb_checksum: "{{ item.checksum | default('') }}"
+  loop: "{{ base__remote_debs }}"
+  tags:
+    - base
+    - install
+    - remote_debs
+
+- name: base | Install base tools from remote archives
+  include_role:
+    name: packages
+    tasks_from: install_remote_archive.yml
+  vars:
+    pkg_archive_name: "{{ item.name }}"
+    pkg_archive_version: "{{ item.version }}"
+    pkg_archive_url: "{{ item.url }}"
+    pkg_archive_filename: "{{ item.filename }}"
+    pkg_archive_checksum: "{{ item.checksum | default('') }}"
+    pkg_archive_binary_path: "{{ item.binary_path }}"
+    pkg_archive_install_dir: "{{ item.install_dir }}"
+    pkg_archive_install_filename: "{{ item.install_filename | default(None) }}"
+  loop: "{{ base__remote_archives }}"
+  tags:
+    - base
+    - install
+    - remote_archives
+
+- name: base | Install base modern utility packages
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    name: "{{ base__packages_modern }}"
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  tags:
+    - base
+    - install
+    - packages
+
+- name: base | Install base modern tools from remote .debs
+  include_role:
+    name: packages
+    tasks_from: install_remote_deb.yml
+  vars:
+    pkg_deb_name: "{{ item.name }}"
+    pkg_deb_url: "{{ item.url }}"
+    pkg_deb_filename: "{{ item.filename }}"
+    pkg_deb_checksum: "{{ item.checksum | default('') }}"
+  loop: "{{ base__remote_debs_modern }}"
+  tags:
+    - base
+    - install
+    - remote_debs
+
+- name: base | Install base modern tools from remote archives
+  include_role:
+    name: packages
+    tasks_from: install_remote_archive.yml
+  vars:
+    pkg_archive_name: "{{ item.name }}"
+    pkg_archive_version: "{{ item.version }}"
+    pkg_archive_url: "{{ item.url }}"
+    pkg_archive_filename: "{{ item.filename }}"
+    pkg_archive_checksum: "{{ item.checksum | default('') }}"
+    pkg_archive_binary_path: "{{ item.binary_path }}"
+    pkg_archive_install_dir: "{{ item.install_dir }}"
+    pkg_archive_install_filename: "{{ item.install_filename | default(None) }}"
+  loop: "{{ base__remote_archives_modern }}"
+  tags:
+    - base
+    - install
+    - remote_archives

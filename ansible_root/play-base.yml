@@ -1,0 +1,4 @@
+- name: Apply base machine setup
+  hosts: "{{ play_base__hosts }}"
+  roles:
+    - name: base

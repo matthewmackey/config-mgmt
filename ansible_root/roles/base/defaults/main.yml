@@ -1,0 +1,62 @@
+base__packages:
+  - ack-grep
+  # Provides: dig
+  - bind9-dnsutils
+  - bzip2
+  - curl
+  - git
+  - gzip
+  - htop
+  # Provides: ping
+  - iputils-ping
+  - jq
+  # Provides: `netstat`
+  - net-tools
+  # Provides: netcat
+  - netcat-openbsd
+  - p7zip-full
+  - tmux
+  - tree
+  # Needed for remote_archives install tasks so base__packages must be installed 1st
+  - unzip
+  - vim
+  - wget
+  - xz-utils
+  - zsh
+
+base__packages_modern:
+  - fd-find
+  - httpie
+  - ripgrep
+  - silversearcher-ag
+
+base__remote_debs: []
+
+base__remote_debs_modern:
+  -
+    name: bat-0.21.0
+    url: https://github.com/sharkdp/bat/releases/download/v0.21.0/bat_0.21.0_amd64.deb
+    filename: bat_0.21.0_amd64.deb
+  -
+    name: duf-0.6.2
+    url: https://github.com/muesli/duf/releases/download/v0.6.2/duf_0.6.2_linux_amd64.deb
+    filename: duf_0.6.2_linux_amd64.deb
+    checksum: sha256:a73f3190aa0e6e78d3ee55d51f680df8c8fa2045ee1ac862c4afe662af19759f
+
+
+base__remote_archives: []
+base__remote_archives_modern:
+  -
+    name: yh
+    version: v0.4.0
+    url: https://github.com/andreazorzetto/yh/releases/download/v0.4.0/yh-linux-amd64.zip
+    filename: yh-linux-amd64.zip
+    binary_path: ./yh
+    install_dir: /usr/local/bin
+  -
+    name: zoxide
+    version: 0.7.2
+    url: https://github.com/ajeetdsouza/zoxide/releases/download/v0.7.2/zoxide-x86_64-unknown-linux-musl.tar.gz
+    filename: zoxide-x86_64-unknown-linux-musl.tar.gz
+    binary_path: zoxide-x86_64-unknown-linux-musl/zoxide
+    install_dir: /usr/local/bin

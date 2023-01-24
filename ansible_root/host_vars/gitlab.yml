@@ -1,5 +1,5 @@
 ---
-sudoers_nopass_users:
+sudoers__nopass_users:
   - cm
   - git
 users:

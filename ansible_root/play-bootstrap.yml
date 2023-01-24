@@ -1,3 +1,4 @@
+# SEE Trello board for info about getting rid of the `cm` user bootstrap idea
 - name: Bootstrap machine for other playbooks to run
   hosts: all
   roles:

@@ -1,7 +1,6 @@
----
 - name: Ensure '/etc/sudoers' has include for '/etc/sudoers.d'
   become: yes
-  lineinfile:
+  ansible.builtin.lineinfile:
     state: present
     line: "#includedir /etc/sudoers.d"
     dest: /etc/sudoers
@@ -11,11 +10,11 @@
 # SEE /etc/sudoers.d/README for more info
 - name: Grant certain users NOPASSWD sudo access
   become: yes
-  template:
+  ansible.builtin.template:
     src: nopass.j2
     dest: /etc/sudoers.d/nopass
     mode: 0440
     owner: root
     group: root
     validate: "/usr/sbin/visudo -cf %s"
-  when: sudoers_nopass_users|length > 0
+  when: sudoers__nopass_users|length > 0

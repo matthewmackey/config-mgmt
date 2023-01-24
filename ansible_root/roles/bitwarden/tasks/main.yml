@@ -1,0 +1,26 @@
+# TODO: clean-up this role and put vars into defaults
+- name: Install bitwarden CLI from remote archive
+  include_role:
+    name: packages
+    tasks_from: install_remote_archive.yml
+  vars:
+    pkg_archive_name: "{{ item.name }}"
+    pkg_archive_version: "{{ item.version }}"
+    pkg_archive_url: "{{ item.url }}"
+    pkg_archive_filename: "{{ item.filename }}"
+    pkg_archive_checksum: "{{ item.checksum | default('') }}"
+    pkg_archive_binary_path: "{{ item.binary_path }}"
+    pkg_archive_install_dir: "{{ item.install_dir }}"
+    pkg_archive_install_filename: "{{ item.install_filename | default(None) }}"
+  loop:
+    -
+      name: bitwarden
+      version: 1.21.1
+      url: https://github.com/bitwarden/cli/releases/download/v1.21.1/bw-linux-1.21.1.zip
+      filename: bw-linux-1.21.1.zip
+      binary_path: ./bw
+      install_dir: /usr/local/bin
+      install_filename: bw
+  tags:
+    - bitwarden
+    - remote_archives

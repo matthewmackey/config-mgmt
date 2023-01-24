@@ -1,9 +1,11 @@
----
-# go_version: 1.17.5
-# go_tarball_checksum: sha256:bd78114b0d441b029c8fe0341f4910370925a4d270a6a590668840675b0c653e
-go_version: 1.19.3
-go_tarball_checksum: sha256:74b9640724fd4e6bb0ed2a1bc44ae813a03f1e72a4c76253e2d5c015494430ba
+# Checksums found on website:
+#   - https://golang.org/dl/
 
-go_arch: linux-amd64
-go_tarball_filename: "go{{ go_version }}.{{ go_arch }}.tar.gz"
-go_downloaded_tarball_file: "{{ common__downloads_dir }}/{{ go_tarball_filename }}"
+# go__version: 1.17.5
+# go__tarball_checksum: sha256:bd78114b0d441b029c8fe0341f4910370925a4d270a6a590668840675b0c653e
+go__version: 1.19.3
+go__tarball_checksum: sha256:74b9640724fd4e6bb0ed2a1bc44ae813a03f1e72a4c76253e2d5c015494430ba
+
+go__arch: linux-amd64
+go__tarball_filename: "go{{ go__version }}.{{ go__arch }}.tar.gz"
+go__downloaded_tarball_file: "{{ common__downloads_dir }}/{{ go__tarball_filename }}"

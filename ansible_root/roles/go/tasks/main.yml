@@ -1,36 +1,33 @@
----
-# Checksum provided directly on website:
-#   - https://golang.org/dl/
 - name: Download Go binary tarball
   get_url:
-    url: "https://golang.org/dl/{{ go_tarball_filename }}"
-    dest: "{{ go_downloaded_tarball_file }}"
-    checksum: "{{ go_tarball_checksum }}"
+    url: "https://golang.org/dl/{{ go__tarball_filename }}"
+    dest: "{{ go__downloaded_tarball_file }}"
+    checksum: "{{ go__tarball_checksum }}"
 
 - name: Make version-specific Go directory in /usr/local
   become: yes
   file:
     state: directory
-    dest: /usr/local/go-{{ go_version }}
+    dest: /usr/local/go-{{ go__version }}
     owner: root
     group: root
     mode: "0755"
 
-- name: Unarchive Go binary tarball to /usr/local/go-{{ go_version }}
+- name: Unarchive Go binary tarball to /usr/local/go-{{ go__version }}
   become: yes
   unarchive:
-    src: "{{ go_downloaded_tarball_file }}"
-    dest: /usr/local/go-{{ go_version }}
+    src: "{{ go__downloaded_tarball_file }}"
+    dest: /usr/local/go-{{ go__version }}
     remote_src: yes
     extra_opts: ["--strip-components=1"]
   args:
-    creates: /usr/local/go/{{ go_version }}/bin/go
+    creates: /usr/local/go/{{ go__version }}/bin/go
 
-- name: Update /usr/local/go symlink to point to /usr/local/go-{{ go_version }}
+- name: Update /usr/local/go symlink to point to /usr/local/go-{{ go__version }}
   become: yes
   file:
     state: link
-    src: /usr/local/go-{{ go_version }}
+    src: /usr/local/go-{{ go__version }}
     dest: /usr/local/go
     owner: root
     group: root

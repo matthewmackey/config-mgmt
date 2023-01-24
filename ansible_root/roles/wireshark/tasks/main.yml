@@ -1,0 +1,21 @@
+- name: wireshark | Install wireshark GUI
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    name: wireshark
+    state: present
+  tags:
+    - wireshark
+    - install
+  when: has_gui is True
+
+- name: wireshark | Install tshark CLI utility
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    name: tshark
+    state: present
+  tags:
+    - wireshark
+    - install
+    - tshark

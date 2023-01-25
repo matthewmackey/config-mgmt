@@ -9,8 +9,8 @@
     url: https://packages.httpie.io/deb/KEY.gpg
     keyring: /etc/apt/trusted.gpg.d/httpie.gpg
   tags:
+    - setup
     - devtools
-    - config
     - httpie
     - packages
 
@@ -23,8 +23,8 @@
     filename: httpie
     update_cache: yes
   tags:
+    - setup
     - devtools
-    - config
     - httpie
     - packages
 #-------------------------------------------------------------------------------
@@ -36,8 +36,8 @@
     name: "{{ devtools__packages }}"
     state: present
   tags:
-    - devtools
     - install
+    - devtools
     - packages
 
 - name: devtools | Install devtools utility packages (full)
@@ -47,8 +47,8 @@
     name: "{{ devtools__packages }}"
     state: present
   tags:
-    - devtools
     - install
+    - devtools
     - packages
   when: install_type == "full"
 
@@ -63,8 +63,8 @@
     pkg_deb_checksum: "{{ item.checksum | default('') }}"
   loop: "{{ devtools__remote_debs }}"
   tags:
-    - devtools
     - install
+    - devtools
     - remote_debs
 
 - name: devtools | Install devtools utilities from remote archives
@@ -82,6 +82,6 @@
     pkg_archive_install_filename: "{{ item.install_filename | default(None) }}"
   loop: "{{ devtools__remote_archives }}"
   tags:
-    - devtools
     - install
+    - devtools
     - remote_archives

@@ -1,6 +1,6 @@
 ---
 install_type: minimal
-has_gui: no
+is_gui: no
 
 username: mmackey
 home_dir: /home/{{ username }}

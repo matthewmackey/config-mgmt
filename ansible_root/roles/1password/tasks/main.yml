@@ -1,0 +1,83 @@
+- name: 1password | Install 1Password APT public key
+  become: yes
+  become_user: root
+  apt_key:
+    state: present
+    url: https://downloads.1password.com/linux/keys/1password.asc
+    keyring: /usr/share/keyrings/1password-archive-keyring.gpg
+  tags:
+    - setup
+    - 1password
+
+- name: 1password | Add 1Password APT repository
+  become: yes
+  become_user: root
+  apt_repository:
+    state: present
+    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/amd64 stable main"
+    filename: 1password
+    update_cache: yes
+  tags:
+    - setup
+    - 1password
+
+- name: 1password | Setup 1Password debsig directories
+  become: yes
+  become_user: root
+  file:
+    state: directory
+    name: "{{ item }}"
+  loop:
+    - /etc/debsig/policies/AC2D62742012EA22/
+    - /usr/share/debsig/keyrings/AC2D62742012EA22
+  tags:
+    - setup
+    - 1password
+
+# DON'T know if the next two debsig tasks are needed b/c an APT install of the 1Password *GUI*
+# package overwrites the policy and key files (the cli package doesn't seem to
+# overwrite them)
+#
+# Also, I don't know how debsig-verify works, and it doesn't seem to be used on a
+# standard APT package install (??)
+- name: 1password | Install 1Password debsig policy
+  become: yes
+  become_user: root
+  get_url:
+   url: https://downloads.1password.com/linux/debian/debsig/1password.pol
+   dest: /etc/debsig/policies/AC2D62742012EA22/1password.pol
+  tags:
+    - setup
+    - 1password
+
+- name: 1password | Install 1Password debsig key
+  become: yes
+  become_user: root
+  shell: |
+    curl -sS https://downloads.1password.com/linux/keys/1password.asc | gpg --dearmor --output /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
+  args:
+    creates: /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
+  tags:
+    - setup
+    - 1password
+
+- name: 1password | Install 1Password CLI package
+  become: yes
+  become_user: root
+  apt:
+    state: present
+    name: 1password-cli
+  tags:
+    - install
+    - 1password
+
+- name: 1password | Install 1Password GUI package (gui)
+  become: yes
+  become_user: root
+  apt:
+    state: present
+    name: 1password
+  when: is_gui
+  tags:
+    - install
+    - 1password

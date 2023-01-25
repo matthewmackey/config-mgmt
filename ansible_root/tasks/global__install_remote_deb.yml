@@ -1,0 +1,37 @@
+#-------------------------------------------------------------------------------
+# HOW TO USE:
+#
+# - name: Install remote .debs
+#   include_tasks:
+#     file: global__install_remote_deb.yml
+#   loop: "{{ LIST_OF_REMOTE_DEBS }}"
+#
+#-------------------------------------------------------------------------------
+- block:
+  - name: global (remote_deb) | Download .deb file w/ checksum ({{ item.name }})
+    ansible.builtin.get_url:
+      url: "{{ item.url }}"
+      dest: "{{ common__downloads_dir }}/{{ item.filename }}"
+      checksum: "{{ item.checksum }}"
+    when: item.checksum is defined and item.checksum != ""
+
+  - name: global (remote_deb) | Download .deb file w/o checksum ({{ item.name }})
+    ansible.builtin.get_url:
+      url: "{{ item.url }}"
+      dest: "{{ common__downloads_dir }}/{{ item.filename }}"
+    when: item.checksum is not defined or item.checksum == ""
+
+  # TODO: validate .deb checksum
+  - name: TODO | global (remote_deb) | Verify checksum of .deb ({{ item.name }})
+    debug:
+      msg: "IMPLEMENT ME"
+    when: False
+
+  - name: global (remote_deb) | Install package via .deb ({{ item.name }})
+    become: yes
+    become_user: root
+    ansible.builtin.apt:
+      state: present
+      deb: "{{ common__downloads_dir }}/{{ item.filename }}"
+  tags:
+    - remote_debs

@@ -12,14 +12,8 @@
     - packages
 
 - name: base | Install base tools from remote .debs
-  include_role:
-    name: packages
-    tasks_from: install_remote_deb.yml
-  vars:
-    pkg_deb_name: "{{ item.name }}"
-    pkg_deb_url: "{{ item.url }}"
-    pkg_deb_filename: "{{ item.filename }}"
-    pkg_deb_checksum: "{{ item.checksum | default('') }}"
+  include_tasks:
+    file: global__install_remote_deb.yml
   loop: "{{ base__remote_debs }}"
   tags:
     - base
@@ -27,18 +21,8 @@
     - remote_debs
 
 - name: base | Install base tools from remote archives
-  include_role:
-    name: packages
-    tasks_from: install_remote_archive.yml
-  vars:
-    pkg_archive_name: "{{ item.name }}"
-    pkg_archive_version: "{{ item.version }}"
-    pkg_archive_url: "{{ item.url }}"
-    pkg_archive_filename: "{{ item.filename }}"
-    pkg_archive_checksum: "{{ item.checksum | default('') }}"
-    pkg_archive_binary_path: "{{ item.binary_path }}"
-    pkg_archive_install_dir: "{{ item.install_dir }}"
-    pkg_archive_install_filename: "{{ item.install_filename | default(None) }}"
+  include_tasks:
+    file: global__install_remote_archive
   loop: "{{ base__remote_archives }}"
   tags:
     - base
@@ -59,14 +43,8 @@
     - packages
 
 - name: base | Install base modern tools from remote .debs
-  include_role:
-    name: packages
-    tasks_from: install_remote_deb.yml
-  vars:
-    pkg_deb_name: "{{ item.name }}"
-    pkg_deb_url: "{{ item.url }}"
-    pkg_deb_filename: "{{ item.filename }}"
-    pkg_deb_checksum: "{{ item.checksum | default('') }}"
+  include_tasks:
+    file: global__install_remote_deb.yml
   loop: "{{ base__remote_debs_modern }}"
   tags:
     - base
@@ -74,18 +52,8 @@
     - remote_debs
 
 - name: base | Install base modern tools from remote archives
-  include_role:
-    name: packages
-    tasks_from: install_remote_archive.yml
-  vars:
-    pkg_archive_name: "{{ item.name }}"
-    pkg_archive_version: "{{ item.version }}"
-    pkg_archive_url: "{{ item.url }}"
-    pkg_archive_filename: "{{ item.filename }}"
-    pkg_archive_checksum: "{{ item.checksum | default('') }}"
-    pkg_archive_binary_path: "{{ item.binary_path }}"
-    pkg_archive_install_dir: "{{ item.install_dir }}"
-    pkg_archive_install_filename: "{{ item.install_filename | default(None) }}"
+  include_tasks:
+    file: global__install_remote_archive
   loop: "{{ base__remote_archives_modern }}"
   tags:
     - base

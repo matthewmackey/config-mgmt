@@ -6,9 +6,22 @@ tools_common__packages:
   # Provides: mkpasswd
   - whois
 tools_common__packages_modern: []
-
 tools_common__remote_debs: []
 tools_common__remote_debs_modern: []
-
 tools_common__remote_archives: []
 tools_common__remote_archives_modern: []
+
+tools_common__gui_packages:
+  - parcellite
+  - remmina
+  # Logitech Unifying Rx tool (CLI & GUI)
+  - solaar
+  - synapse
+  - usb-creator-gtk
+  # In oreder to get +clipboard support
+  - vim-gtk3
+  - xclip
+  - xsel
+tools_common__gui_gnome_shell_packages:
+  - gnome-shell-pomodoro
+tools_common__gui_remote_debs: []

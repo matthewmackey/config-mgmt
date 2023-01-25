@@ -1,9 +1,3 @@
-- name: Download Go binary tarball
-  get_url:
-    url: "https://golang.org/dl/{{ go__tarball_filename }}"
-    dest: "{{ go__downloaded_tarball_file }}"
-    checksum: "{{ go__tarball_checksum }}"
-
 - name: Make version-specific Go directory in /usr/local
   become: yes
   file:
@@ -12,6 +6,21 @@
     owner: root
     group: root
     mode: "0755"
+  tags:
+    - install
+    - setup
+    - go
+
+# We need to use get_url w/ unarchive to do checksum validation
+- name: Download Go binary tarball
+  get_url:
+    url: "https://golang.org/dl/{{ go__tarball_filename }}"
+    dest: "{{ go__downloaded_tarball_file }}"
+    checksum: "{{ go__tarball_checksum }}"
+  tags:
+    - install
+    - download
+    - go
 
 - name: Unarchive Go binary tarball to /usr/local/go-{{ go__version }}
   become: yes
@@ -22,6 +31,9 @@
     extra_opts: ["--strip-components=1"]
   args:
     creates: /usr/local/go/{{ go__version }}/bin/go
+  tags:
+    - install
+    - go
 
 - name: Update /usr/local/go symlink to point to /usr/local/go-{{ go__version }}
   become: yes
@@ -31,4 +43,6 @@
     dest: /usr/local/go
     owner: root
     group: root
-
+  tags:
+    - install
+    - go

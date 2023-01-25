@@ -1,0 +1,24 @@
+- name: crypt | Install crypt-related utilities (minimal)
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - pass
+  tags:
+    - crypt
+    - install
+
+- name: crypt | Install crypt-related utilities (full)
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - encfs
+  when: install_type == "full"
+  tags:
+    - crypt
+    - install

@@ -3,7 +3,6 @@ tools_common__packages:
   - at
   # Installs debconf-get-selections
   - debconf-utils
-  - encfs
   # Provides: mkpasswd
   - whois
 tools_common__packages_modern: []

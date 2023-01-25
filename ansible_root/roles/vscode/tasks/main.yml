@@ -1,13 +1,7 @@
 # TODO: clean-up this role and put vars into defaults
 - name: vscode | Install from remote .deb
-  include_role:
-    name: packages
-    tasks_from: install_remote_deb.yml
-  vars:
-    pkg_deb_name: "{{ item.name }}"
-    pkg_deb_url: "{{ item.url }}"
-    pkg_deb_filename: "{{ item.filename }}"
-    pkg_deb_checksum: "{{ item.checksum | default('') }}"
+  include_tasks:
+    file: global__install_remote_deb.yml
   loop:
     - name: vscode
       url: https://update.code.visualstudio.com/1.68.1/linux-deb-x64/stable
@@ -15,4 +9,4 @@
       checksum: sha256:19f21cb2481129070d4a5db4b47b20e93715c8e7696d4d4b9dddc3c229c9c495
   tags:
     - vscode
-    - remote_archives
+    - remote_debs

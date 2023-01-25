@@ -1,17 +1,12 @@
 # TODO: clean-up this role and put vars into defaults
 - name: zoom | Install from remote .deb
-  include_role:
-    name: packages
-    tasks_from: install_remote_deb.yml
-  vars:
-    pkg_deb_name: "{{ item.name }}"
-    pkg_deb_url: "{{ item.url }}"
-    pkg_deb_filename: "{{ item.filename }}"
-    pkg_deb_checksum: "{{ item.checksum | default('') }}"
+  include_tasks:
+    file: global__install_remote_deb.yml
   loop:
     - name: zoom
       url: https://zoom.us/client/latest/zoom_amd64.deb
       filename: zoom_amd64.deb
   tags:
+    - install
     - zoom
-    - remote_archives
+    - remote_debs

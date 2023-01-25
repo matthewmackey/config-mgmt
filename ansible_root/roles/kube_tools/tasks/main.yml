@@ -1,0 +1,23 @@
+# TODO: clean-up this role and put vars into defaults
+- name: kube_tools | Install kubectl shell utilties from remote archives
+  include_tasks:
+      file: global__install_remote_archive.yml
+  loop:
+    -
+      name: kubectx
+      version: v0.9.4
+      url: https://github.com/ahmetb/kubectx/releases/download/v0.9.4/kubectx_v0.9.4_linux_x86_64.tar.gz
+      filename: kubectx_v0.9.4_linux_x86_64.tar.gz
+      binary_path: ./kubectx
+      install_dir: /usr/local/bin
+    -
+      name: kubens
+      version: v0.9.4
+      url: https://github.com/ahmetb/kubectx/releases/download/v0.9.4/kubens_v0.9.4_linux_x86_64.tar.gz
+      filename: kubens_v0.9.4_linux_x86_64.tar.gz
+      binary_path: ./kubens
+      install_dir: /usr/local/bin
+  tags:
+    - install
+    - kube_tools
+    - remote_archives

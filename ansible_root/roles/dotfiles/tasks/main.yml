@@ -1,0 +1,29 @@
+- name: dotfiles | Clone mmackey/dotfiles into ~/.personal
+  ansible.builtin.git:
+    repo: https://github.com/matthewmackey/dotfiles.git
+    dest: "{{ dotfiles__install_dir }}"
+    version: main
+  tags:
+    - install
+    - dotfiles
+
+- name: dotfiles | Do 'minimal' dotfiles setup
+  shell: |
+    ./install.sh -m
+  args:
+    chdir: "{{ dotfiles__install_dir }}"
+    # creates: "{{ home_dir }}/.config/sh/includes-enabled"
+  changed_when: False
+  tags:
+    - install
+    - dotfiles
+
+- name: dotfiles | Install fzf via dotfiles post-install script
+  shell: |
+    ./post-install/install-fzf.sh
+  args:
+    chdir: "{{ dotfiles__install_dir }}"
+    creates: "{{ home_dir }}/.config/fzf"
+  tags:
+    - install
+    - dotfiles

@@ -1,0 +1,1 @@
+dotfiles__install_dir: "{{ home_dir }}/.personal/dotfiles"

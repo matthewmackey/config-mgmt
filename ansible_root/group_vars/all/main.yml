@@ -47,7 +47,6 @@ packages_common:
   - vim
   - wireshark
   - wmctrl
-  - xclip
 packages_common_server:
   - ack-grep
   - apt-file

@@ -62,8 +62,6 @@
       - tmux
       - tree
       - wget
-      - xclip
-      - xsel
       - xz-utils
   tags:
     - hacker

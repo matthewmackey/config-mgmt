@@ -4,7 +4,17 @@
 # - name: Install binary from remote archive
 #   include_tasks:
 #     file: global__install_remote_archive.yml
-#   loop: "{{ LIST_OF_REMOTE_ARCHIVES }}"
+#   # Example loop variable:
+#   loop:
+#     - name: bitwarden
+#       version: 1.21.1
+#       url: https://github.com/bitwarden/cli/releases/download/v1.21.1/bw-linux-1.21.1.zip
+#       filename: bw-linux-1.21.1.zip
+#       install_dir: /usr/local/bin
+#       install_filename: bw
+#       # Path to binary within the archive (`./<binary>` - means it is in the root dir of the
+#       # archive and will be deposited directly in whatever directory it is extracted to)
+#       binary_path: ./bw
 #
 #-------------------------------------------------------------------------------
 - block:

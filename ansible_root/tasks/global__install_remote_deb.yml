@@ -4,7 +4,12 @@
 # - name: Install remote .debs
 #   include_tasks:
 #     file: global__install_remote_deb.yml
-#   loop: "{{ LIST_OF_REMOTE_DEBS }}"
+#   # Example loop variable:
+#   loop:
+#      - name: microsoft-teams
+#        url: https://packages.microsoft.com/repos/ms-teams/pool/main/t/teams/teams_1.5.00.10453_amd64.deb
+#        filename: teams_1.5.00.10453_amd64.deb
+#        checksum: sha256:7cb570d9ac5231eb6e6a84738e0fb1e0345863c58fe5341b2fb2db7c5e8b15f0
 #
 #-------------------------------------------------------------------------------
 - block:

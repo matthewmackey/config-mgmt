@@ -1,0 +1,15 @@
+devtools__packages:
+  - httpie
+  - mysql-client
+  - postgresql-client
+  # Provides: redis-cli
+  - redis-tools
+  - sqlite3
+
+devtools__packages_full:
+  # Used for making cloud-init seed ISOs
+  - cloud-utils
+  - universal-ctags
+
+devtools__remote_debs: []
+devtools__remote_archives: []

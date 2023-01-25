@@ -1,0 +1,87 @@
+#-------------------------------------------------------------------------------
+# http APT setup required before install packages task below
+#-------------------------------------------------------------------------------
+- name: devtools | Install httpie APT signing key
+  become: yes
+  become_user: root
+  ansible.builtin.apt_key:
+    state: present
+    url: https://packages.httpie.io/deb/KEY.gpg
+    keyring: /etc/apt/trusted.gpg.d/httpie.gpg
+  tags:
+    - devtools
+    - config
+    - httpie
+    - packages
+
+- name: devtools | Install httpie APT repo
+  become: yes
+  become_user: root
+  ansible.builtin.apt_repository:
+    state: present
+    repo: deb https://packages.httpie.io/deb ./
+    filename: httpie
+    update_cache: yes
+  tags:
+    - devtools
+    - config
+    - httpie
+    - packages
+#-------------------------------------------------------------------------------
+
+- name: devtools | Install devtools utility packages (minimal)
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    name: "{{ devtools__packages }}"
+    state: present
+  tags:
+    - devtools
+    - install
+    - packages
+
+- name: devtools | Install devtools utility packages (full)
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    name: "{{ devtools__packages }}"
+    state: present
+  tags:
+    - devtools
+    - install
+    - packages
+  when: install_type == "full"
+
+- name: devtools | Install devtools utilities from remote .debs
+  include_role:
+    name: packages
+    tasks_from: install_remote_deb.yml
+  vars:
+    pkg_deb_name: "{{ item.name }}"
+    pkg_deb_url: "{{ item.url }}"
+    pkg_deb_filename: "{{ item.filename }}"
+    pkg_deb_checksum: "{{ item.checksum | default('') }}"
+  loop: "{{ devtools__remote_debs }}"
+  tags:
+    - devtools
+    - install
+    - remote_debs
+
+- name: devtools | Install devtools utilities from remote archives
+  include_role:
+    name: packages
+    tasks_from: install_remote_archive.yml
+  vars:
+    pkg_archive_name: "{{ item.name }}"
+    pkg_archive_version: "{{ item.version }}"
+    pkg_archive_url: "{{ item.url }}"
+    pkg_archive_filename: "{{ item.filename }}"
+    pkg_archive_checksum: "{{ item.checksum | default('') }}"
+    pkg_archive_binary_path: "{{ item.binary_path }}"
+    pkg_archive_install_dir: "{{ item.install_dir }}"
+    pkg_archive_install_filename: "{{ item.install_filename | default(None) }}"
+  loop: "{{ devtools__remote_archives }}"
+  tags:
+    - devtools
+    - install
+    - remote_archives

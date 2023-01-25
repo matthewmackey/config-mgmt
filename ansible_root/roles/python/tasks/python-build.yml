@@ -1,0 +1,49 @@
+# See: https://github.com/pyenv/pyenv/wiki/Common-build-problems
+#
+# Technically, these are the deps for all of `pyenv`, which `python-build`
+# is a part of, but I didn't take the time to narrow down which ones are
+# the only ones needed for using `python-build` (it would be very hard to do).
+- name: python | Install dependencies for python-build
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    state: present
+    name: "{{ python__python_build_deps }}"
+  tags:
+    - install
+    - setup
+    - python
+
+# TODO: change to https URL
+- name: python | Download python-build (part of pyenv)
+  ansible.builtin.git:
+    repo: https://github.com/pyenv/pyenv.git
+    dest: /tmp/pyenv
+    version: "{{ python__pyenv_version }}"
+  tags:
+    - install
+    - python
+
+# NOTE: this also installs `pyenv-install` & `pyenv-uninstall` to /usr/local, which we don't use
+- name: python | Install python-build to /usr/local
+  become: yes
+  become_user: root
+  shell: |
+    PREFIX=/usr/local ./install.sh -v
+  args:
+    chdir: /tmp/pyenv/plugins/python-build
+    creates: /usr/local/bin/python-build
+  tags:
+    - install
+    - python
+
+- name: python | Install Python version {{ python__default_version }} to ~/pythons with 'python-build'
+  become_user: "{{ username }}"
+  shell: |
+    ./python-build {{ python__default_version }} {{ home_dir }}/pythons/{{ python__default_version }}
+  args:
+    chdir: /usr/local/bin
+    creates: "{{ home_dir }}/pythons/{{ python__default_version }}/bin/python3"
+  tags:
+    - install
+    - python

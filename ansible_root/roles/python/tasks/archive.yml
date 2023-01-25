@@ -1,0 +1,20 @@
+- name: python | Get name of Python tarball to upload based on OS distribution
+  set_fact:
+    python__tarball_filename: "python-{{ python__default_version }}-{{ ansible_facts['distribution'] | lower }}-{{ ansible_facts['distribution_version'] }}.tar.gz"
+  tags:
+    - install
+    - setup
+    - python
+
+- name: python | Upload & unarchive Python [{{ python__default_version }}] tarball to ~/pythons
+  become_user: "{{ username }}"
+  unarchive:
+    src: "{{ python__tarball_filename }}"
+    dest: "{{ home_dir }}/pythons/"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    creates: "{{ home_dir }}/pythons/{{ python__default_version }}/bin/python3"
+  tags:
+    - install
+    - upload
+    - python

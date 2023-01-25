@@ -1,19 +1,19 @@
----
-python_python_build_deps:
+python__default_version: 3.8.9
+python__install_method: archive
+python__pyenv_version: v2.2.3
+python__python_build_deps:
   - build-essential
   - curl
-  - git
   - libbz2-dev
   - libffi-dev
   - liblzma-dev
-  - libncurses5-dev
   - libncursesw5-dev
   - libreadline-dev
   - libsqlite3-dev
   - libssl-dev
+  - libxml2-dev
+  - libxmlsec1-dev
   - llvm
-  - python-openssl
   - tk-dev
-  - wget
   - xz-utils
   - zlib1g-dev

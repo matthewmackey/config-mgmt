@@ -21,3 +21,12 @@
     - install
     - kube_tools
     - remote_archives
+
+- name: kube_tools | Install kind via `go install`
+  shell: |
+    go install {{ item }}
+  with_items:
+    - sigs.k8s.io/kind@v0.14.0
+  tags:
+    - install
+    - kube_tools

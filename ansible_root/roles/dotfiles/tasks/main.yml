@@ -12,7 +12,6 @@
     ./install.sh -m
   args:
     chdir: "{{ dotfiles__install_dir }}"
-    # creates: "{{ home_dir }}/.config/sh/includes-enabled"
   changed_when: False
   tags:
     - install

@@ -1,0 +1,17 @@
+# Checksum is hard-coded here b/c they don't have checksum files to download,
+# just checksums to view on the download webpage
+- name: burp | Download Burp Suite Community installer
+  ansible.builtin.get_url:
+    url: "{{ burpsuite__installer_url }}"
+    dest: "{{ downloads_dir }}/{{ burpsuite__installer_filename }}"
+    checksum: "{{ burpsuite__installer_checksum }}"
+    mode: '0755'
+
+# TODO: Consider using '-overwrite' option with un-attended install
+- name: burp | Run un-attended Burp Suite Community installer
+  become: yes
+  become_user: root
+  shell: |
+    {{ downloads_dir }}/{{ burpsuite__installer_filename }} -q
+  args:
+    creates: /opt/BurpSuiteCommunity/BurpSuiteCommunity

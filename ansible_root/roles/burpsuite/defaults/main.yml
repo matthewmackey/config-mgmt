@@ -1,0 +1,5 @@
+burpsuite__version: 2022.12.7
+burpsuite__installer_checksum: sha256:1daab223e7a4f45cae75933781d83ad8cb3f715e7e76d5bcf4708af4a9f833bb
+# This maintains filename format from PortSwigger
+burpsuite__installer_filename: burpsuite_community_linux_v{{ burpsuite__version | replace('.', '_') }}.sh
+burpsuite__installer_url: "https://portswigger-cdn.net/burp/releases/download?product=community&type=Linux&version={{ burpsuite__version }}"

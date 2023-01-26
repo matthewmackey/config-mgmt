@@ -1,0 +1,50 @@
+- name: zaproxy | Download OWASP ZAP installer
+  ansible.builtin.get_url:
+    url: "{{ zaproxy__installer_url }}"
+    dest: "{{ common__downloads_dir }}/{{ zaproxy__installer_filename }}"
+    checksum: "{{ zaproxy__installer_checksum }}"
+    mode: '0755'
+  tags:
+    - download
+    - install
+    - zaproxy
+
+- name: zaproxy | Lay down temp varfile to be used by install4j installer
+  template:
+    src: zap-install4j-response.varfile.j2
+    dest: /tmp/zap-install4j-response.varfile
+  tags:
+    - install
+    - setup
+    - zaproxy
+
+# ZAP uses the install4j installer tool (like Burp); see here for CLI args:
+#   https://www.ej-technologies.com/resources/install4j/help/doc/installers/options.html
+- name: zaproxy | Run un-attended OWASP ZAP installer script
+  become: yes
+  become_user: root
+  shell: |
+    {{ common__downloads_dir }}/{{ zaproxy__installer_filename }} -q \
+      -varfile /tmp/zap-install4j-response.varfile \
+      -Dinstall4j.keepLog=true
+  args:
+    # symlinked into {{ zaproxy__install_symlink_dir }}
+    creates: "{{ zaproxy__install_dir }}/zap.sh"
+  tags:
+    - install
+    - zaproxy
+
+- name: zaproxy | Clean-up .desktop files & create .desktop file with nice icon
+  become: yes
+  become_user: root
+  shell: |
+    rm -f /usr/share/applications/install4j_*-zap.sh.desktop && \
+    cat {{ zaproxy__install_dir }}/.install4j/*.desktop \
+      {{ zaproxy__install_dir }}/OWASP\ ZAP.desktop \
+      > /usr/share/applications/zaproxy.desktop
+  args:
+    creates: /usr/share/applications/zaproxy.desktop
+  tags:
+    - desktop_files
+    - install
+    - zaproxy

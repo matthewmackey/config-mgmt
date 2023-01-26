@@ -1,9 +1,13 @@
 tools_net__packages:
+  - arping
   - arp-scan
   # Provides: tracepath
   - iputils-tracepath
+  - nikto
   - nmap
   - socat
   - tcptraceroute
   # Provides: traceroute
   - traceroute
+  # Also provides: mkpasswd
+  - whois

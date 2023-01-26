@@ -3,8 +3,6 @@ tools_common__packages:
   - at
   # Installs debconf-get-selections
   - debconf-utils
-  # Provides: mkpasswd
-  - whois
 tools_common__packages_modern: []
 tools_common__remote_debs: []
 tools_common__remote_debs_modern: []

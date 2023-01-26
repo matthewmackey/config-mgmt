@@ -1,28 +1,76 @@
+#------------------------------------------------------------------------------
+# These are Python tools I want to install but are hard to with Ansible b/c they
+# involve virtualenvs:
+#
+#  - https://github.com/aboul3la/Sublist3r
+#  - https://github.com/ProjectAnte/dnsgen
+#------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------
+# altdns
+#-------------------------------------------------------------------
+- name: hacker | install altdns into hacker virtualenv via PyPi (not source)
+  shell: |
+    source {{ hacker__virtualenv_activate }}
+    pip3 install py-altdns=={{ hacker__altdns_version }}
+    deactivate
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__altdns
+
+#-------------------------------------------------------------------
+# altdns-wordlist
+#-------------------------------------------------------------------
+- name: hacker | clone altdns repository
+  ansible.builtin.git:
+    repo: https://github.com/infosec-au/altdns.git
+    dest: "{{ hacker__tools_dir }}/altdns"
+    version: "{{ hacker__altdns_wordlist_version }}"
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__altdns_wordlist
+
 #-------------------------------------------------------------------
 # amass
 #-------------------------------------------------------------------
 - name: hacker | install amass
   shell: |
-    go install -v github.com/OWASP/Amass/v3/...@master
+    go install -v github.com/OWASP/Amass/v3/...@{{ hacker__amass_version }}
   args:
     creates: "/home/{{ ansible_ssh_user }}/go/bin/amass"
   tags:
+    - install
     - hacker
+    - hacker__bug_bounty
     - hacker__amass
 
 #-------------------------------------------------------------------
-# ExploitDB: Searchsploit
+# assetfinder
+#-------------------------------------------------------------------
+- name: hacker | install assetfinder
+  shell: |
+    go get -u github.com/tomnomnom/assetfinder
+  args:
+    creates: "/home/{{ ansible_ssh_user }}/go/bin/assetfinder"
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__assetfinder
+
+#-------------------------------------------------------------------
+# ExploitDB/Searchsploit
 #-------------------------------------------------------------------
 - name: hacker - install exploitdb/searchsploit
-  tags:
-    - hacker
-    - hacker__searchsploit
-  when: hacker__install_searchsploit | bool
   block:
     - name: hacker | download exploitdb project w/ searchsploit tools
       ansible.builtin.git:
         repo: 'https://github.com/offensive-security/exploitdb.git'
-        version: "{{ hacker__exploitdb_version }}"
+        version: "{{ hacker__exploitdb_searchsploit_version }}"
         dest: "{{ hacker__tools_dir }}/exploitdb"
 
     - name: hacker | symlink searchsploit into PATH from exploitdb project
@@ -30,29 +78,54 @@
         state: link
         src: "{{ hacker__tools_dir }}/exploitdb/searchsploit"
         dest: "{{ hacker__tools_bin_dir }}/searchsploit"
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__exploitdb
+    - hacker__searchsploit
+  when: hacker__install_exploitdb_searchsploit | bool
 
 #-------------------------------------------------------------------
 # ffuf
 #-------------------------------------------------------------------
 - name: hacker | install ffuf
   shell: |
-    go install github.com/ffuf/ffuf@latest
+    go install github.com/ffuf/ffuf@{{ hacker__ffuf_version }}
   args:
     creates: "/home/{{ ansible_ssh_user }}/go/bin/ffuf"
   tags:
+    - install
     - hacker
+    - hacker__bug_bounty
     - hacker__ffuf
+
+#-------------------------------------------------------------------
+# goaltdns
+#-------------------------------------------------------------------
+- name: hacker | install goaltdns
+  shell: |
+    go get -u github.com/subfinder/goaltdns
+  args:
+    creates: "/home/{{ ansible_ssh_user }}/go/bin/goaltdns"
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__goaltdns
 
 #-------------------------------------------------------------------
 # gobuster
 #-------------------------------------------------------------------
 - name: hacker | install gobuster
   shell: |
-    go install github.com/OJ/gobuster/v3@latest
+    go install github.com/OJ/gobuster/v3@{{ hacker__gobuster_version }}
   args:
     creates: "/home/{{ ansible_ssh_user }}/go/bin/gobuster"
   tags:
+    - install
     - hacker
+    - hacker__bug_bounty
     - hacker__gobuster
 
 #-------------------------------------------------------------------
@@ -60,22 +133,19 @@
 #-------------------------------------------------------------------
 - name: hacker | install httprobe
   shell: |
-    go install github.com/tomnomnom/httprobe@latest
+    go install github.com/tomnomnom/httprobe@{{ hacker__httprobe_version }}
   args:
     creates: "/home/{{ ansible_ssh_user }}/go/bin/httprobe"
   tags:
+    - install
     - hacker
+    - hacker__bug_bounty
     - hacker__httprobe
 
 #-------------------------------------------------------------------
 # massdns
 #-------------------------------------------------------------------
-- name: hacker | Block for massdns
-  tags:
-    - hacker
-    - hacker__massdns
-  vars:
-    hacker__massdns_home: "{{ hacker__tools_dir }}/massdns"
+- name: hacker | install massdns
   block:
     - name: hacker | clone massdns repository
       ansible.builtin.git:
@@ -94,6 +164,13 @@
         state: link
         src: "{{ hacker__massdns_home }}/bin/massdns"
         dest: "{{ hacker__tools_bin_dir }}/massdns"
+  vars:
+    hacker__massdns_home: "{{ hacker__tools_dir }}/massdns"
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__massdns
 
 #-------------------------------------------------------------------
 # Metasploit
@@ -104,39 +181,57 @@
 #-------------------------------------------------------------------
 - name: hacker | install metasploit via their omnibus installer
   shell: |
-    curl \
-      https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > /tmp/msfinstall && \
+    curl {{ hacker__metasploit_installer_url }} > /tmp/msfinstall && \
     chmod 755 /tmp/msfinstall && \
     /tmp/msfinstall
   args:
     creates: /opt/metasploit-framework/bin/msfconsole
   tags:
+    - install
     - hacker
+    - hacker__bug_bounty
     - hacker__metasploit
   when: hacker__install_metasploit | bool
+
+#-------------------------------------------------------------------
+# nuclei
+#-------------------------------------------------------------------
+- name: hacker | install nuclei
+  shell: |
+    go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@{{ hacker__nuclei_version }}
+  args:
+    creates: "/home/{{ ansible_ssh_user }}/go/bin/nuclei"
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__nuclei
+
+#-------------------------------------------------------------------
+# SecLists
+#-------------------------------------------------------------------
+- name: hacker | install SecLists
+  ansible.builtin.git:
+    repo: https://github.com/danielmiessler/SecLists.git
+    version: "{{ hacker__seclists_version }}"
+    dest: "{{ hacker__tools_dir }}/SecLists"
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__seclists
+  when: hacker__install_seclists | bool
 
 #-------------------------------------------------------------------
 # subfinder
 #-------------------------------------------------------------------
 - name: hacker | install subfinder
   shell: |
-    go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+    go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@{{ hacker__subfinder_version }}
   args:
     creates: "/home/{{ ansible_ssh_user }}/go/bin/subfinder"
   tags:
+    - install
     - hacker
+    - hacker__bug_bounty
     - hacker__subfinder
-
-#-------------------------------------------------------------------
-# Wordlists / Data
-#-------------------------------------------------------------------
-- name: hacker | install packages - wordlists
-  ansible.builtin.git:
-    repo: https://github.com/danielmiessler/SecLists.git
-    version: '2021.2'
-    dest: "{{ hacker__tools_dir }}/SecLists"
-  tags:
-    - hacker
-    - hacker__wordlists
-  when: hacker__install_wordlists | bool
-

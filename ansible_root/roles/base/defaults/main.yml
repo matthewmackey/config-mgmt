@@ -15,6 +15,8 @@ base__packages:
   # Provides: netcat
   - netcat-openbsd
   - p7zip-full
+  # Parallel gzip - takes advantage of mulit-core systems
+  - pigz
   - tmux
   - tree
   # Needed for remote_archives install tasks so base__packages must be installed 1st

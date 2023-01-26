@@ -5,6 +5,7 @@
   become: yes
   become_user: root
   tags:
+    - setup
     - hacker
     - hacker__setup
   block:
@@ -38,7 +39,7 @@
 #-------------------------------------------------------------------
 # Common
 #-------------------------------------------------------------------
-- name: hacker | install packages - common
+- name: hacker | install packages - common tools
   become: yes
   become_user: root
   ansible.builtin.apt:
@@ -46,116 +47,89 @@
     name: "{{ hacker__packages_common }}"
   vars:
     hacker__packages_common:
-      - ack-grep
       - ascii
-      - bzip2
-      - curl
-      - fd-find
-      - fzf
-      - git
-      - gzip
-      - htop
-      - jq
-      - pigz
-      - p7zip-full
-      - ripgrep
-      - tmux
-      - tree
-      - wget
-      - xz-utils
   tags:
+    - install
     - hacker
     - hacker__common
-
+    #
 #-------------------------------------------------------------------
-# DB
+# CTF Tools
 #-------------------------------------------------------------------
-- name: hacker | install packages - DB
+- name: hacker | install packages - CTF tools
   become: yes
   become_user: root
   ansible.builtin.apt:
     state: present
-    name: "{{ hacker__packages_db }}"
+    name: "{{ hacker__packages_ctf }}"
   vars:
-    hacker__packages_db:
-      - mysql-client
-      - sqlite3
+    hacker__packages_ctf:
+      - hashcash
   tags:
+    - install
     - hacker
-    - hacker__db
+    - hacker__ctf
 
 #-------------------------------------------------------------------
-# Network
+# Hardware tools
 #-------------------------------------------------------------------
-- name: hacker - network tools
+- name: hacker | install packages - hardware tools
   become: yes
   become_user: root
+  ansible.builtin.apt:
+    state: present
+    name: "{{ hacker__packages_hardware }}"
   vars:
-    hacker__packages_net_tools:
-      - arping
-      - arp-scan
-      - iputils-ping
-      - iputils-tracepath
-      - net-tools
-      - nikto
-      - nmap
-      - tshark
-      - whois
-    hacker__packages_net_tools_gui:
-      - wireshark
-  block:
-    - name: hacker | install packages - network tools
-      ansible.builtin.apt:
-        state: present
-        name: "{{ hacker__packages_net_tools }}"
-      tags:
-        - hacker
-        - hacker__net_tools
+    hacker__packages_hardware:
+      - bluez-hcidump
+  tags:
+    - install
+    - hacker
+    - hacker__hardware
 
-    - name: hacker | install packages - network tools (GUI)
-      ansible.builtin.apt:
-        state: present
-        name: "{{ hacker__packages_net_tools_gui }}"
-      vars:
-      tags:
-        - hacker
-        - hacker__net_tools_gui
-        - gui
+#-------------------------------------------------------------------
+# Forensics
+#-------------------------------------------------------------------
+- name: hacker | install packages - forensics tools
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    state: present
+    name: "{{ hacker__packages_forensics }}"
+  vars:
+    hacker__packages_forensics:
+      - binwalk
+      - foremost
+      - steghide
+  tags:
+    - install
+    - hacker
+    - hacker__forensics
+
+#-------------------------------------------------------------------
+# Reverse Engineering
+#-------------------------------------------------------------------
+- name: hacker | install packages - reverse engineering tools
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    state: present
+    name: "{{ hacker__packages_reverse_engr }}"
+  vars:
+    hacker__packages_reverse_engr:
+      - fs-uae
+      - fs-uae-launcher
+  tags:
+    - install
+    - hacker
+    - hacker__reverse_engr
+
+#-------------------------------------------------------------------
+# John the Ripper
+#-------------------------------------------------------------------
+- import_tasks: john_the_ripper.yml
 
 #-------------------------------------------------------------------
 # Bug Bounty
 #-------------------------------------------------------------------
 - import_tasks: bug_bounty.yml
-
-#-------------------------------------------------------------------
-# CTF
-#-------------------------------------------------------------------
-- import_tasks: ctf.yml
-
-#-------------------------------------------------------------------
-# Hardware
-#-------------------------------------------------------------------
-- import_tasks: hardware.yml
-
-#-------------------------------------------------------------------
-# Reverse Engineering / Forensics
-#-------------------------------------------------------------------
-- import_tasks: reverse_engineering.yml
-
-#-------------------------------------------------------------------
-# Burp Suite
-#-------------------------------------------------------------------
-- import_tasks: burp.yml
-  tags:
-    - burp
-    - gui
-  when: hacker__install_burp
-
-#-------------------------------------------------------------------
-# OWASP ZAP
-#-------------------------------------------------------------------
-- import_tasks: zap.yml
-  tags:
-    - zap
-    - gui
-  when: hacker__install_zap

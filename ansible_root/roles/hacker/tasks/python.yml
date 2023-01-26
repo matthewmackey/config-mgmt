@@ -1,7 +1,0 @@
-#------------------------------------------------------------------------------
-# These are Python tools I want to install but are hard to with Ansible b/c they
-# involve virtualenvs:
-#
-#  - https://github.com/aboul3la/Sublist3r
-#  - https://github.com/ProjectAnte/dnsgen
-#------------------------------------------------------------------------------

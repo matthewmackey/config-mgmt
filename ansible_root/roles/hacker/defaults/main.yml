@@ -21,8 +21,19 @@ hacker__nuclei_version: latest
 hacker__seclists_version: 2021.2
 hacker__subfinder_version: latest
 
+hacker__install_altdns: no
+hacker__install_altdns_wordlist: no
+hacker__install_amass: no
+hacker__install_assetfinder: no
 hacker__install_exploitdb_searchsploit: no
+hacker__install_ffuf: no
+hacker__install_goaltdns: no
+hacker__install_gobuster: no
+hacker__install_httprobe: no
+hacker__install_massdns: no
 hacker__install_metasploit: no
+hacker__install_nuclei: no
 hacker__install_seclists: no
+hacker__install_subfinder: no
 
 hacker__metasploit_installer_url: "https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb"

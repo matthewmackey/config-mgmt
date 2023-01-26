@@ -19,6 +19,7 @@
     - hacker
     - hacker__bug_bounty
     - hacker__altdns
+  when: hacker__install_altdns | bool
 
 #-------------------------------------------------------------------
 # altdns-wordlist
@@ -33,6 +34,7 @@
     - hacker
     - hacker__bug_bounty
     - hacker__altdns_wordlist
+  when: hacker__install_altdns_wordlist | bool
 
 #-------------------------------------------------------------------
 # amass
@@ -47,6 +49,7 @@
     - hacker
     - hacker__bug_bounty
     - hacker__amass
+  when: hacker__install_amass | bool
 
 #-------------------------------------------------------------------
 # assetfinder
@@ -61,6 +64,7 @@
     - hacker
     - hacker__bug_bounty
     - hacker__assetfinder
+  when: hacker__install_assetfinder | bool
 
 #-------------------------------------------------------------------
 # ExploitDB/Searchsploit
@@ -99,6 +103,7 @@
     - hacker
     - hacker__bug_bounty
     - hacker__ffuf
+  when: hacker__install_ffuf | bool
 
 #-------------------------------------------------------------------
 # goaltdns
@@ -113,6 +118,7 @@
     - hacker
     - hacker__bug_bounty
     - hacker__goaltdns
+  when: hacker__install_goaltdns | bool
 
 #-------------------------------------------------------------------
 # gobuster
@@ -127,6 +133,7 @@
     - hacker
     - hacker__bug_bounty
     - hacker__gobuster
+  when: hacker__install_gobuster | bool
 
 #-------------------------------------------------------------------
 # httprobe
@@ -141,6 +148,7 @@
     - hacker
     - hacker__bug_bounty
     - hacker__httprobe
+  when: hacker__install_httprobe | bool
 
 #-------------------------------------------------------------------
 # massdns
@@ -171,6 +179,7 @@
     - hacker
     - hacker__bug_bounty
     - hacker__massdns
+  when: hacker__install_massdns | bool
 
 #-------------------------------------------------------------------
 # Metasploit
@@ -206,6 +215,7 @@
     - hacker
     - hacker__bug_bounty
     - hacker__nuclei
+  when: hacker__install_nuclei | bool
 
 #-------------------------------------------------------------------
 # SecLists
@@ -235,3 +245,4 @@
     - hacker
     - hacker__bug_bounty
     - hacker__subfinder
+  when: hacker__install_subfinder | bool

@@ -39,6 +39,21 @@
     - setup
     - docker
 
+- name: Add Docker's APT repository for Ubuntu 22.04
+  become: yes
+  become_user: root
+  ansible.builtin.apt_repository:
+    state: present
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable
+    update_cache: yes
+  when:
+    - ansible_facts['distribution'] == "Ubuntu"
+    - ansible_facts['distribution_major_version'] == "22"
+  tags:
+    - install
+    - setup
+    - docker
+
 - name: Install Docker from Docker's Ubuntu package repo
   become: yes
   become_user: root

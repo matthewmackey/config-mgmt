@@ -22,7 +22,7 @@
 
 - name: base | Install base tools from remote archives
   include_tasks:
-    file: global__install_remote_archive
+    file: global__install_remote_archive.yml
   loop: "{{ base__remote_archives }}"
   tags:
     - base
@@ -53,7 +53,7 @@
 
 - name: base | Install base modern tools from remote archives
   include_tasks:
-    file: global__install_remote_archive
+    file: global__install_remote_archive.yml
   loop: "{{ base__remote_archives_modern }}"
   tags:
     - base

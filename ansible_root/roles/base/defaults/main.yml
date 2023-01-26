@@ -39,11 +39,10 @@ base__remote_debs_modern:
     url: https://github.com/sharkdp/bat/releases/download/v0.21.0/bat_0.21.0_amd64.deb
     filename: bat_0.21.0_amd64.deb
   -
-    name: duf-0.6.2
-    url: https://github.com/muesli/duf/releases/download/v0.6.2/duf_0.6.2_linux_amd64.deb
-    filename: duf_0.6.2_linux_amd64.deb
-    checksum: sha256:a73f3190aa0e6e78d3ee55d51f680df8c8fa2045ee1ac862c4afe662af19759f
-
+    name: duf-0.8.1
+    filename: duf_0.8.1_linux_amd64.deb
+    url: https://github.com/muesli/duf/releases/download/v0.8.1/duf_0.8.1_linux_amd64.deb
+    checksum: sha256:746983b4065e80b14f2e5af70c58e2283bb8b3a128cb076954d7329d476d5fad
 
 base__remote_archives: []
 base__remote_archives_modern:

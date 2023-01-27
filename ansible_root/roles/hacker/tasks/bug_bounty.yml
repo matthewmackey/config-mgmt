@@ -14,6 +14,9 @@
     source {{ hacker__virtualenv_activate }}
     pip3 install py-altdns=={{ hacker__altdns_version }}
     deactivate
+  args:
+    creates: "{{ hacker__virtualenv_dir }}/bin/altdns"
+    executable: /bin/bash
   tags:
     - install
     - hacker
@@ -43,7 +46,7 @@
   shell: |
     go install -v github.com/OWASP/Amass/v3/...@{{ hacker__amass_version }}
   args:
-    creates: "/home/{{ ansible_ssh_user }}/go/bin/amass"
+    creates: "/home/{{ ansible_user_id }}/go/bin/amass"
   tags:
     - install
     - hacker
@@ -58,7 +61,7 @@
   shell: |
     go get -u github.com/tomnomnom/assetfinder
   args:
-    creates: "/home/{{ ansible_ssh_user }}/go/bin/assetfinder"
+    creates: "/home/{{ ansible_user_id }}/go/bin/assetfinder"
   tags:
     - install
     - hacker
@@ -97,7 +100,7 @@
   shell: |
     go install github.com/ffuf/ffuf@{{ hacker__ffuf_version }}
   args:
-    creates: "/home/{{ ansible_ssh_user }}/go/bin/ffuf"
+    creates: "/home/{{ ansible_user_id }}/go/bin/ffuf"
   tags:
     - install
     - hacker
@@ -112,7 +115,7 @@
   shell: |
     go get -u github.com/subfinder/goaltdns
   args:
-    creates: "/home/{{ ansible_ssh_user }}/go/bin/goaltdns"
+    creates: "/home/{{ ansible_user_id }}/go/bin/goaltdns"
   tags:
     - install
     - hacker
@@ -127,7 +130,7 @@
   shell: |
     go install github.com/OJ/gobuster/v3@{{ hacker__gobuster_version }}
   args:
-    creates: "/home/{{ ansible_ssh_user }}/go/bin/gobuster"
+    creates: "/home/{{ ansible_user_id }}/go/bin/gobuster"
   tags:
     - install
     - hacker
@@ -142,7 +145,7 @@
   shell: |
     go install github.com/tomnomnom/httprobe@{{ hacker__httprobe_version }}
   args:
-    creates: "/home/{{ ansible_ssh_user }}/go/bin/httprobe"
+    creates: "/home/{{ ansible_user_id }}/go/bin/httprobe"
   tags:
     - install
     - hacker
@@ -209,7 +212,7 @@
   shell: |
     go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@{{ hacker__nuclei_version }}
   args:
-    creates: "/home/{{ ansible_ssh_user }}/go/bin/nuclei"
+    creates: "/home/{{ ansible_user_id }}/go/bin/nuclei"
   tags:
     - install
     - hacker
@@ -239,7 +242,7 @@
   shell: |
     go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@{{ hacker__subfinder_version }}
   args:
-    creates: "/home/{{ ansible_ssh_user }}/go/bin/subfinder"
+    creates: "/home/{{ ansible_user_id }}/go/bin/subfinder"
   tags:
     - install
     - hacker

@@ -56,3 +56,4 @@
         - install
         - hacker
         - hacker__john
+  when: hacker__install_john | bool

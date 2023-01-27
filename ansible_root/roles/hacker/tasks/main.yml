@@ -52,7 +52,8 @@
     - install
     - hacker
     - hacker__common
-    #
+  when: hacker__install_common | bool
+
 #-------------------------------------------------------------------
 # CTF Tools
 #-------------------------------------------------------------------
@@ -69,23 +70,7 @@
     - install
     - hacker
     - hacker__ctf
-
-#-------------------------------------------------------------------
-# Hardware tools
-#-------------------------------------------------------------------
-- name: hacker | install packages - hardware tools
-  become: yes
-  become_user: root
-  ansible.builtin.apt:
-    state: present
-    name: "{{ hacker__packages_hardware }}"
-  vars:
-    hacker__packages_hardware:
-      - bluez-hcidump
-  tags:
-    - install
-    - hacker
-    - hacker__hardware
+  when: hacker__install_ctf | bool
 
 #-------------------------------------------------------------------
 # Forensics
@@ -105,6 +90,25 @@
     - install
     - hacker
     - hacker__forensics
+  when: hacker__install_forensics | bool
+
+#-------------------------------------------------------------------
+# Hardware tools
+#-------------------------------------------------------------------
+- name: hacker | install packages - hardware tools
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    state: present
+    name: "{{ hacker__packages_hardware }}"
+  vars:
+    hacker__packages_hardware:
+      - bluez-hcidump
+  tags:
+    - install
+    - hacker
+    - hacker__hardware
+  when: hacker__install_hardware | bool
 
 #-------------------------------------------------------------------
 # Reverse Engineering
@@ -123,6 +127,7 @@
     - install
     - hacker
     - hacker__reverse_engr
+  when: hacker__install_reverse_engr | bool
 
 #-------------------------------------------------------------------
 # John the Ripper

@@ -1,0 +1,4 @@
+global__dotfiles_python_include: /home/{{ ansible_user_id }}/.config/sh/includes-enabled/python.sh
+global__default_python_dir: /home/{{ ansible_user_id }}/pythons/default
+global__virtualenvs_dir: /home/{{ ansible_user_id }}/virtualenvs
+global__virtualenvwrapper_activate: "{{ global__default_python_dir }}/bin/virtualenvwrapper.sh"

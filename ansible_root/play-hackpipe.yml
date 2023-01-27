@@ -1,11 +1,15 @@
 - name: Configure hackpipe VM
   hosts: hacker_vms
   roles:
-    - { role: base,     tags: ["base"] }
-    - { role: dotfiles, tags: ["dotfiles"] }
-    - { role: devtools, tags: ["devtools"] }
-    - { role: crypt,    tags: ["crypt"] }
-    - { role: python,   tags: ["python"] }
-    - { role: go,       tags: ["go"] }
-    - { role: docker,   tags: ["docker"] }
-    # - { role: hacker, tags: ["hacker"] }
+    - role: base
+    - role: dotfiles
+    - role: devtools
+    - role: crypt
+    - role: python
+    - role: go
+    - role: docker
+    - role: hacker
+      vars:
+        hacker__install_altdns: yes
+        hacker__install_massdns: yes
+        hacker__install_subfinder: yes

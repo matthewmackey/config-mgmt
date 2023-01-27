@@ -1,6 +1,10 @@
 hacker__tools_dir: "/opt/hacker"
 hacker__tools_bin_dir: "{{ hacker__tools_dir }}/bin"
 
+hacker__virtualenv_name: hacker
+hacker__virtualenv_dir: "{{ global__virtualenvs_dir }}/{{ hacker__virtualenv_name }}"
+hacker__virtualenv_activate: "{{ hacker__virtualenv_dir }}/bin/activate"
+
 hacker__install_common: yes
 hacker__install_ctf: no
 hacker__install_forensics: no

@@ -135,6 +135,28 @@
 - import_tasks: john_the_ripper.yml
 
 #-------------------------------------------------------------------
+# virtualenv: Hacker Tools
+#-------------------------------------------------------------------
+# - name: hacker | setup virtualenv for hacker tools
+#   block:
+- name: hacker | ensure virtualenv for hacker tools exists for current (Ansible) user
+  shell: |
+    # Setup Python / virtualenvwrapper shell env vars
+    source {{ global__dotfiles_python_include }}
+
+    # Enable virtualenvwrapper shell functions
+    source {{ global__virtualenvwrapper_activate }}
+
+    mkvirtualenv {{ hacker__virtualenv_name }}
+  args:
+    creates: "{{ hacker__virtualenv_activate }}"
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__virtualenv
+
+#-------------------------------------------------------------------
 # Bug Bounty
 #-------------------------------------------------------------------
 - import_tasks: bug_bounty.yml

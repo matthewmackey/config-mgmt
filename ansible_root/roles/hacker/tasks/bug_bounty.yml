@@ -47,6 +47,8 @@
     go install -v github.com/OWASP/Amass/v3/...@{{ hacker__amass_version }}
   args:
     creates: "/home/{{ ansible_user_id }}/go/bin/amass"
+    # Needed to activate GOPATH
+    executable: /bin/bash
   tags:
     - install
     - hacker
@@ -62,6 +64,8 @@
     go get -u github.com/tomnomnom/assetfinder
   args:
     creates: "/home/{{ ansible_user_id }}/go/bin/assetfinder"
+    # Needed to activate GOPATH
+    executable: /bin/bash
   tags:
     - install
     - hacker
@@ -101,6 +105,8 @@
     go install github.com/ffuf/ffuf@{{ hacker__ffuf_version }}
   args:
     creates: "/home/{{ ansible_user_id }}/go/bin/ffuf"
+    # Needed to activate GOPATH
+    executable: /bin/bash
   tags:
     - install
     - hacker
@@ -116,6 +122,8 @@
     go get -u github.com/subfinder/goaltdns
   args:
     creates: "/home/{{ ansible_user_id }}/go/bin/goaltdns"
+    # Needed to activate GOPATH
+    executable: /bin/bash
   tags:
     - install
     - hacker
@@ -131,6 +139,8 @@
     go install github.com/OJ/gobuster/v3@{{ hacker__gobuster_version }}
   args:
     creates: "/home/{{ ansible_user_id }}/go/bin/gobuster"
+    # Needed to activate GOPATH
+    executable: /bin/bash
   tags:
     - install
     - hacker
@@ -146,6 +156,8 @@
     go install github.com/tomnomnom/httprobe@{{ hacker__httprobe_version }}
   args:
     creates: "/home/{{ ansible_user_id }}/go/bin/httprobe"
+    # Needed to activate GOPATH
+    executable: /bin/bash
   tags:
     - install
     - hacker
@@ -213,6 +225,8 @@
     go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@{{ hacker__nuclei_version }}
   args:
     creates: "/home/{{ ansible_user_id }}/go/bin/nuclei"
+    # Needed to activate GOPATH
+    executable: /bin/bash
   tags:
     - install
     - hacker
@@ -243,6 +257,8 @@
     go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@{{ hacker__subfinder_version }}
   args:
     creates: "/home/{{ ansible_user_id }}/go/bin/subfinder"
+    # Needed to activate GOPATH
+    executable: /bin/bash
   tags:
     - install
     - hacker

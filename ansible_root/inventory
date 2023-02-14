@@ -22,7 +22,7 @@ all:
       ansible_connection: local
       ansible_host: 127.0.0.1
     gcp_hacker:
-      ansible_host: mm-hacking.us-central1-f.bbh-hacking
+      ansible_host: mmhacker.us-central1-f.bbh-hacking
     mmmaster:
     mmworker0:
     mmhacker:
@@ -62,7 +62,6 @@ gitlab:
 hacker_vms:
   hosts:
     gcp_hacker:
-    hackpipe:
     kali:
     mmlenovo:
     mmhacker:

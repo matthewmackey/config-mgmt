@@ -9,7 +9,3 @@
     - role: go
     - role: docker
     - role: hacker
-      vars:
-        hacker__install_altdns: yes
-        hacker__install_massdns: yes
-        hacker__install_subfinder: yes

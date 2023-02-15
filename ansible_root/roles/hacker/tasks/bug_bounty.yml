@@ -1,43 +1,22 @@
 #------------------------------------------------------------------------------
-# These are Python tools I want to install but are hard to with Ansible b/c they
-# involve virtualenvs:
-#
-#  - https://github.com/aboul3la/Sublist3r
-#  - https://github.com/ProjectAnte/dnsgen
+# Install: Go
 #------------------------------------------------------------------------------
-
 #-------------------------------------------------------------------
-# altdns
-#-------------------------------------------------------------------
-- name: hacker | install altdns into hacker virtualenv via PyPi (not source)
-  shell: |
-    source {{ hacker__virtualenv_activate }}
-    pip3 install py-altdns=={{ hacker__altdns_version }}
-    deactivate
-  args:
-    creates: "{{ hacker__virtualenv_dir }}/bin/altdns"
-    executable: /bin/bash
-  tags:
-    - install
-    - hacker
-    - hacker__bug_bounty
-    - hacker__altdns
-  when: hacker__install_altdns | bool
-
-#-------------------------------------------------------------------
-# altdns-wordlist
-#-------------------------------------------------------------------
-- name: hacker | clone altdns repository
-  ansible.builtin.git:
-    repo: https://github.com/infosec-au/altdns.git
-    dest: "{{ hacker__tools_dir }}/altdns"
-    version: "{{ hacker__altdns_wordlist_version }}"
-  tags:
-    - install
-    - hacker
-    - hacker__bug_bounty
-    - hacker__altdns_wordlist
-  when: hacker__install_altdns_wordlist | bool
+# Go tools (TEMPLATE for later??)
+##-------------------------------------------------------------------
+#- name: hacker | install Go tool ({{ item.name }})
+#  shell: |
+#    go install -v {{ item.url }}@{{ item.version }}
+#  args:
+#    creates: "/home/{{ ansible_user_id }}/go/bin/{{ item.exec }}"
+#    # Needed to activate GOPATH
+#    executable: /bin/bash
+#  tags:
+#    - install
+#    - hacker
+#    - hacker__bug_bounty
+#    - hacker__go_tools
+#  loop: "{{ hacker__go_tools }}"
 
 #-------------------------------------------------------------------
 # amass
@@ -57,11 +36,34 @@
   when: hacker__install_amass | bool
 
 #-------------------------------------------------------------------
+# anew
+#
+# This doesn't work with any version or branch specifier.  Seems to
+# have something to do with go modules.
+#
+# This is the case even though the anew repo has tags (why ??).
+#-------------------------------------------------------------------
+- name: hacker | install anew
+  shell: |
+    go get -u github.com/tomnomnom/anew
+  args:
+    creates: "/home/{{ ansible_user_id }}/go/bin/anew"
+    # Needed to activate GOPATH
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__anew
+    - hacker__tomnomnom
+  when: hacker__install_anew | bool
+
+#-------------------------------------------------------------------
 # assetfinder
 #-------------------------------------------------------------------
 - name: hacker | install assetfinder
   shell: |
-    go get -u github.com/tomnomnom/assetfinder
+    go get -u github.com/tomnomnom/assetfinder@{{ hacker__assetfinder_version }}
   args:
     creates: "/home/{{ ansible_user_id }}/go/bin/assetfinder"
     # Needed to activate GOPATH
@@ -71,7 +73,421 @@
     - hacker
     - hacker__bug_bounty
     - hacker__assetfinder
+    - hacker__tomnomnom
   when: hacker__install_assetfinder | bool
+
+#-------------------------------------------------------------------
+# blocksort
+#
+# This doesn't work with any version or branch specifier.  Seems to
+# have something to do with go modules.
+#-------------------------------------------------------------------
+- name: hacker | install blocksort
+  shell: |
+    go get -u github.com/tomnomnom/blocksort
+  args:
+    creates: "/home/{{ ansible_user_id }}/go/bin/blocksort"
+    # Needed to activate GOPATH
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__blocksort
+    - hacker__tomnomnom
+  when: hacker__install_blocksort | bool
+
+#-------------------------------------------------------------------
+# ffuf
+#-------------------------------------------------------------------
+- name: hacker | install ffuf
+  shell: |
+    go install -v github.com/ffuf/ffuf@{{ hacker__ffuf_version }}
+  args:
+    creates: "/home/{{ ansible_user_id }}/go/bin/ffuf"
+    # Needed to activate GOPATH
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__ffuf
+  when: hacker__install_ffuf | bool
+
+#-------------------------------------------------------------------
+# fff
+#
+# This doesn't work with any version or branch specifier.  Seems to
+# have something to do with go modules.
+#-------------------------------------------------------------------
+- name: hacker | install fff
+  shell: |
+    go get -u github.com/tomnomnom/fff
+  args:
+    creates: "/home/{{ ansible_user_id }}/go/bin/fff"
+    # Needed to activate GOPATH
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__fff
+    - hacker__tomnomnom
+  when: hacker__install_fff | bool
+
+#-------------------------------------------------------------------
+# gf
+#
+# This doesn't work with any version or branch specifier.  Seems to
+# have something to do with go modules.
+#-------------------------------------------------------------------
+- name: hacker | install gf
+  shell: |
+    go get -u github.com/tomnomnom/gf
+  args:
+    creates: "/home/{{ ansible_user_id }}/go/bin/gf"
+    # Needed to activate GOPATH
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__gf
+    - hacker__tomnomnom
+  when: hacker__install_gf | bool
+
+#-------------------------------------------------------------------
+# goaltdns
+#-------------------------------------------------------------------
+- name: hacker | install goaltdns
+  shell: |
+    go get -u github.com/subfinder/goaltdns@{{ hacker__goaltdns_version }}
+  args:
+    creates: "/home/{{ ansible_user_id }}/go/bin/goaltdns"
+    # Needed to activate GOPATH
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__goaltdns
+  when: hacker__install_goaltdns | bool
+
+#-------------------------------------------------------------------
+# gobuster
+#-------------------------------------------------------------------
+- name: hacker | install gobuster
+  shell: |
+    go install -v github.com/OJ/gobuster/v3@{{ hacker__gobuster_version }}
+  args:
+    creates: "/home/{{ ansible_user_id }}/go/bin/gobuster"
+    # Needed to activate GOPATH
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__gobuster
+  when: hacker__install_gobuster | bool
+
+#-------------------------------------------------------------------
+# gron
+#
+# This doesn't work with any version or branch specifier.  Seems to
+# have something to do with go modules.
+#
+# This is the case even though the anew repo has tags (why ??).
+#-------------------------------------------------------------------
+- name: hacker | install gron
+  shell: |
+    go get -u github.com/tomnomnom/gron
+  args:
+    creates: "/home/{{ ansible_user_id }}/go/bin/gron"
+    # Needed to activate GOPATH
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__gron
+    - hacker__tomnomnom
+  when: hacker__install_gron | bool
+
+#-------------------------------------------------------------------
+# hakrawler
+#-------------------------------------------------------------------
+- name: hacker | install hakrawler
+  shell: |
+    go install -v github.com/hakluke/hakrawler@{{ hacker__hakrawler_version }}
+  args:
+    creates: "/home/{{ ansible_user_id }}/go/bin/hakrawler"
+    # Needed to activate GOPATH
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__hakrawler
+  when: hacker__install_hakrawler | bool
+
+#-------------------------------------------------------------------
+# gospider
+#-------------------------------------------------------------------
+- name: hacker | install gospider
+  shell: |
+    go install -v github.com/jaeles-project/gospider@{{ hacker__gospider_version }}
+  args:
+    creates: "/home/{{ ansible_user_id }}/go/bin/gospider"
+    # Needed to activate GOPATH
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__gospider
+  when: hacker__install_gospider | bool
+#-------------------------------------------------------------------
+# fingerprintx
+#-------------------------------------------------------------------
+- name: hacker | install fingerprintx
+  shell: |
+    go install -v github.com/praetorian-inc/fingerprintx/cmd/fingerprintx@{{ hacker__fingerprintx_version }}
+  args:
+    creates: "/home/{{ ansible_user_id }}/go/bin/fingerprintx"
+    # Needed to activate GOPATH
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__fingerprintx
+  when: hacker__install_fingerprintx | bool
+
+#-------------------------------------------------------------------
+# gowitness
+#-------------------------------------------------------------------
+- name: hacker | install gowitness
+  shell: |
+    go install -v github.com/sensepost/gowitness@{{ hacker__gowitness_version }}
+  args:
+    creates: "/home/{{ ansible_user_id }}/go/bin/gowitness"
+    # Needed to activate GOPATH
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__gowitness
+  when: hacker__install_gowitness | bool
+
+
+#-------------------------------------------------------------------
+# httprobe
+#-------------------------------------------------------------------
+- name: hacker | install httprobe
+  shell: |
+    go install -v github.com/tomnomnom/httprobe@{{ hacker__httprobe_version }}
+  args:
+    creates: "/home/{{ ansible_user_id }}/go/bin/httprobe"
+    # Needed to activate GOPATH
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__httprobe
+    - hacker__tomnomnom
+  when: hacker__install_httprobe | bool
+
+#-------------------------------------------------------------------
+# httpx
+#-------------------------------------------------------------------
+- name: hacker | install httpx
+  shell: |
+    go install -v github.com/projectdiscovery/httpx/cmd/httpx@{{ hacker__httpx_version }}
+  args:
+    creates: "/home/{{ ansible_user_id }}/go/bin/httpx"
+    # Needed to activate GOPATH
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__httpx
+  when: hacker__install_httpx | bool
+
+#-------------------------------------------------------------------
+# meg
+#
+# This doesn't work with any version or branch specifier.  Seems to
+# have something to do with go modules.
+#
+# This is the case even though the anew repo has tags (why ??).
+#-------------------------------------------------------------------
+- name: hacker | install meg
+  shell: |
+    go get -u github.com/tomnomnom/meg
+  args:
+    creates: "/home/{{ ansible_user_id }}/go/bin/meg"
+    # Needed to activate GOPATH
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__meg
+    - hacker__tomnomnom
+  when: hacker__install_meg | bool
+
+#-------------------------------------------------------------------
+# nuclei
+#-------------------------------------------------------------------
+- name: hacker | install nuclei
+  shell: |
+    go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@{{ hacker__nuclei_version }}
+  args:
+    creates: "/home/{{ ansible_user_id }}/go/bin/nuclei"
+    # Needed to activate GOPATH
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__nuclei
+  when: hacker__install_nuclei | bool
+
+#-------------------------------------------------------------------
+# qsreplace
+#
+# This doesn't work with any version or branch specifier.  Seems to
+# have something to do with go modules.
+#
+# This is the case even though the anew repo has tags (why ??).
+#-------------------------------------------------------------------
+- name: hacker | install qsreplace
+  shell: |
+    go get -u github.com/tomnomnom/qsreplace
+  args:
+    creates: "/home/{{ ansible_user_id }}/go/bin/qsreplace"
+    # Needed to activate GOPATH
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__qsreplace
+    - hacker__tomnomnom
+  when: hacker__install_qsreplace | bool
+
+#-------------------------------------------------------------------
+# subfinder
+#-------------------------------------------------------------------
+- name: hacker | install subfinder
+  shell: |
+    go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@{{ hacker__subfinder_version }}
+  args:
+    creates: "/home/{{ ansible_user_id }}/go/bin/subfinder"
+    # Needed to activate GOPATH
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__subfinder
+  when: hacker__install_subfinder | bool
+
+#-------------------------------------------------------------------
+# unfurl
+#
+# This doesn't work with any version or branch specifier.  Seems to
+# have something to do with go modules.
+#
+# This is the case even though the anew repo has tags (why ??).
+#-------------------------------------------------------------------
+- name: hacker | install unfurl
+  shell: |
+    go get -u github.com/tomnomnom/unfurl
+  args:
+    creates: "/home/{{ ansible_user_id }}/go/bin/unfurl"
+    # Needed to activate GOPATH
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__unfurl
+    - hacker__tomnomnom
+  when: hacker__install_unfurl | bool
+
+#-------------------------------------------------------------------
+# waybackurls
+#
+# This doesn't work with any version or branch specifier.  Seems to
+# have something to do with go modules.
+#
+# This is the case even though the anew repo has tags (why ??).
+#-------------------------------------------------------------------
+- name: hacker | install waybackurls
+  shell: |
+    go get -u github.com/tomnomnom/waybackurls
+  args:
+    creates: "/home/{{ ansible_user_id }}/go/bin/waybackurls"
+    # Needed to activate GOPATH
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__waybackurls
+    - hacker__tomnomnom
+  when: hacker__install_waybackurls | bool
+
+
+#------------------------------------------------------------------------------
+# Install: Python
+#
+# These are Python tools I want to install but are hard to with Ansible b/c they
+# involve virtualenvs:
+#
+#  - https://github.com/aboul3la/Sublist3r
+#  - https://github.com/ProjectAnte/dnsgen
+#------------------------------------------------------------------------------
+#-------------------------------------------------------------------
+# altdns
+#-------------------------------------------------------------------
+- name: hacker | install altdns into hacker virtualenv via PyPi (not source)
+  shell: |
+    source {{ hacker__virtualenv_activate }}
+    pip3 install py-altdns=={{ hacker__altdns_version }}
+    deactivate
+  args:
+    creates: "{{ hacker__virtualenv_dir }}/bin/altdns"
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__altdns
+  when: hacker__install_altdns | bool
+
+
+#------------------------------------------------------------------------------
+# Install: Git
+#------------------------------------------------------------------------------
+#-------------------------------------------------------------------
+# altdns-wordlist
+#-------------------------------------------------------------------
+- name: hacker | clone altdns repository
+  ansible.builtin.git:
+    repo: https://github.com/infosec-au/altdns.git
+    dest: "{{ hacker__tools_dir }}/altdns"
+    version: "{{ hacker__altdns_wordlist_version }}"
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__altdns_wordlist
+  when: hacker__install_altdns_wordlist | bool
 
 #-------------------------------------------------------------------
 # ExploitDB/Searchsploit
@@ -95,75 +511,8 @@
     - hacker__bug_bounty
     - hacker__exploitdb
     - hacker__searchsploit
+    - hacker__large
   when: hacker__install_exploitdb_searchsploit | bool
-
-#-------------------------------------------------------------------
-# ffuf
-#-------------------------------------------------------------------
-- name: hacker | install ffuf
-  shell: |
-    go install github.com/ffuf/ffuf@{{ hacker__ffuf_version }}
-  args:
-    creates: "/home/{{ ansible_user_id }}/go/bin/ffuf"
-    # Needed to activate GOPATH
-    executable: /bin/bash
-  tags:
-    - install
-    - hacker
-    - hacker__bug_bounty
-    - hacker__ffuf
-  when: hacker__install_ffuf | bool
-
-#-------------------------------------------------------------------
-# goaltdns
-#-------------------------------------------------------------------
-- name: hacker | install goaltdns
-  shell: |
-    go get -u github.com/subfinder/goaltdns
-  args:
-    creates: "/home/{{ ansible_user_id }}/go/bin/goaltdns"
-    # Needed to activate GOPATH
-    executable: /bin/bash
-  tags:
-    - install
-    - hacker
-    - hacker__bug_bounty
-    - hacker__goaltdns
-  when: hacker__install_goaltdns | bool
-
-#-------------------------------------------------------------------
-# gobuster
-#-------------------------------------------------------------------
-- name: hacker | install gobuster
-  shell: |
-    go install github.com/OJ/gobuster/v3@{{ hacker__gobuster_version }}
-  args:
-    creates: "/home/{{ ansible_user_id }}/go/bin/gobuster"
-    # Needed to activate GOPATH
-    executable: /bin/bash
-  tags:
-    - install
-    - hacker
-    - hacker__bug_bounty
-    - hacker__gobuster
-  when: hacker__install_gobuster | bool
-
-#-------------------------------------------------------------------
-# httprobe
-#-------------------------------------------------------------------
-- name: hacker | install httprobe
-  shell: |
-    go install github.com/tomnomnom/httprobe@{{ hacker__httprobe_version }}
-  args:
-    creates: "/home/{{ ansible_user_id }}/go/bin/httprobe"
-    # Needed to activate GOPATH
-    executable: /bin/bash
-  tags:
-    - install
-    - hacker
-    - hacker__bug_bounty
-    - hacker__httprobe
-  when: hacker__install_httprobe | bool
 
 #-------------------------------------------------------------------
 # massdns
@@ -197,6 +546,26 @@
   when: hacker__install_massdns | bool
 
 #-------------------------------------------------------------------
+# SecLists
+#-------------------------------------------------------------------
+- name: hacker | install SecLists
+  ansible.builtin.git:
+    repo: https://github.com/danielmiessler/SecLists.git
+    version: "{{ hacker__seclists_version }}"
+    dest: "{{ hacker__tools_dir }}/SecLists"
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__seclists
+    - hacker__large
+  when: hacker__install_seclists | bool
+
+
+#------------------------------------------------------------------------------
+# Install: Shell
+#------------------------------------------------------------------------------
+#-------------------------------------------------------------------
 # Metasploit
 #
 # The `msfinstall` program will install APT keys and the `metasploit-framework` package.
@@ -215,53 +584,5 @@
     - hacker
     - hacker__bug_bounty
     - hacker__metasploit
+    - hacker__large
   when: hacker__install_metasploit | bool
-
-#-------------------------------------------------------------------
-# nuclei
-#-------------------------------------------------------------------
-- name: hacker | install nuclei
-  shell: |
-    go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@{{ hacker__nuclei_version }}
-  args:
-    creates: "/home/{{ ansible_user_id }}/go/bin/nuclei"
-    # Needed to activate GOPATH
-    executable: /bin/bash
-  tags:
-    - install
-    - hacker
-    - hacker__bug_bounty
-    - hacker__nuclei
-  when: hacker__install_nuclei | bool
-
-#-------------------------------------------------------------------
-# SecLists
-#-------------------------------------------------------------------
-- name: hacker | install SecLists
-  ansible.builtin.git:
-    repo: https://github.com/danielmiessler/SecLists.git
-    version: "{{ hacker__seclists_version }}"
-    dest: "{{ hacker__tools_dir }}/SecLists"
-  tags:
-    - install
-    - hacker
-    - hacker__bug_bounty
-    - hacker__seclists
-  when: hacker__install_seclists | bool
-
-#-------------------------------------------------------------------
-# subfinder
-#-------------------------------------------------------------------
-- name: hacker | install subfinder
-  shell: |
-    go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@{{ hacker__subfinder_version }}
-  args:
-    creates: "/home/{{ ansible_user_id }}/go/bin/subfinder"
-    # Needed to activate GOPATH
-    executable: /bin/bash
-  tags:
-    - install
-    - hacker
-    - hacker__bug_bounty
-    - hacker__subfinder
-  when: hacker__install_subfinder | bool

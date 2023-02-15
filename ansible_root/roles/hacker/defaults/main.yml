@@ -16,32 +16,92 @@ hacker__install_john: no
 
 #----------------------------------------------------------------------
 # Bug Bounty Tools
+#
+# If branch name is specified (ie - `master`)vs. `latest` then that
+# means that tool's repo does not create releases/tags.  So `latest`
+# will then mean the latest release.
+#
+# This also means that the tool must be installed w/ `go get` vs. `go install`.
 #----------------------------------------------------------------------
 hacker__altdns_version: 1.0.2
 hacker__altdns_wordlist_version: master
-hacker__amass_version: master
+hacker__amass_version: v3.21.2
+# hacker__anew_version: 0.2  # doesn't work w/ version/branch
+hacker__assetfinder_version: v0.1.1
+# hacker__blocksort_version: master  # doesn't work w/ version/branch
 hacker__exploitdb_searchsploit_version: 2022-09-02
-hacker__ffuf_version: latest
-hacker__gobuster_version: latest
-hacker__httprobe_version: latest
+# hacker__fff_version: master  # doesn't work w/ version/branch
+hacker__ffuf_version: v2.0.0
+hacker__fingerprintx_version: latest
+# hacker__gf_version: master  # doesn't work w/ version/branch
+hacker__goaltdns_version: master
+hacker__gobuster_version: v3.4.0
+hacker__gospider_version: latest
+hacker__gowitness_version: latest  # doesn't work w/ version/branch even though tags exist
+# hacker__gron_version: v0.7.1  # doesn't work w/ version/branch
+hacker__hakrawler_version: latest
+hacker__httprobe_version: v0.2
+hacker__httpx_version: v1.2.7
 hacker__massdns_version:  v1.0.0
-hacker__nuclei_version: latest
+# hacker__meg_version: v0.3.0  # doesn't work w/ version/branch
+hacker__nuclei_version: v2.8.9
+# hacker__qsreplace_version: v0.0.3  # doesn't work w/ version/branch
 hacker__seclists_version: 2021.2
-hacker__subfinder_version: latest
+hacker__subfinder_version: master
+# hacker__unfurl_version: v0.4.3  # doesn't work w/ version/branch
+# hacker__waybackurls_version: v0.1.0  # doesn't work w/ version/branch
 
-hacker__install_altdns: no
-hacker__install_altdns_wordlist: no
-hacker__install_amass: no
-hacker__install_assetfinder: no
+# INSTALLED by default
+hacker__install_altdns: yes
+hacker__install_altdns_wordlist: yes
+hacker__install_amass: yes
+hacker__install_anew: yes
+hacker__install_assetfinder: yes
+hacker__install_blocksort: yes
+hacker__install_fff: yes
+hacker__install_ffuf: yes
+hacker__install_fingerprintx: yes
+hacker__install_gf: yes
+hacker__install_goaltdns: yes
+hacker__install_gobuster: yes
+hacker__install_gospider: yes
+hacker__install_gowitness: yes
+hacker__install_gron: yes
+hacker__install_hakrawler: yes
+hacker__install_httprobe: yes
+hacker__install_httpx: yes
+hacker__install_massdns: yes
+hacker__install_meg: yes
+hacker__install_nuclei: yes
+hacker__install_qsreplace: yes
+hacker__install_subfinder: yes
+hacker__install_unfurl: yes
+hacker__install_waybackurls: yes
+
+# SKIPPED by default
 hacker__install_exploitdb_searchsploit: no
-hacker__install_ffuf: no
-hacker__install_goaltdns: no
-hacker__install_gobuster: no
-hacker__install_httprobe: no
-hacker__install_massdns: no
 hacker__install_metasploit: no
-hacker__install_nuclei: no
 hacker__install_seclists: no
-hacker__install_subfinder: no
+
+# hacker__go_tools:
+#   - name: amass
+#     url: github.com/OWASP/Amass/v3/...
+#     version: master
+#     exec: amass
+
+#   - name: assetfinder
+#     url: github.com/tomnomnom/assetfinder
+#     version: latest
+#     exec: assetfinder
+
+#   - name: ffuf
+#     url: github.com/ffuf/ffuf
+#     version: latest
+#     exec: ffuf
+
+#   - name: goaltdns
+#     url: github.com/subfinder/goaltdns
+#     version:
+#     exec: goaltdns
 
 hacker__metasploit_installer_url: "https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb"

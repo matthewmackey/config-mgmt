@@ -22,6 +22,16 @@
         - never
         - awsvpn
 
+    - name: crypt
+      tags:
+        - never
+        - crypt
+
+    - name: devtools
+      tags:
+        - never
+        - devtools
+
     - name: docker
       tags:
         - never
@@ -85,6 +95,11 @@
         - never
         - moonlander
 
+    - name: net
+      tags:
+        - never
+        - net
+
     - name: qemu_kvm
       tags:
         - never
@@ -115,6 +130,11 @@
         - never
         - slack
 
+    - name: sops
+      tags:
+        - never
+        - sops
+
     - name: sudoers
       tags:
         - never
@@ -124,16 +144,6 @@
       tags:
         - never
         - tools_common
-
-    - name: tools_common_gui
-      tags:
-        - never
-        - tools_common_gui
-
-    - name: tools_net
-      tags:
-        - never
-        - tools_net
 
     - name: virtual_machines
       tags:

@@ -12,7 +12,7 @@
     - packages
 
 - name: tools_common | Install common tools from remote .debs
-  import_tasks:
+  include_tasks:
     file: global__install_remote_deb.yml
   loop: "{{ tools_common__remote_debs }}"
   tags:
@@ -21,7 +21,7 @@
     - remote_debs
 
 - name: tools_common | Install common tools from remote archives
-  import_tasks:
+  include_tasks:
     file: global__install_remote_archive.yml
   loop: "{{ tools_common__remote_archives }}"
   tags:
@@ -44,7 +44,7 @@
     - packages
 
 - name: tools_common | Install common tools for Desktop enivronments from remote .debs (gui)
-  import_tasks:
+  include_tasks:
     file: global__install_remote_deb.yml
   loop: "{{ tools_common__gui_remote_debs }}"
   when: is_gui

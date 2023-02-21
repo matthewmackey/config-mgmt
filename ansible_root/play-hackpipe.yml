@@ -5,7 +5,10 @@
     - role: dotfiles
     - role: devtools
     - role: crypt
-    - role: python
-    - role: go
     - role: docker
+    - role: go
+    - role: python
+    - role: rust
+      tags:
+        - rust
     - role: hacker

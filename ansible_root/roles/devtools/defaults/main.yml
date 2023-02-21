@@ -11,5 +11,10 @@ devtools__packages_full:
   - cloud-utils
   - universal-ctags
 
-devtools__remote_debs: []
+devtools__remote_debs:
+  - name: cypher-shell
+    url: "https://dist.neo4j.org/cypher-shell/cypher-shell_5.5.0_all.deb"
+    filename: cypher-shell_5.5.0_all.deb
+    checksum: sha256:1220ff3e5e6e4b910c3ef18b9d0f513a41c33be3dc923571d1565c3153098d8c
+
 devtools__remote_archives: []

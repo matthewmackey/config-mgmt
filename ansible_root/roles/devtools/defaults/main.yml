@@ -9,6 +9,7 @@ devtools__packages:
 devtools__packages_full:
   # Used for making cloud-init seed ISOs
   - cloud-utils
+  - graphviz
   - universal-ctags
 
 devtools__remote_debs:

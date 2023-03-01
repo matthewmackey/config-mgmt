@@ -84,6 +84,7 @@
   vars:
     hacker__packages_forensics:
       - binwalk
+      - exiftool
       - foremost
       - steghide
   tags:

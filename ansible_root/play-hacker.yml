@@ -1,45 +1,12 @@
----
-- name: Configure hacker vms
+- name: Configure hackpipe VM
   hosts: hacker_vms
-
-  pre_tasks:
-
-    - name: Update APT cache
-      become: yes
-      apt:
-        update_cache: yes
-        cache_valid_time: 360
-      tags:
-        - always
-
-    # TODO: move to a role (required by golang role)
-    - name: Setup downloads/srv directory
-      become_user: "{{ username }}"
-      file:
-        state: directory
-        name: "{{ downloads_srv_dir }}"
-      tags:
-        - always
-
   roles:
-
-    - role: go
-      tags:
-        - go
-
-    - role: hacker
-      tags:
-        - hacker
-
+    - role: base
+    - role: dotfiles
+    - role: devtools
+    - role: crypt
     - role: docker
-      tags:
-        - docker
-
+    - role: go
     - role: python
-      tags:
-        - python
-
-    - role: kubernetes
-      tags:
-        - kubernetes
-
+    - role: rust
+    - role: hacker

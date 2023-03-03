@@ -1,4 +1,3 @@
----
 - name: Install packages that allow APT to be used over HTTPS
   become: yes
   apt:
@@ -13,3 +12,6 @@
       - curl
       - gnupg-agent
       - software-properties-common
+  tags:
+    - setup
+    - apt-https

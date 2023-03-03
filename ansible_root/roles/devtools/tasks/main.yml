@@ -1,7 +1,7 @@
 #-------------------------------------------------------------------------------
-# http APT setup required before install packages task below
+# APT setup required before install packages task below
 #-------------------------------------------------------------------------------
-- name: devtools | Install httpie APT signing key
+- name: devtools | httpie | Install httpie APT signing key
   become: yes
   become_user: root
   ansible.builtin.apt_key:
@@ -14,7 +14,7 @@
     - httpie
     - packages
 
-- name: devtools | Install httpie APT repo
+- name: devtools | httpie | Install httpie APT repo
   become: yes
   become_user: root
   ansible.builtin.apt_repository:
@@ -26,6 +26,33 @@
     - setup
     - devtools
     - httpie
+    - packages
+
+- name: devtools | cypher-shell | Install Neo4j APT signing key
+  become: yes
+  become_user: root
+  ansible.builtin.apt_key:
+    state: present
+    url: https://debian.neo4j.com/neotechnology.gpg.key
+    keyring: /etc/apt/trusted.gpg.d/neo4j-neotechnology-keyring.gpg
+  tags:
+    - setup
+    - devtools
+    - cypher-shell
+    - packages
+
+- name: devtools | cypher-shell | Install Neo4J APT repo
+  become: yes
+  become_user: root
+  ansible.builtin.apt_repository:
+    state: present
+    repo: deb https://debian.neo4j.com stable 4.0
+    filename: neo4j
+    update_cache: yes
+  tags:
+    - setup
+    - devtools
+    - cypher-shell
     - packages
 #-------------------------------------------------------------------------------
 

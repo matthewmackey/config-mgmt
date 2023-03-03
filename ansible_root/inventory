@@ -23,6 +23,8 @@ all:
       ansible_host: 127.0.0.1
     gcp_hacker:
       ansible_host: mmhacker.us-central1-f.bbh-hacking
+    gcp_htb:
+      ansible_host: hacker-htb.us-central1-f.bbh-hacking
     mmmaster:
     mmworker0:
     mmhacker:
@@ -62,6 +64,7 @@ gitlab:
 hacker_vms:
   hosts:
     gcp_hacker:
+    gcp_htb:
     kali:
     mmlenovo:
     mmhacker:

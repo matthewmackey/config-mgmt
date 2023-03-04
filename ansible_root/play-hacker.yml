@@ -11,6 +11,15 @@
     - role: rust
     - role: hacker
 
+- name: Setup HackTheBox VMs
+  hosts: htb
+  become: yes
+  become_user: root
+  roles:
+    - role: openvpn
+  tags:
+    - htb
+
 # Installing Gnome Terminal b/c couldn't get base16 to work on default Qt terminal w/ Kali
 - name: Setup Kali Linux hacker VMs
   hosts: kali

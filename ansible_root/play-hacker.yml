@@ -5,9 +5,9 @@
     - role: dotfiles
     - role: devtools
     - role: crypt
-    # - role: docker
-    - role: go
+    - role: docker
     - role: python
+    - role: go
     - role: rust
     - role: hacker
 

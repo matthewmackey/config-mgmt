@@ -5,7 +5,7 @@
     dest: "{{ common__downloads_dir }}/awscliv2.zip"
 
 # 'creates' is used but this actually a hack b/c the value it is looking for
-# comes from a path the installer creates in the following step
+# comes from a directory the installer creates in the following step
 - name: Unzip AWS CLI .zip archive to /tmp
   unarchive:
     src: "{{ common__downloads_dir }}/awscliv2.zip"

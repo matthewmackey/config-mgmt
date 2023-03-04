@@ -70,6 +70,10 @@ hacker_vms:
     mmhacker:
     mmtower:
 
+htb:
+  hosts:
+    gcp_htb:
+
 lab_hosts:
   hosts:
     mmlenovo:

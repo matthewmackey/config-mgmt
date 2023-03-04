@@ -9,24 +9,31 @@
     - role: python
     - role: go
     - role: rust
+    - role: openvpn
     - role: hacker
 
-- name: Setup HackTheBox VMs
+# This is to configure VM w/ Cinnamon GUI that we must access remotely (ie - on a Cloud VM)
+- name: Setup HackTheBox VMs (Cloud VM)
   hosts: htb
   become: yes
   become_user: root
   roles:
-    - role: openvpn
+    - role: cinnamon
+    - role: xrdp
   tags:
+    - never
     - htb
 
-# Installing Gnome Terminal b/c couldn't get base16 to work on default Qt terminal w/ Kali
 - name: Setup Kali Linux hacker VMs
   hosts: kali
-  become: yes
-  become_user: root
-  tasks:
-    - name: Install Gnome Terminal
-      apt:
-        name: gnome-terminal
-        state: present
+  roles:
+    # Prefer Alacritty terminal
+    - role: alacritty
+  tags:
+    - kali
+  # # Installing Gnome Terminal b/c couldn't get base16 to work on default Qt terminal w/ Kali
+  # tasks:
+  #   - name: Install Gnome Terminal
+  #     apt:
+  #       name: gnome-terminal
+  #       state: present

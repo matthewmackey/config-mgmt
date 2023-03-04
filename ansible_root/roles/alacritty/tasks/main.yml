@@ -1,4 +1,3 @@
----
 - name: Install Debian dependencies
   become: yes
   become_user: root
@@ -26,7 +25,7 @@
     creates: "{{ common__git_dir }}/alacritty/target/release/alacritty"
 
 - name: Copy alacritty binary to ansible bin directory
-  copy:
+  ansible.builtin.copy:
     src: "{{ common__git_dir }}/alacritty/target/release/alacritty"
     dest: "{{ common__bin_dir }}/alacritty"
     mode: 0755
@@ -34,7 +33,7 @@
 - name: Symlink alacritty binary to /usr/local/bin
   become: yes
   become_user: root
-  file:
+  ansible.builtin.file:
     state: link
     src: "{{ common__bin_dir }}/alacritty"
     dest: /usr/local/bin/alacritty
@@ -45,7 +44,7 @@
 - name: Copy alacritty logo to /usr/share/pixmaps for use with .desktop file
   become: yes
   become_user: root
-  copy:
+  ansible.builtin.copy:
     src: "{{ common__git_dir }}/alacritty/extra/logo/alacritty-term.svg"
     dest: /usr/share/pixmaps/Alacritty.svg
     owner: root
@@ -58,4 +57,3 @@
     desktop-file-install {{ common__git_dir }}/alacritty/extra/linux/Alacritty.desktop
     update-desktop-database
   changed_when: False
-

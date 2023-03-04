@@ -1,103 +1,36 @@
----
-- name: Install OpenVPN Server
+- name: openvpn | Install OpenVPN Client/Server
   become: yes
   become_user: root
-  apt:
+  ansible.builtin.apt:
     name: openvpn
     state: present
+  tags:
+    - install
+    - openvpn
 
-- name: Install Easy-RSA
+- name: openvpn | Install Easy-RSA
   become: yes
   become_user: root
-  apt:
+  ansible.builtin.apt:
     name: easy-rsa
     state: present
+  tags:
+    - install
+    - openvpn
 
-- name: Create Easy-RSA PKI folder in home directory
-  file:
-    path: "{{ openvpn__easyrsa_dir }}"
-    state: directory
-    mode: '0700'
-
-- name: Symlink Easy-RSA package files to Easy-RSA PKI folder
-  shell: |
-    ln -s /usr/share/easy-rsa/* {{ openvpn__easyrsa_dir }}/
-  args:
-    creates: "{{ openvpn__easyrsa_dir }}/easyrsa"
-
-- name: Initialize the Easy-RSA PKI
-  shell: |
-    ./easyrsa init-pki
-  args:
-    chdir: "{{ openvpn__easyrsa_dir }}"
-    creates: "{{ openvpn__easyrsa_dir }}/pki"
-
-- name: Create 'vars' file for use in creating CA
-  copy:
-    src: vars
-    dest: "{{ openvpn__easyrsa_dir }}/vars"
-
-# The 'echo' simulates hitting enter on interactive 'gen-req'; this is needed to
-# ensure CN on CSR is not 'ChangeMe' and is the server name provided to command
-- name: Create CA certificate request
-  shell: |
-    echo | ./easyrsa gen-req {{ openvpn__server_name }} nopass
-  args:
-    chdir: "{{ openvpn__easyrsa_dir }}"
-    creates: "{{ openvpn__easyrsa_dir }}/pki/reqs/{{ openvpn__server_name }}.req"
-
-- name: Make server.key file read-only to help prevent deletion
-  file:
-    path: "{{ item }}"
-    mode: '0400'
-  loop:
-    - "{{ openvpn__easyrsa_dir }}/pki/private/{{ openvpn__server_name }}.key"
-
-- name: Copy server.key to OpenVPN config directory
+# For some reason, the easy-rsa package does not put the `easyrsa` in a common bin directory
+- name: openvpn | Symlink Easy-RSA executable into common PATH location
   become: yes
   become_user: root
-  copy:
-    src: "{{ openvpn__easyrsa_dir }}/pki/private/{{ openvpn__server_name }}.key"
-    dest: /etc/openvpn/server/
-    remote_src: yes
+  ansible.builtin.file:
+    state: link
+    src: "{{ openvpn__easyrsa_bin }}"
+    dest: "{{ openvpn__easyrsa_bin_symlink }}"
+  tags:
+    - install
+    - openvpn
 
-- name: Fetch server.req certificate request for signing by CA on local machine
-  fetch:
-    src: "{{ openvpn__easyrsa_dir }}/pki/reqs/{{ openvpn__server_name }}.req"
-    dest: ~/easy-rsa/pki/reqs/{{ openvpn__server_name }}.req
-    flat: yes
-
-- name: Sign CSR by CA on local machine to create server certificate
-  delegate_to: localhost
-  shell: |
-    ./easyrsa sign-req server {{ openvpn__server_name }}
-  args:
-    chdir: ~/easy-rsa
-    creates: ~/easy-rsa/pki/issued/{{ openvpn__server_name }}.crt
-  environment:
-    EASYRSA_BATCH: 1
-
-- name: Copy issued server certificate and ca.crt back to OpenVPN server
-  become: yes
-  become_user: root
-  copy:
-    src: "{{ item }}"
-    dest: /etc/openvpn/server/
-  loop:
-    - ~/easy-rsa/pki/issued/{{ openvpn__server_name }}.crt
-    - ~/easy-rsa/pki/ca.crt
-
-- name: Generate OpenVPN `tls-crypt` pre-shared key
-  shell: |
-    openvpn --genkey --secret ta.key
-  args:
-    chdir: "{{ openvpn__easyrsa_dir }}"
-    creates: "{{ openvpn__easyrsa_dir }}/ta.key"
-
-- name: Copy generated `tls-crypt` pre-shard key to OpenVPN config directory
-  become: yes
-  become_user: root
-  copy:
-    src: "{{ openvpn__easyrsa_dir }}/ta.key"
-    dest: /etc/openvpn/server/
-    remote_src: yes
+# TODO: the imported tasks are quite old & are meant to configure an OpenVPN SERVER;
+# they probably need to be re-visited
+- import_tasks: setup_vpn_server.yml
+  when: False

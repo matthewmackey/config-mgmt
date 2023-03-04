@@ -1,3 +1,8 @@
----
+openvpn__easyrsa_home: /usr/share/easy-rsa
+openvpn__easyrsa_bin: /usr/share/easy-rsa/easyrsa
+openvpn__easyrsa_bin_symlink: /usr/share/easy-rsa/easyrsa
+
+# TODO: make these var name more appropriate and don't hard-code username
+# These are used for HOME dir easy-rsa usage
 openvpn__easyrsa_user: ubuntu
 openvpn__easyrsa_dir: /home/{{ openvpn__easyrsa_user }}/easy-rsa

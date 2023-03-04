@@ -21,7 +21,7 @@
 #-------------------------------------------------------------------
 # amass
 #-------------------------------------------------------------------
-- name: hacker | install amass
+- name: hacker | amass | install amass
   shell: |
     go install -v github.com/OWASP/Amass/v3/...@{{ hacker__amass_version }}
   args:
@@ -37,13 +37,8 @@
 
 #-------------------------------------------------------------------
 # anew
-#
-# This doesn't work with any version or branch specifier.  Seems to
-# have something to do with go modules.
-#
-# This is the case even though the anew repo has tags (why ??).
 #-------------------------------------------------------------------
-- name: hacker | install anew
+- name: hacker | anew | install anew
   shell: |
     go get -u github.com/tomnomnom/anew
   args:
@@ -61,9 +56,9 @@
 #-------------------------------------------------------------------
 # assetfinder
 #-------------------------------------------------------------------
-- name: hacker | install assetfinder
+- name: hacker | assetfinder | install assetfinder
   shell: |
-    go get -u github.com/tomnomnom/assetfinder@{{ hacker__assetfinder_version }}
+    go get -u github.com/tomnomnom/assetfinder
   args:
     creates: "/home/{{ ansible_user_id }}/go/bin/assetfinder"
     # Needed to activate GOPATH
@@ -78,11 +73,8 @@
 
 #-------------------------------------------------------------------
 # blocksort
-#
-# This doesn't work with any version or branch specifier.  Seems to
-# have something to do with go modules.
 #-------------------------------------------------------------------
-- name: hacker | install blocksort
+- name: hacker | blocksort | install blocksort
   shell: |
     go get -u github.com/tomnomnom/blocksort
   args:
@@ -98,29 +90,9 @@
   when: hacker__install_blocksort | bool
 
 #-------------------------------------------------------------------
-# ffuf
-#-------------------------------------------------------------------
-- name: hacker | install ffuf
-  shell: |
-    go install -v github.com/ffuf/ffuf@{{ hacker__ffuf_version }}
-  args:
-    creates: "/home/{{ ansible_user_id }}/go/bin/ffuf"
-    # Needed to activate GOPATH
-    executable: /bin/bash
-  tags:
-    - install
-    - hacker
-    - hacker__bug_bounty
-    - hacker__ffuf
-  when: hacker__install_ffuf | bool
-
-#-------------------------------------------------------------------
 # fff
-#
-# This doesn't work with any version or branch specifier.  Seems to
-# have something to do with go modules.
 #-------------------------------------------------------------------
-- name: hacker | install fff
+- name: hacker | fff | install fff
   shell: |
     go get -u github.com/tomnomnom/fff
   args:
@@ -136,12 +108,26 @@
   when: hacker__install_fff | bool
 
 #-------------------------------------------------------------------
-# gf
-#
-# This doesn't work with any version or branch specifier.  Seems to
-# have something to do with go modules.
+# ffuf
 #-------------------------------------------------------------------
-- name: hacker | install gf
+- name: hacker | ffuf | install ffuf
+  shell: |
+    go install -v github.com/ffuf/ffuf/v2@{{ hacker__ffuf_version }}
+  args:
+    creates: "/home/{{ ansible_user_id }}/go/bin/ffuf"
+    # Needed to activate GOPATH
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__ffuf
+  when: hacker__install_ffuf | bool
+
+#-------------------------------------------------------------------
+# gf
+#-------------------------------------------------------------------
+- name: hacker | gf | install gf
   shell: |
     go get -u github.com/tomnomnom/gf
   args:
@@ -159,9 +145,9 @@
 #-------------------------------------------------------------------
 # goaltdns
 #-------------------------------------------------------------------
-- name: hacker | install goaltdns
+- name: hacker | goaltdns | install goaltdns
   shell: |
-    go get -u github.com/subfinder/goaltdns@{{ hacker__goaltdns_version }}
+    go get -u github.com/subfinder/goaltdns
   args:
     creates: "/home/{{ ansible_user_id }}/go/bin/goaltdns"
     # Needed to activate GOPATH
@@ -176,7 +162,7 @@
 #-------------------------------------------------------------------
 # gobuster
 #-------------------------------------------------------------------
-- name: hacker | install gobuster
+- name: hacker | gobuster | install gobuster
   shell: |
     go install -v github.com/OJ/gobuster/v3@{{ hacker__gobuster_version }}
   args:
@@ -192,13 +178,8 @@
 
 #-------------------------------------------------------------------
 # gron
-#
-# This doesn't work with any version or branch specifier.  Seems to
-# have something to do with go modules.
-#
-# This is the case even though the anew repo has tags (why ??).
 #-------------------------------------------------------------------
-- name: hacker | install gron
+- name: hacker | gron | install gron
   shell: |
     go get -u github.com/tomnomnom/gron
   args:
@@ -216,7 +197,7 @@
 #-------------------------------------------------------------------
 # hakrawler
 #-------------------------------------------------------------------
-- name: hacker | install hakrawler
+- name: hacker | hakrawler | install hakrawler
   shell: |
     go install -v github.com/hakluke/hakrawler@{{ hacker__hakrawler_version }}
   args:
@@ -233,7 +214,7 @@
 #-------------------------------------------------------------------
 # gospider
 #-------------------------------------------------------------------
-- name: hacker | install gospider
+- name: hacker | gospider | install gospider
   shell: |
     go install -v github.com/jaeles-project/gospider@{{ hacker__gospider_version }}
   args:
@@ -246,10 +227,11 @@
     - hacker__bug_bounty
     - hacker__gospider
   when: hacker__install_gospider | bool
+
 #-------------------------------------------------------------------
 # fingerprintx
 #-------------------------------------------------------------------
-- name: hacker | install fingerprintx
+- name: hacker | fingerprintx | install fingerprintx
   shell: |
     go install -v github.com/praetorian-inc/fingerprintx/cmd/fingerprintx@{{ hacker__fingerprintx_version }}
   args:
@@ -266,7 +248,7 @@
 #-------------------------------------------------------------------
 # gowitness
 #-------------------------------------------------------------------
-- name: hacker | install gowitness
+- name: hacker | gowitness | install gowitness
   shell: |
     go install -v github.com/sensepost/gowitness@{{ hacker__gowitness_version }}
   args:
@@ -284,7 +266,7 @@
 #-------------------------------------------------------------------
 # httprobe
 #-------------------------------------------------------------------
-- name: hacker | install httprobe
+- name: hacker | httprobe | install httprobe
   shell: |
     go install -v github.com/tomnomnom/httprobe@{{ hacker__httprobe_version }}
   args:
@@ -302,7 +284,7 @@
 #-------------------------------------------------------------------
 # httpx
 #-------------------------------------------------------------------
-- name: hacker | install httpx
+- name: hacker | httpx | install httpx
   shell: |
     go install -v github.com/projectdiscovery/httpx/cmd/httpx@{{ hacker__httpx_version }}
   args:
@@ -318,13 +300,8 @@
 
 #-------------------------------------------------------------------
 # meg
-#
-# This doesn't work with any version or branch specifier.  Seems to
-# have something to do with go modules.
-#
-# This is the case even though the anew repo has tags (why ??).
 #-------------------------------------------------------------------
-- name: hacker | install meg
+- name: hacker | meg | install meg
   shell: |
     go get -u github.com/tomnomnom/meg
   args:
@@ -342,7 +319,7 @@
 #-------------------------------------------------------------------
 # nuclei
 #-------------------------------------------------------------------
-- name: hacker | install nuclei
+- name: hacker | nuclei | install nuclei
   shell: |
     go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@{{ hacker__nuclei_version }}
   args:
@@ -358,13 +335,8 @@
 
 #-------------------------------------------------------------------
 # qsreplace
-#
-# This doesn't work with any version or branch specifier.  Seems to
-# have something to do with go modules.
-#
-# This is the case even though the anew repo has tags (why ??).
 #-------------------------------------------------------------------
-- name: hacker | install qsreplace
+- name: hacker | qsreplace | install qsreplace
   shell: |
     go get -u github.com/tomnomnom/qsreplace
   args:
@@ -382,7 +354,7 @@
 #-------------------------------------------------------------------
 # subfinder
 #-------------------------------------------------------------------
-- name: hacker | install subfinder
+- name: hacker | subfinder | install subfinder
   shell: |
     go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@{{ hacker__subfinder_version }}
   args:
@@ -398,13 +370,8 @@
 
 #-------------------------------------------------------------------
 # unfurl
-#
-# This doesn't work with any version or branch specifier.  Seems to
-# have something to do with go modules.
-#
-# This is the case even though the anew repo has tags (why ??).
 #-------------------------------------------------------------------
-- name: hacker | install unfurl
+- name: hacker | unfurl | install unfurl
   shell: |
     go get -u github.com/tomnomnom/unfurl
   args:
@@ -421,13 +388,8 @@
 
 #-------------------------------------------------------------------
 # waybackurls
-#
-# This doesn't work with any version or branch specifier.  Seems to
-# have something to do with go modules.
-#
-# This is the case even though the anew repo has tags (why ??).
 #-------------------------------------------------------------------
-- name: hacker | install waybackurls
+- name: hacker | waybackurls | install waybackurls
   shell: |
     go get -u github.com/tomnomnom/waybackurls
   args:
@@ -452,10 +414,11 @@
 #  - https://github.com/aboul3la/Sublist3r
 #  - https://github.com/ProjectAnte/dnsgen
 #------------------------------------------------------------------------------
+
 #-------------------------------------------------------------------
 # altdns
 #-------------------------------------------------------------------
-- name: hacker | install altdns into hacker virtualenv via PyPi (not source)
+- name: hacker | altdns | install altdns into hacker virtualenv via PyPi (not source)
   shell: |
     source {{ hacker__virtualenv_activate }}
     pip3 install py-altdns=={{ hacker__altdns_version }}
@@ -474,10 +437,11 @@
 #------------------------------------------------------------------------------
 # Install: Git
 #------------------------------------------------------------------------------
+
 #-------------------------------------------------------------------
 # altdns-wordlist
 #-------------------------------------------------------------------
-- name: hacker | clone altdns repository
+- name: hacker | altdns | clone altdns repository
   ansible.builtin.git:
     repo: https://github.com/infosec-au/altdns.git
     dest: "{{ hacker__tools_dir }}/altdns"
@@ -492,15 +456,15 @@
 #-------------------------------------------------------------------
 # ExploitDB/Searchsploit
 #-------------------------------------------------------------------
-- name: hacker - install exploitdb/searchsploit
+- name: hacker | exploitdb/searchsploit | install exploitdb/searchsploit
   block:
-    - name: hacker | download exploitdb project w/ searchsploit tools
+    - name: hacker | exploitdb/searchsploit | download exploitdb project w/ searchsploit tools
       ansible.builtin.git:
         repo: 'https://github.com/offensive-security/exploitdb.git'
         version: "{{ hacker__exploitdb_searchsploit_version }}"
         dest: "{{ hacker__tools_dir }}/exploitdb"
 
-    - name: hacker | symlink searchsploit into PATH from exploitdb project
+    - name: hacker | exploitdb/searchsploit | symlink searchsploit into PATH from exploitdb project
       ansible.builtin.file:
         state: link
         src: "{{ hacker__tools_dir }}/exploitdb/searchsploit"
@@ -517,21 +481,21 @@
 #-------------------------------------------------------------------
 # massdns
 #-------------------------------------------------------------------
-- name: hacker | install massdns
+- name: hacker | massdns | install massdns
   block:
-    - name: hacker | clone massdns repository
+    - name: hacker | massdns | clone massdns repository
       ansible.builtin.git:
         repo: https://github.com/blechschmidt/massdns
         dest: "{{ hacker__massdns_home }}"
         version: "{{ hacker__massdns_version }}"
 
-    - name: hacker | build massdns from source
+    - name: hacker | massdns | build massdns from source
       command: make
       args:
         chdir: "{{ hacker__massdns_home }}"
         creates: "{{ hacker__massdns_home }}/bin/massdns"
 
-    - name: hacker | symlink massdns binary into the PATH
+    - name: hacker | massdns | symlink massdns binary into the PATH
       ansible.builtin.file:
         state: link
         src: "{{ hacker__massdns_home }}/bin/massdns"
@@ -548,7 +512,7 @@
 #-------------------------------------------------------------------
 # SecLists
 #-------------------------------------------------------------------
-- name: hacker | install SecLists
+- name: hacker | SecLists | install SecLists
   ansible.builtin.git:
     repo: https://github.com/danielmiessler/SecLists.git
     version: "{{ hacker__seclists_version }}"
@@ -565,14 +529,16 @@
 #------------------------------------------------------------------------------
 # Install: Shell
 #------------------------------------------------------------------------------
+
 #-------------------------------------------------------------------
 # Metasploit
 #
-# The `msfinstall` program will install APT keys and the `metasploit-framework` package.
+# The `msfinstall` program will install APT keys and the `metasploit-framework` package
+# (or does it?? - this doesn't run as root so I don't know how it can).
 #
 # See: https://docs.metasploit.com/docs/using-metasploit/getting-started/nightly-installers.html
 #-------------------------------------------------------------------
-- name: hacker | install metasploit via their omnibus installer
+- name: hacker | metasploit | install metasploit via their omnibus installer
   shell: |
     curl {{ hacker__metasploit_installer_url }} > /tmp/msfinstall && \
     chmod 755 /tmp/msfinstall && \

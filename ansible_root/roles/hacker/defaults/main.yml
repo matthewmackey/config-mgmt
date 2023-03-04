@@ -22,33 +22,38 @@ hacker__install_john: no
 # will then mean the latest release.
 #
 # This also means that the tool must be installed w/ `go get` vs. `go install`.
+#
+# Some tools don't work with any version or branch specifier.  It seems to
+# have something to do with go modules.
+#
+# This is the case even though the some of those repos have tags, like `anew` (why ??).
 #----------------------------------------------------------------------
 hacker__altdns_version: 1.0.2
 hacker__altdns_wordlist_version: master
 hacker__amass_version: v3.21.2
-# hacker__anew_version: 0.2  # doesn't work w/ version/branch
-hacker__assetfinder_version: v0.1.1
-# hacker__blocksort_version: master  # doesn't work w/ version/branch
+# hacker__anew_version: 0.2            # doesn't work w/ version/branch
+# hacker__assetfinder_version: v0.1.1  # doesnt' work w/ version/branch
+# hacker__blocksort_version: master    # doesn't work w/ version/branch
 hacker__exploitdb_searchsploit_version: 2022-09-02
-# hacker__fff_version: master  # doesn't work w/ version/branch
+# hacker__fff_version: master          # doesn't work w/ version/branch
 hacker__ffuf_version: v2.0.0
 hacker__fingerprintx_version: latest
-# hacker__gf_version: master  # doesn't work w/ version/branch
-hacker__goaltdns_version: master
+# hacker__gf_version: master           # doesn't work w/ version/branch
+# hacker__goaltdns_version: master     # doesn't work w/ version/branch
 hacker__gobuster_version: v3.4.0
 hacker__gospider_version: latest
-hacker__gowitness_version: latest  # doesn't work w/ version/branch even though tags exist
-# hacker__gron_version: v0.7.1  # doesn't work w/ version/branch
+hacker__gowitness_version: latest      # doesn't work w/ version/branch even though tags exist
+# hacker__gron_version: v0.7.1         # doesn't work w/ version/branch
 hacker__hakrawler_version: latest
-hacker__httprobe_version: v0.2
+hacker__httprobe_version: v0.1.2       # v0.2 doesn't work - I think b/c non-semantic version
 hacker__httpx_version: v1.2.7
 hacker__massdns_version:  v1.0.0
-# hacker__meg_version: v0.3.0  # doesn't work w/ version/branch
+# hacker__meg_version: v0.3.0          # doesn't work w/ version/branch
 hacker__nuclei_version: v2.8.9
-# hacker__qsreplace_version: v0.0.3  # doesn't work w/ version/branch
-hacker__seclists_version: 2021.2
+# hacker__qsreplace_version: v0.0.3    # doesn't work w/ version/branch
+hacker__seclists_version: '2021.2'
 hacker__subfinder_version: master
-# hacker__unfurl_version: v0.4.3  # doesn't work w/ version/branch
+# hacker__unfurl_version: v0.4.3       # doesn't work w/ version/branch
 # hacker__waybackurls_version: v0.1.0  # doesn't work w/ version/branch
 
 # INSTALLED by default

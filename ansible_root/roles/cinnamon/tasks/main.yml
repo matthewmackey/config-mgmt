@@ -1,0 +1,6 @@
+- name: cinnamon | Install Cinnamon GUI
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    name: cinnamon
+    state: present

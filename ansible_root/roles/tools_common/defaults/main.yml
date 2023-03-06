@@ -10,6 +10,8 @@ tools_common__remote_archives: []
 tools_common__remote_archives_modern: []
 
 tools_common__gui_packages:
+  # d-bus graphical viewer
+  - d-feet
   - parcellite
   - remmina
   # Logitech Unifying Rx tool (CLI & GUI)

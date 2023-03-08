@@ -71,6 +71,12 @@ hacker_vms:
     mmhacker:
     mmtower:
 
+hacker_vms_gui:
+  hosts:
+    kali:
+    mmlenovo:
+    mmtower:
+
 htb:
   hosts:
     gcp_htb:

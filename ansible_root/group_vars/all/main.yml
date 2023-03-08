@@ -1,8 +1,9 @@
 ---
 install_type: minimal
 is_gui: no
+# has_gui: no
 
-username: mmackey
+username: "{{ ansible_user_id }}"
 home_dir: /home/{{ username }}
 
 common__user: "{{ username }}"

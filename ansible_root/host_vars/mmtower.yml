@@ -1,5 +1,5 @@
 ---
-username: mmachaj
+is_gui: yes
 home_dir: /home/{{ username }}
 sudoers__nopass_users:
   - app

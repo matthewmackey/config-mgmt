@@ -510,6 +510,31 @@
   when: hacker__install_massdns | bool
 
 #-------------------------------------------------------------------
+# sqlmap
+#-------------------------------------------------------------------
+- name: hacker | sqlmap | install sqlmap
+  block:
+    - name: hacker | sqlmap | clone sqlmap repository
+      ansible.builtin.git:
+        repo: https://github.com/sqlmapproject/sqlmap.git
+        dest: "{{ hacker__sqlmap_home }}"
+        version: "{{ hacker__sqlmap_version }}"
+
+    - name: hacker | sqlmap | symlink sqlmap binary into the PATH
+      ansible.builtin.file:
+        state: link
+        src: "{{ hacker__sqlmap_home }}/sqlmap.py"
+        dest: "{{ hacker__tools_bin_dir }}/sqlmap"
+  vars:
+    hacker__sqlmap_home: "{{ hacker__tools_dir }}/sqlmap"
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__sqlmap
+  when: hacker__install_sqlmap | bool
+
+#-------------------------------------------------------------------
 # SecLists
 #-------------------------------------------------------------------
 - name: hacker | SecLists | install SecLists

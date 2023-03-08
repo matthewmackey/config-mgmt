@@ -4,9 +4,9 @@
   ansible.builtin.file:
     state: directory
     path: "{{ common__ansible_srv_dir }}"
-    mode: 0755
+    mode: 0775
     owner: "{{ common__user }}"
-    group: "{{ common__user }}"
+    group: "{{ common__ansible_group }}"
   tags:
     - setup
     - common
@@ -17,9 +17,9 @@
   ansible.builtin.file:
     state: directory
     path: "{{ common__bin_dir }}"
-    mode: 0755
+    mode: 0775
     owner: "{{ common__user }}"
-    group: "{{ common__user }}"
+    group: "{{ common__ansible_group }}"
   tags:
     - setup
     - common
@@ -30,9 +30,9 @@
   ansible.builtin.file:
     state: directory
     path: "{{ common__downloads_dir }}"
-    mode: 0755
+    mode: 0775
     owner: "{{ common__user }}"
-    group: "{{ common__user }}"
+    group: "{{ common__ansible_group }}"
   tags:
     - setup
     - common
@@ -43,9 +43,9 @@
   ansible.builtin.file:
     state: directory
     path: "{{ common__git_dir }}"
-    mode: 0755
+    mode: 0775
     owner: "{{ common__user }}"
-    group: "{{ common__user }}"
+    group: "{{ common__ansible_group }}"
   tags:
     - setup
     - common

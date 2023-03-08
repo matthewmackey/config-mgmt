@@ -37,7 +37,7 @@
     state: present
     update_cache: yes
     cache_valid_time: 3600
-  when: is_gui
+  when: is_gui | bool
   tags:
     - install
     - tools_common
@@ -47,7 +47,7 @@
   include_tasks:
     file: global__install_remote_deb.yml
   loop: "{{ tools_common__gui_remote_debs }}"
-  when: is_gui
+  when: is_gui | bool
   tags:
     - install
     - tools_common
@@ -60,7 +60,7 @@
   changed_when: False
   ignore_errors: yes
   register: is_gnome_shell_installed
-  when: is_gui
+  when: is_gui | bool
 
 - name: tools_common | Install Gnome Shell-related packages (gui)
   become: yes
@@ -68,4 +68,4 @@
   ansible.builtin.apt:
     name: "{{ tools_common__gui_gnome_shell_packages }}"
     state: present
-  when: is_gui and is_gnome_shell_installed.rc == 0
+  when: (is_gui | bool) and (is_gnome_shell_installed.rc == 0)

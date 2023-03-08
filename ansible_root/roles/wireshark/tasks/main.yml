@@ -7,7 +7,7 @@
   tags:
     - wireshark
     - install
-  when: has_gui is True
+  when: is_gui | bool
 
 - name: wireshark | Install tshark CLI utility
   become: yes

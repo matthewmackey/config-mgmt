@@ -1,7 +1,11 @@
+- name: Run base playbook
+  import_playbook: play-base.yml
+  tags:
+    - never
+
 - name: Configure standard hacker VM (no-UI)
   hosts: hacker_vms
   roles:
-    - role: base
     - role: dotfiles
     - role: devtools
     - role: crypt
@@ -11,6 +15,8 @@
     - role: rust
     - role: openvpn
     - role: hacker
+  tags:
+    - never
 
 # This is to configure VM w/ Cinnamon GUI that we must access remotely (ie - on a Cloud VM)
 - name: Setup HackTheBox VMs (Cloud VM)
@@ -24,13 +30,15 @@
     - never
     - htb
 
-- name: Setup Kali Linux hacker VMs
-  hosts: kali
+- name: Setup standard hacker VM (GUI)
+  hosts: hacker_vms_gui
   roles:
-    # Prefer Alacritty terminal
     - role: alacritty
-  tags:
-    - kali
+    - role: wireshark
+    - role: zaproxy
+
+# - name: Setup Kali hacker VM (w/ GUI)
+#   hosts: kali
   # # Installing Gnome Terminal b/c couldn't get base16 to work on default Qt terminal w/ Kali
   # tasks:
   #   - name: Install Gnome Terminal

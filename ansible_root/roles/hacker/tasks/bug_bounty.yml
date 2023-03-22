@@ -125,6 +125,23 @@
   when: hacker__install_ffuf | bool
 
 #-------------------------------------------------------------------
+# gau
+#-------------------------------------------------------------------
+- name: hacker | gau | install gau
+  shell: |
+    go install -v github.com/lc/gau/v2/cmd/gau@{{ hacker__gua_version }}
+  args:
+    creates: "/home/{{ ansible_user_id }}/go/bin/gau"
+    # Needed to activate GOPATH
+    executable: /bin/bash
+  tags:
+    - install
+    - hacker
+    - hacker__bug_bounty
+    - hacker__gau
+  when: hacker__install_gau | bool
+
+#-------------------------------------------------------------------
 # gf
 #-------------------------------------------------------------------
 - name: hacker | gf | install gf

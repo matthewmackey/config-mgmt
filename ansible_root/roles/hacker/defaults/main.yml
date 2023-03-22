@@ -38,6 +38,7 @@ hacker__exploitdb_searchsploit_version: 2022-09-02
 # hacker__fff_version: master          # doesn't work w/ version/branch
 hacker__ffuf_version: v2.0.0
 hacker__fingerprintx_version: latest
+hacker__gau_version: v2.1.2
 # hacker__gf_version: master           # doesn't work w/ version/branch
 # hacker__goaltdns_version: master     # doesn't work w/ version/branch
 hacker__gobuster_version: v3.4.0
@@ -67,6 +68,7 @@ hacker__install_blocksort: yes
 hacker__install_fff: yes
 hacker__install_ffuf: yes
 hacker__install_fingerprintx: yes
+hacker__install_gau: yes
 hacker__install_gf: yes
 hacker__install_goaltdns: yes
 hacker__install_gobuster: yes

@@ -1,5 +1,33 @@
 #------------------------------------------------------------------------------
-# Install: Go
+# Install Method: Remote Debs
+#
+# SEE for info on applying tags to include_tasks so we can run the includes
+# via tags:
+#
+#   - https://serverfault.com/questions/1023392/use-ansible-include-tasks-with-tags-on-the-sub-tasks
+#
+#------------------------------------------------------------------------------
+- name: hacker | rustscan | install rustscan from remote deb
+  include_tasks:
+    file: global__install_remote_deb.yml
+    apply:
+      tags:
+        - install
+        - hacker
+        - hacker__bug_bounty
+        - hacker__rustscan
+  loop:
+    - name: rustscan
+      url: https://github.com/RustScan/RustScan/releases/download/{{ hacker__rustscan_version }}/rustscan_{{ hacker__rustscan_version }}_amd64.deb
+      filename: rustscan_{{ hacker__rustscan_version }}_amd64.deb
+      checksum: sha256:2374715a43449bc116653e2ad500d0a2b4dadf8b6ef836d4e0c67157ba3b2e49
+  tags:
+    - always
+  when: hacker__install_rustscan | bool
+
+
+#------------------------------------------------------------------------------
+# Install Method: Go
 #------------------------------------------------------------------------------
 #-------------------------------------------------------------------
 # Go tools (TEMPLATE for later??)
@@ -423,7 +451,7 @@
 
 
 #------------------------------------------------------------------------------
-# Install: Python
+# Install Method: Python
 #
 # These are Python tools I want to install but are hard to with Ansible b/c they
 # involve virtualenvs:
@@ -452,7 +480,7 @@
 
 
 #------------------------------------------------------------------------------
-# Install: Git
+# Install Method: Git
 #------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------
@@ -569,7 +597,7 @@
 
 
 #------------------------------------------------------------------------------
-# Install: Shell
+# Install Method: Shell
 #------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------

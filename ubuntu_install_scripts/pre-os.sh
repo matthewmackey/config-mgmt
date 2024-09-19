@@ -12,9 +12,6 @@ PASSPHRASE=
 #-----------------------------------------------------------------------
 # Constants
 #-----------------------------------------------------------------------
-SHOULD_CREATE_EFI_PARTITION=n
-SHOULD_CREATE_LVM_SWAP_PARTITION=n
-
 EFI_PART_NAME="EFI System Partition"
 EFI_PART_SIZE=256M
 BOOT_PART_SIZE=1G
@@ -55,6 +52,9 @@ VG_NAME=ubuntu-vg
 # variables named BOOT_* and ROOT_* when reading/editing this script, and I
 # want to try to avoid any confusion that could cause developer errors
 REQUIRED_VARS=(
+  SHOULD_CREATE_EFI_PARTITION
+  SHOULD_CREATE_LVM_SWAP_PARTITION
+
   INSTALL_DEV
 
   EFI_PART_NUM
@@ -77,8 +77,6 @@ REQUIRED_VARS=(
 # OPTIONAL Variables
 #-----------------------------------------------------------------------
 OPTIONAL_VARS=(
-  SHOULD_CREATE_EFI_PARTITION
-  SHOULD_CREATE_LVM_SWAP_PARTITION
   PASSPHRASE_FILE
   SWAP_LVM_SIZE
 )
@@ -111,15 +109,13 @@ verify_vars_provided() {
     if [ "${!v}" = "" ]; then
       error "variable $v required"
     else
-      echo "REQUIRED variable $v found"
-      echo "  ${!v}"
+      echo "REQUIRED variable $v found -> [${!v}]"
     fi
   done
 
   for v in ${OPTIONAL_VARS[@]}; do
     if [ "${!v}" != "" ]; then
-      echo "OPTIONAL variable $v found"
-      echo "  ${!v}"
+      echo "OPTIONAL variable $v found -> [${!v}]"
     fi
   done
 }
@@ -189,8 +185,8 @@ create_partitions() {
 
   if [[ "$SHOULD_CREATE_EFI_PARTITION" = "y" ]]; then
     msg "Option to create an EFI system partion has been chosen"
-    create_boot_efi_partition
-  if
+    # create_boot_efi_partition
+  fi
 
   create_boot_partition
   create_root_partition
@@ -341,7 +337,7 @@ undo() {
   msg "Delete partitions"
   if [[ "$SHOULD_CREATE_EFI_PARTITION" = "y" ]]; then
     sgdisk --delete $EFI_PART_NUM $INSTALL_DEV
-  if
+  fi
 
   for i in $BOOT_PART_NUM $ROOTFS_PART_NUM; do
     sgdisk --delete $i $INSTALL_DEV
@@ -383,5 +379,5 @@ fi
 if [ "$OPTION" = "-u" ]; then
   undo
 else
-  main
+  echo main
 fi

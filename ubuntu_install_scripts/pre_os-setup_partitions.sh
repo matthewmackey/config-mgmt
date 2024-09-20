@@ -185,7 +185,7 @@ create_partitions() {
 
   if [[ "$SHOULD_CREATE_EFI_PARTITION" = "y" ]]; then
     msg "Option to create an EFI system partion has been chosen"
-    # create_boot_efi_partition
+    create_boot_efi_partition
   fi
 
   create_boot_partition

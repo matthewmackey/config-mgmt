@@ -1,0 +1,26 @@
+# I think hplip (CLI) package comes installed in Ubuntu by default
+#
+# See: https://developers.hp.com/hp-linux-imaging-and-printing
+- name: printer | Install HP Linux CLI
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    name: hplip
+    state: present
+  tags:
+    - printer
+    - install
+    - packages
+
+- name: printer | Install HP Toolbox (GUI)
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    name: hplip-gui
+    state: present
+  when: is_gui | bool
+  tags:
+    - printer
+    - install
+    - packages
+    - gui

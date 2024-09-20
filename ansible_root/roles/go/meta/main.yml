@@ -1,4 +1,4 @@
 # TODO: complete this dependency chain properly
 dependencies: []
-  # This role requires `common__downloads_dir` be created on host already
-  #- role: common
+  # This role requires `base__downloads_dir` be created on host already
+  #- role: base

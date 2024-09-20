@@ -14,9 +14,9 @@
         name: hacker
         state: present
 
-    - name: hacker | add developer user ({{ common__user }}) to "hacker" group
+    - name: hacker | add developer user ({{ base__user }}) to "hacker" group
       ansible.builtin.user:
-        name: "{{ common__user }}"
+        name: "{{ base__user }}"
         groups: hacker
         append: yes
 

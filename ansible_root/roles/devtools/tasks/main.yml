@@ -80,6 +80,17 @@
     - full
   when: install_type == "full"
 
+- name: devtools | Install devtools utility Snaps
+  become: yes
+  become_user: root
+  ansible.builtin.snap:
+    name: "{{ devtools__snaps }}"
+    state: present
+  tags:
+    - install
+    - devtools
+    - snaps
+
 - name: devtools | Install devtools utilities from remote .debs
   include_tasks:
     file: global__install_remote_deb.yml

@@ -1,7 +1,7 @@
 - name: Download AWS CLI .zip archive
   get_url:
     url: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
-    dest: "{{ common__downloads_dir }}/awscliv2.zip"
+    dest: "{{ base__downloads_dir }}/awscliv2.zip"
   tags:
     - install
     - awscli
@@ -10,7 +10,7 @@
 # comes from a directory the installer creates in the following step
 - name: Unzip AWS CLI .zip archive to /tmp
   unarchive:
-    src: "{{ common__downloads_dir }}/awscliv2.zip"
+    src: "{{ base__downloads_dir }}/awscliv2.zip"
     dest: /tmp
     remote_src: yes
     creates: /usr/local/aws-cli

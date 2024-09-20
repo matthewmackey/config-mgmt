@@ -149,7 +149,7 @@
   shell: shasum -a 256 -c {{ virtual_machines__vmware_ovftool_installer }}.sha256sum
   changed_when: False
   args:
-    chdir: "{{ common__downloads_dir }}"
+    chdir: "{{ base__downloads_dir }}"
   when: vmware_ovftool_installer_downloaded_check.rc == 0
   tags:
     - vmware

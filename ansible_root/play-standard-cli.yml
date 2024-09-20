@@ -1,0 +1,9 @@
+- name: Run base playbook
+  import_playbook: play-base.yml
+
+- name: Setup standard cli server configuration
+  hosts: all
+  roles:
+    - role: dotfiles
+    - role: crypt
+    - role: python

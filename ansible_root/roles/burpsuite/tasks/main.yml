@@ -3,7 +3,8 @@
 - name: burp | Download Burp Suite Community installer
   ansible.builtin.get_url:
     url: "{{ burpsuite__installer_url }}"
-    dest: "{{ downloads_dir }}/{{ burpsuite__installer_filename }}"
+  # Using home_ vs base__ b/c we don't use base role
+    dest: "{{ home_downloads_dir }}/{{ burpsuite__installer_filename }}"
     checksum: "{{ burpsuite__installer_checksum }}"
     mode: '0755'
 
@@ -11,7 +12,8 @@
 - name: burp | Run un-attended Burp Suite Community installer
   become: yes
   become_user: root
+  # Using home_ vs base__ b/c we don't use base role
   shell: |
-    {{ downloads_dir }}/{{ burpsuite__installer_filename }} -q
+    {{ home_downloads_dir }}/{{ burpsuite__installer_filename }} -q
   args:
     creates: /opt/BurpSuiteCommunity/BurpSuiteCommunity

@@ -1,3 +1,5 @@
 ---
 dependencies:
+  # Has dependency on base__* variables
+  # - role: base
   - role: apt_https

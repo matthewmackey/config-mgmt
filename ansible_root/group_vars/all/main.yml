@@ -1,94 +1,44 @@
 ---
 install_type: minimal
+
 is_gui: no
-# has_gui: no
+is_server: no
 
 username: "{{ ansible_user_id }}"
 home_dir: /home/{{ username }}
 
-common__user: "{{ username }}"
+base__user: "{{ username }}"
 
-common__ansible_srv_dir: /srv/ansible
-common__bin_dir: /srv/ansible/bin
-common__downloads_dir: /srv/ansible/downloads
-common__git_dir: /srv/ansible/git
+base__ansible_srv_dir: /srv/ansible
+base__bin_dir: /srv/ansible/bin
+base__downloads_dir: /srv/ansible/downloads
+base__git_dir: /srv/ansible/git
 
 sudoers__nopass_users:
   - "{{ username }}"
 
-# TODO: replace one of these two variables since they ared dups
-downloads_dir: "{{ home_dir }}/downloads/srv"
-downloads_srv_dir: "{{ downloads_dir }}"
-drivers_dir: "{{ home_dir }}/downloads/drivers"
+# TODO: replace one of these two variables since they are dups
+home_downloads_dir: "{{ home_dir }}/downloads/srv"
+home_downloads_srv_dir: "{{ home_dir }}/downloads/srv"
 
 ansible_bash_dir: "/home/{{ username }}/.local/ansible_bash"
 
 nfs_mount_dir: /mnt/mmackey-sync
 nfs_mount_str: 192.168.1.253:/{{ nfs_mount_dir }}
 nfs_exports_str: "{{ nfs_mount_dir }} 192.168.1.0/24(rw,sync,no_subtree_check)"
-packages_common:
-  - ack-grep
-  - apt-file
-  - cinnamon
-  - curl
-  - fd-find
-  - fzf
-  - htop
-  - jq
-  - gparted
-  - p7zip-full
-  - parcellite
-  - pass
-  - pithos
-  - ripgrep
-  - stow
-  - synapse
-  - tmux
-  - tree
-  - vim
-  - wireshark
-  - wmctrl
-packages_common_server:
-  - ack-grep
-  - apt-file
-  - curl
-  - htop
-  - jq
-  - nfs-kernel-server
-  - p7zip-full
-  - stow
-  - tmux
-  - tree
-  - vim
-  - wireshark
-snaps_common:
-  - hexchat
-  - slack
-  - skype
-snaps_server:
-  - multipass
-packages_r_lang:
+
+
+# -------------------------------------------------------------------------------
+# UNUSED - need to create roles to install these (or just keep for ref)
+# -------------------------------------------------------------------------------
+ide__packages:
+  - atom
+  - roxterm
+  - sublime-text-installer
+
+r_lang__packages:
   - r-base-dev
   # For 'devtools' R package
   - libcurl4-openssl-dev
   # For 'devtools' R package
   - libxml2-dev
-packages_developer:
-  - git
-#  - subversion
-#  - sqlite
-  - gcc-arm-linux-gnueabihf
-  - g++-arm-linux-gnueabihf
-  - gcc-aarch64-linux-gnu
-  - g++-aarch64-linux-gnu
-  - remmina
-  - universal-ctags
-snaps_developer:
-  - postman
-pacakges_ide:
-  - atom
-  - roxterm
-  - sublime-text-installer
-packages_os:
-  - dconf-editor
-

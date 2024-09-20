@@ -1,3 +1,61 @@
+#-------------------------------------------------------------------------------
+# SETUP
+#-------------------------------------------------------------------------------
+- name: base | Create ansible srv directory
+  become: yes
+  become_user: root
+  ansible.builtin.file:
+    state: directory
+    path: "{{ base__ansible_srv_dir }}"
+    mode: 0775
+    owner: "{{ base__user }}"
+    group: "{{ base__ansible_group }}"
+  tags:
+    - base
+    - setup
+
+- name: base | Create ansible bin directory
+  become: yes
+  become_user: root
+  ansible.builtin.file:
+    state: directory
+    path: "{{ base__bin_dir }}"
+    mode: 0775
+    owner: "{{ base__user }}"
+    group: "{{ base__ansible_group }}"
+  tags:
+    - base
+    - setup
+
+- name: base | Create ansible downloads directory
+  become: yes
+  become_user: root
+  ansible.builtin.file:
+    state: directory
+    path: "{{ base__downloads_dir }}"
+    mode: 0775
+    owner: "{{ base__user }}"
+    group: "{{ base__ansible_group }}"
+  tags:
+    - base
+    - setup
+
+- name: base | Create ansible git directory
+  become: yes
+  become_user: root
+  ansible.builtin.file:
+    state: directory
+    path: "{{ base__git_dir }}"
+    mode: 0775
+    owner: "{{ base__user }}"
+    group: "{{ base__ansible_group }}"
+  tags:
+    - base
+    - setup
+
+#-------------------------------------------------------------------------------
+# Base
+#-------------------------------------------------------------------------------
 - name: base | Install base utility packages
   become: yes
   become_user: root
@@ -19,6 +77,17 @@
     - base
     - install
     - remote_debs
+
+- name: base | Install base tools from Snaps
+  become: yes
+  become_user: root
+  ansible.builtin.snap:
+    state: present
+    name: "{{ base__snaps }}"
+  tags:
+    - base
+    - install
+    - snaps
 
 - name: base | Install base tools from remote archives
   include_tasks:
@@ -59,3 +128,66 @@
     - base
     - install
     - remote_archives
+
+
+#-------------------------------------------------------------------------------
+# GUI
+#-------------------------------------------------------------------------------
+- name: base | gui | Install base GUI packages
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    name: "{{ base__gui_packages }}"
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  when: is_gui | bool
+  tags:
+    - base
+    - install
+    - packages
+    - gui
+
+- name: base | gui | Install base GUI Snaps
+  become: yes
+  become_user: root
+  ansible.builtin.snap:
+    state: present
+    name: "{{ base__gui_snaps }}"
+  when: is_gui | bool
+  tags:
+    - base
+    - install
+    - snaps
+    - gui
+
+#-------------------------------------------------------------------------------
+# GUI - Gnome Shell
+#-------------------------------------------------------------------------------
+# This won't work with 'ansible.builtin.shell' for some reason??
+- name: base | gui | gnome-shell | Determine if gnome-shell is installed
+  shell: |
+    dpkg -l | grep '^ii  gnome-shell '
+  changed_when: False
+  ignore_errors: yes
+  register: is_gnome_shell_installed
+  when: is_gui | bool
+  tags:
+    - base
+    - setup
+    - gui
+    - gnome_shell
+
+- name: base | gui | gnome-shell | Install Gnome Shell-related packages
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    name: "{{ base__gui_gnome_shell_packages }}"
+    state: present
+  when: (is_gui | bool) and (is_gnome_shell_installed.rc == 0)
+  tags:
+    - base
+    - install
+    - packages
+    - gui
+    - gnome_shell

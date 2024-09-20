@@ -5,11 +5,15 @@
 
     - import_role:
         name: tools_common
-      tags: common
+      tags:
+        - tools_common
+        - tools
 
     - import_role:
         name: tools_net
-      tags: common
+      tags:
+        - tools_net
+        - tools
 
     - import_role:
         name: sudoers

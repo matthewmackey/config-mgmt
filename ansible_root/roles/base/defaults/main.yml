@@ -1,9 +1,17 @@
+base__ansible_group: ansible
+
 base__packages:
   - ack-grep
+  - apt-file
+  # Provides at/batch commands to create jobs
+  - at
   # Provides: dig
   - bind9-dnsutils
   - bzip2
   - curl
+  # Installs debconf-get-selections
+  - debconf-utils
+  - fzf
   - git
   - gzip
   - htop
@@ -15,6 +23,7 @@ base__packages:
   # Provides: netcat
   - netcat-openbsd
   - p7zip-full
+  - pass
   # Parallel gzip - takes advantage of mulit-core systems
   - pigz
   - tmux
@@ -25,6 +34,8 @@ base__packages:
   - wget
   - xz-utils
   - zsh
+
+base__snaps: []
 
 base__packages_modern:
   - fd-find
@@ -60,3 +71,49 @@ base__remote_archives_modern:
     filename: zoxide-x86_64-unknown-linux-musl.tar.gz
     binary_path: zoxide-x86_64-unknown-linux-musl/zoxide
     install_dir: /usr/local/bin
+
+
+
+base__gui_packages:
+  - cinnamon
+  - dconf-editor
+  # d-bus graphical viewer
+  - d-feet
+  - gparted
+  - parcellite
+  - pithos
+  - remmina
+  # Logitech Unifying Rx tool (CLI & GUI)
+  - solaar
+  - synapse
+  - usb-creator-gtk
+  # In oreder to get +clipboard support
+  - vim-gtk3
+  - wmctrl
+  - xclip
+  - xsel
+
+base__gui_snaps:
+  - slack
+  - skype
+
+base__gui_gnome_shell_packages:
+  - gnome-shell-pomodoro
+
+#-------------------------------------------------------------------------------
+# TODO: these are currently unused and we need to add tasks for them
+#-------------------------------------------------------------------------------
+base__server_packages:
+  - ack-grep
+  - apt-file
+  - curl
+  - htop
+  - jq
+  - nfs-kernel-server
+  - p7zip-full
+  - tmux
+  - tree
+  - vim
+
+base__server_snaps:
+  - multipass

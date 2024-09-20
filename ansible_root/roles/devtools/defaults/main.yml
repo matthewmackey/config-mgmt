@@ -1,7 +1,7 @@
 devtools__packages:
   - cypher-shell
   - httpie
-  # - mysql-client
+  - mysql-client
   - postgresql-client
   # Provides: redis-cli
   - redis-tools
@@ -12,6 +12,9 @@ devtools__packages_full:
   - cloud-utils
   - graphviz
   - universal-ctags
+
+devtools__snaps:
+  - postman
 
 devtools__remote_debs: []
 

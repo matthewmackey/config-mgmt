@@ -16,14 +16,14 @@
   - name: global (remote_deb) | Download .deb file w/ checksum ({{ item.name }})
     ansible.builtin.get_url:
       url: "{{ item.url }}"
-      dest: "{{ common__downloads_dir }}/{{ item.filename }}"
+      dest: "{{ base__downloads_dir }}/{{ item.filename }}"
       checksum: "{{ item.checksum }}"
     when: item.checksum is defined and item.checksum != ""
 
   - name: global (remote_deb) | Download .deb file w/o checksum ({{ item.name }})
     ansible.builtin.get_url:
       url: "{{ item.url }}"
-      dest: "{{ common__downloads_dir }}/{{ item.filename }}"
+      dest: "{{ base__downloads_dir }}/{{ item.filename }}"
     when: item.checksum is not defined or item.checksum == ""
 
   # TODO: validate .deb checksum
@@ -37,6 +37,6 @@
     become_user: root
     ansible.builtin.apt:
       state: present
-      deb: "{{ common__downloads_dir }}/{{ item.filename }}"
+      deb: "{{ base__downloads_dir }}/{{ item.filename }}"
   tags:
     - remote_debs

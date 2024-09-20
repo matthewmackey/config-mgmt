@@ -21,19 +21,19 @@
     - name: global (remote_archive) | Download archive file w/ checksum ({{ item.name }}-{{item.version }})
       ansible.builtin.get_url:
         url: "{{ item.url }}"
-        dest: "{{ common__downloads_dir }}/{{ item.filename }}"
+        dest: "{{ base__downloads_dir }}/{{ item.filename }}"
         checksum: "{{ item.checksum }}"
       when: item.checksum is defined and item.checksum != ""
 
     - name: global (remote_archive) | Download archive file w/o checksum ({{ item.name }}-{{item.version }})
       ansible.builtin.get_url:
         url: "{{ item.url }}"
-        dest: "{{ common__downloads_dir }}/{{ item.filename }}"
+        dest: "{{ base__downloads_dir }}/{{ item.filename }}"
       when: item.checksum is not defined or item.checksum == ""
 
     - name: global (remote_archive) | Extract archive to /tmp ({{ item.name }}-{{item.version }})
       ansible.builtin.unarchive:
-        src: "{{ common__downloads_dir }}/{{ item.filename }}"
+        src: "{{ base__downloads_dir }}/{{ item.filename }}"
         dest: /tmp
         remote_src: yes
       args:
@@ -44,7 +44,7 @@
       become_user: root
       ansible.builtin.copy:
         src: /tmp/{{ item.binary_path }}
-        dest: "{{ common__bin_dir }}/{{ item.name }}-{{ item.version }}"
+        dest: "{{ base__bin_dir }}/{{ item.name }}-{{ item.version }}"
         mode: '0755'
         remote_src: yes
 
@@ -53,7 +53,7 @@
       become_user: root
       ansible.builtin.file:
         state: link
-        src: "{{ common__bin_dir }}/{{ item.name }}-{{ item.version }}"
+        src: "{{ base__bin_dir }}/{{ item.name }}-{{ item.version }}"
         dest: "{{ item.install_dir }}/{{ item.name }}"
         owner: root
         group: root
@@ -64,7 +64,7 @@
       become_user: root
       ansible.builtin.file:
         state: link
-        src: "{{ common__bin_dir }}/{{ item.name }}-{{ item.version }}"
+        src: "{{ base__bin_dir }}/{{ item.name }}-{{ item.version }}"
         dest: "{{ item.install_dir }}/{{ item.install_filename }}"
         owner: root
         group: root

@@ -2,10 +2,6 @@
 - name: Run any roles selectively against all hosts
   hosts: all
   roles:
-    - name: common
-      tags:
-        - never
-        - common
 
     - name: alacritty
       tags:

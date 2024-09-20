@@ -5,13 +5,15 @@
 - name: Download `docker-credential-pass` credential helper
   get_url:
     url: "https://github.com/docker/docker-credential-helpers/releases/download/v0.6.3/docker-credential-pass-v0.6.3-amd64.tar.gz"
-    dest: "{{ downloads_dir }}/docker-credential-pass-v0.6.3-amd64.tar.gz"
+    # TODO: Using home_ vs base__ b/c we don't use base role
+    dest: "{{ home_downloads_dir }}/docker-credential-pass-v0.6.3-amd64.tar.gz"
 
 # Archive only contains a single, binary file
 - name: Unarchive `docker-credential-pass` binary tarball to /usr/local
   become: yes
   unarchive:
-    src: "{{ downloads_dir }}/docker-credential-pass-v0.6.3-amd64.tar.gz"
+    # TODO: Using home_ vs base__ b/c we don't use base role
+    src: "{{ home_downloads_dir }}/docker-credential-pass-v0.6.3-amd64.tar.gz"
     dest: /usr/local/bin
     remote_src: yes
   args:

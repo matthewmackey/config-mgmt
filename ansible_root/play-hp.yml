@@ -10,12 +10,14 @@
     - import_role:
         name: tools_common
       tags:
-        - common
+        - tools_common
+        - tools
 
     - import_role:
         name: tools_net
       tags:
-        - common
+        - tools_net
+        - tools
 
     - import_role:
         name: docker

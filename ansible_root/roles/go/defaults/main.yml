@@ -11,4 +11,4 @@ go__tarball_checksum: sha256:f6c8a87aa03b92c4b0bf3d558e28ea03006eb29db78917daec5
 
 go__arch: linux-amd64
 go__tarball_filename: "go{{ go__version }}.{{ go__arch }}.tar.gz"
-go__downloaded_tarball_file: "{{ common__downloads_dir }}/{{ go__tarball_filename }}"
+go__downloaded_tarball_file: "{{ base__downloads_dir }}/{{ go__tarball_filename }}"

@@ -1,7 +1,7 @@
 - name: zaproxy | Download OWASP ZAP installer
   ansible.builtin.get_url:
     url: "{{ zaproxy__installer_url }}"
-    dest: "{{ common__downloads_dir }}/{{ zaproxy__installer_filename }}"
+    dest: "{{ base__downloads_dir }}/{{ zaproxy__installer_filename }}"
     checksum: "{{ zaproxy__installer_checksum }}"
     mode: '0755'
   tags:
@@ -24,7 +24,7 @@
   become: yes
   become_user: root
   shell: |
-    {{ common__downloads_dir }}/{{ zaproxy__installer_filename }} -q \
+    {{ base__downloads_dir }}/{{ zaproxy__installer_filename }} -q \
       -varfile /tmp/zap-install4j-response.varfile \
       -Dinstall4j.keepLog=true
   args:

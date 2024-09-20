@@ -2,7 +2,8 @@ username: mmackey
 name: "Matthew Mackey"
 password: $6$fc3WQQnhuiVwNJ4q$YXwKJhfsDVqFONJzNCbrlmRtLiCwP16UBbf2sHrP7vR9j7/holCNsd8IObjAYtYnGWJsuPLeAEpajI2qFWpDc.
 home_dir: /home/{{ username }}
-downloads_dir: "{{ home_dir }}/downloads/srv"
+# Using home_ vs base__ b/c we don't use base role
+downloads_dir: "{{ home_downloads_dir }}"
 home_dirs_to_create:
   - .pwd
   - docs
@@ -26,7 +27,8 @@ home_dirs_to_create:
 #  - { src: Music, dest: media/music }
 #  - { src: Pictures, dest: media/pics }
 #  - { src: Videos, dest: media/videos }
-node_downloads_dir: "{{ downloads_dir }}/node"
+# Using home_ vs base__ b/c we don't use base role
+node_downloads_dir: "{{ home_downloads_dir }}/node"
 node_home_dir: "{{ home_dir }}/node"
 node_default_version: 10.20.1
 node_default_version_home_dir: "{{ node_home_dir }}/node-v{{ node_default_version }}-linux-x64"

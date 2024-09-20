@@ -5,7 +5,8 @@
 
 - import_tasks: packages.yml
   tags:
-    - packages_developer
+    - packages
+    - snaps
 
 - import_tasks: home_dir.yml
 

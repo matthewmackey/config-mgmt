@@ -3,12 +3,6 @@
   become: yes
   apt:
     state: present
-    name: "{{ packages_developer }}"
+    name: "{{ mmackey__developer_packages }}"
     cache_valid_time: 3600
     update_cache: yes
-
-- name: Install developer snaps
-  become: yes
-  snap:
-    state: present
-    name: "{{ snaps_developer }}"

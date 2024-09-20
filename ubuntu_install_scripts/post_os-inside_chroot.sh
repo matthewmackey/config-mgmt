@@ -188,6 +188,10 @@ ensure_cryptsetup_initramfs_installed() {
 setup_crypt_files() {
   header "[Setup crypt files]"
 
+  if [[ ! -e /etc/crypttab ]]; then
+    touch /etc/crypttab
+  fi
+
   if [[ $(sed -n -e "/^$BOOT_DEV_MAPPER/p" /etc/crypttab | wc -l) -eq 0 ]]; then
     echo "$BOOT_DEV_MAPPER UUID=$(blkid -s UUID -o value ${BOOT_DEV}) ${LUKS_KEY_FILE} luks,discard" >> /etc/crypttab
   fi

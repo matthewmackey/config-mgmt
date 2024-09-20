@@ -48,7 +48,7 @@ cp post_os-inside_chroot.sh $CHROOT_MNT/tmp/post_os-inside_chroot.sh
 cat <<-END
   Run the following to enter & finish setting up the chroot environment:
 
-  chroot $CHROOT_MNT
+  sudo chroot $CHROOT_MNT
   mount -a
 
 END

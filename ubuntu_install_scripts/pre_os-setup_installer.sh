@@ -7,10 +7,12 @@ if [ "$EUID" -ne 0 ]; then
   exit
 fi
 
+echo "Waiting for Installer to mount filesystem at /target..."
+
 while [ ! -d /target/etc/default/grub.d ]; do
   sleep 1;
 done
 
 echo "GRUB_ENABLE_CRYPTODISK=y" >> /target/etc/default/grub.d/local.cfg
 
-echo "SUCCESS - GRUB config setup for installer"
+echo "SUCCESS - GRUB config setup for Installer"

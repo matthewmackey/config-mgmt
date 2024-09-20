@@ -18,6 +18,9 @@ base__packages:
   # Provides: ping
   - iputils-ping
   - jq
+  # Awesome utility programs
+  # See: https://rentes.github.io/unix/utilities/2015/07/27/moreutils-package/
+  - moreutils
   # Provides: `netstat`
   - net-tools
   # Provides: netcat

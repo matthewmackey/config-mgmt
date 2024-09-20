@@ -1,0 +1,23 @@
+# SEE: https://flathub.org/setup/Ubuntu
+- name: flatpak | Install Flatpak package
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    name: flatpak
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  tags:
+    - flatpak
+    - install
+    - packages
+
+- name: flatpak | Install 'Flathub' Flatpak repo to the User Flatpak installation
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    method: user
+  tags:
+    - flatpak
+    - setup

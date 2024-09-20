@@ -31,6 +31,23 @@ required for GRUB due to its compatibility issues with LUKS v2.  More reserach
 is needed.
 
 
+OS Versions
+===========
+
+Ubuntu 24.04 Issue
+------------------
+
+As of 9/19/2024, we cannot use these install scripts with Ubuntu 24.04 because
+the new installer that comes with 24.04 (Subiquity) does not show the LVM
+partitions in the Manual configuration part of the install where we specify what
+mount points go where.  The last LTS release that used the old installer (Ubiquity)
+that allowed this behavior was 22.04, so for now we can only install 22.04 with
+these installer scripts until either:
+
+  - Subiquity is updated with this feature
+  - Autoinstall.yml can allow this (and also allow a fix for the GRUB LUKS v1 problem)
+
+
 Systems
 =======
 

@@ -3,6 +3,11 @@
 set -e
 set -o pipefail
 
+if [ "$EUID" -ne 0 ]; then
+  echo "Please run as root"
+  exit
+fi
+
 #-----------------------------------------------------------------------
 # GLOBAL Placeholder Variables
 #-----------------------------------------------------------------------

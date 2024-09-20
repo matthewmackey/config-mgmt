@@ -268,8 +268,23 @@ open_root_crypt() {
 #-----------------------------------------------------------------------
 # Step:
 #-----------------------------------------------------------------------
+# We leave formatting of LVM partitions to the Installer because
+# creating a script to handle the /dev/mapper/* LVM volume names
+# with how the dashes are handled can get complicated, and just
+# doing it in the Installer is not very time consuming.
+format_partitions() {
+  header "[Format Partitions]"
+  format_boot_efi_partition_fat32
+  format_boot_partition_ext4
+}
+
+format_boot_efi_partition_fat32() {
+  msg "Formatting /boot/efi as fat32"
+  mkfs.vfat -F 32  $EFI_DEV
+}
+
 format_boot_partition_ext4() {
-  header "[Formatting /boot as ext4]"
+  msg "Formatting /boot as ext4"
   mkfs.ext4 -L boot /dev/mapper/$BOOT_DEV_MAPPER
 }
 
@@ -353,7 +368,7 @@ main() {
   create_partitions
   create_luks
   open_luks
-  format_boot_partition_ext4
+  format_partitions
   setup_rootfs_lvm
   display_grub_message
 }

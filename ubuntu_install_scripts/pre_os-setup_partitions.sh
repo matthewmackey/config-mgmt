@@ -394,5 +394,5 @@ fi
 if [ "$OPTION" = "-u" ]; then
   undo
 else
-  echo main
+  main
 fi

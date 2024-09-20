@@ -3,6 +3,50 @@
 set -e
 set -o pipefail
 
+if [ "$EUID" -ne 0 ]; then
+  echo "Please run as root"
+  exit
+fi
+
+
+#-----------------------------------------------------------------------
+# GLOBAL Placeholder Variables
+#-----------------------------------------------------------------------
+PASSPHRASE=
+
+
+#-----------------------------------------------------------------------
+# Constants
+#-----------------------------------------------------------------------
+CONSTANTS_ENV_FILE=constants.env
+
+if [ ! -e "$CONSTANTS_ENV_FILE" ]; then
+  echo "A \"$CONSTANTS_ENV_FILE\" must be in the same directory as this script"
+  exit 1
+fi
+
+source $CONSTANTS_ENV_FILE
+
+
+#-----------------------------------------------------------------------
+# REQUIRED Variables
+#-----------------------------------------------------------------------
+# Using ROOTFS_* vs. ROOT_*, which breaks the convention of how I relate those
+# vars to the DEV_MAPPER names below; doing this b/c it would be to easy to confuse
+# variables named BOOT_* and ROOT_* when reading/editing this script, and I
+# want to try to avoid any confusion that could cause developer errors
+REQUIRED_VARS=(
+  BOOT_DEV
+  ROOTFS_DEV
+)
+
+#-----------------------------------------------------------------------
+# OPTIONAL Variables
+#-----------------------------------------------------------------------
+OPTIONAL_VARS=(
+  PASSPHRASE_FILE
+)
+
 
 #-----------------------------------------------------------------------
 # Helper Functions
@@ -24,15 +68,6 @@ EOF
 
 
 verify_vars_provided() {
-  REQUIRED_VARS=(
-    BOOT_DEV
-    ROOTFS_DEV
-  )
-
-  OPTIONAL_VARS=(
-    PASSPHRASE_FILE
-  )
-
   for v in ${REQUIRED_VARS[@]}; do
     if [ "${!v}" = "" ]; then
       error "variable $v required"
@@ -100,7 +135,7 @@ read_luks_passphrase() {
 # Step:
 #-----------------------------------------------------------------------
 setup_luks_keys() {
-  header "[Luks - create & add keyfiles]"
+  header "[LUKS - create & add keyfiles]"
 
   mkdir ${LUKS_DIR}
   chmod 0500 ${LUKS_DIR}
@@ -110,28 +145,6 @@ setup_luks_keys() {
 
   echo -n "$PASSPHRASE" | cryptsetup luksAddKey ${BOOT_DEV} ${LUKS_KEY_FILE}
   echo -n "$PASSPHRASE" | cryptsetup luksAddKey ${ROOTFS_DEV} ${LUKS_KEY_FILE}
-}
-
-
-#-----------------------------------------------------------------------
-# Step:
-#-----------------------------------------------------------------------
-setup_crypt_files() {
-  header "[Setup crypt files]"
-
-  if [[ $(sed -n -e "/^$BOOT_DEV_MAPPER/p" /etc/crypttab | wc -l) -eq 0 ]]; then
-    echo "$BOOT_DEV_MAPPER UUID=$(blkid -s UUID -o value ${BOOT_DEV}) ${LUKS_KEY_FILE} luks,discard" >> /etc/crypttab
-  fi
-  if [[ $(sed -n -e "/^$ROOTFS_DEV_MAPPER/p" /etc/crypttab | wc -l) -eq 0 ]]; then
-    echo "$ROOTFS_DEV_MAPPER UUID=$(blkid -s UUID -o value ${ROOTFS_DEV}) ${LUKS_KEY_FILE} luks,discard" >> /etc/crypttab
-  fi
-
-  if [[ $(sed -n -e "/^KEYFILE_PATTERN.*keyfile$/p" /etc/cryptsetup-initramfs/conf-hook | wc -l) -eq 0 ]]; then
-    echo "KEYFILE_PATTERN=${LUKS_DIR}/*.keyfile" >> /etc/cryptsetup-initramfs/conf-hook
-  fi
-  if [[ $(sed -n -e '/^UMASK=0077$/p' /etc/initramfs-tools/initramfs.conf | wc -l) -eq 0 ]]; then
-    echo "UMASK=0077" >> /etc/initramfs-tools/initramfs.conf
-  fi
 }
 
 
@@ -161,34 +174,48 @@ verify_luks_keys_added() {
 
 
 #-----------------------------------------------------------------------
-# CLI
+# Step:
 #-----------------------------------------------------------------------
-BOOT_DEV_MAPPER=bootcrypt_luks1
-ROOTFS_DEV_MAPPER=rootcrypt
-
-LUKS_DIR=/root/.luks
-LUKS_KEY_FILE=${LUKS_DIR}/full_disk.keyfile
-
-
-# Placeholder global var
-PASSPHRASE=
-
-#-----------------------------
-# REQUIRED Variables
-#-----------------------------
-# Using ROOTFS_* vs. ROOT_*, which breaks the convention of how I relate those
-# vars to the DEV_MAPPER names below; doing this b/c it would be to easy to confuse
-# variables named BOOT_* and ROOT_* when reading/editing this script, and I
-# want to try to avoid any confusion that could cause developer errors
-BOOT_DEV=
-ROOTFS_DEV=
-
-#-----------------------------
-# OPTIONAL Variables
-#-----------------------------
-PASSPHRASE_FILE=
+ensure_cryptsetup_initramfs_installed() {
+  header "[Ensure cryptsetup-initramfs Installed]"
+  apt install -y cryptsetup-initramfs
+}
 
 
+#-----------------------------------------------------------------------
+# Step:
+#-----------------------------------------------------------------------
+setup_crypt_files() {
+  header "[Setup crypt files]"
+
+  if [[ $(sed -n -e "/^$BOOT_DEV_MAPPER/p" /etc/crypttab | wc -l) -eq 0 ]]; then
+    echo "$BOOT_DEV_MAPPER UUID=$(blkid -s UUID -o value ${BOOT_DEV}) ${LUKS_KEY_FILE} luks,discard" >> /etc/crypttab
+  fi
+  if [[ $(sed -n -e "/^$ROOTFS_DEV_MAPPER/p" /etc/crypttab | wc -l) -eq 0 ]]; then
+    echo "$ROOTFS_DEV_MAPPER UUID=$(blkid -s UUID -o value ${ROOTFS_DEV}) ${LUKS_KEY_FILE} luks,discard" >> /etc/crypttab
+  fi
+
+  if [[ $(sed -n -e "/^KEYFILE_PATTERN.*keyfile$/p" /etc/cryptsetup-initramfs/conf-hook | wc -l) -eq 0 ]]; then
+    echo "KEYFILE_PATTERN=${LUKS_DIR}/*.keyfile" >> /etc/cryptsetup-initramfs/conf-hook
+  fi
+  if [[ $(sed -n -e '/^UMASK=0077$/p' /etc/initramfs-tools/initramfs.conf | wc -l) -eq 0 ]]; then
+    echo "UMASK=0077" >> /etc/initramfs-tools/initramfs.conf
+  fi
+}
+
+
+#-----------------------------------------------------------------------
+# Step:
+#-----------------------------------------------------------------------
+update_initramfs() {
+  header "[Update initramfs]"
+  update-initramfs -u -k all
+}
+
+
+#-----------------------------------------------------------------------
+# MAIN()
+#-----------------------------------------------------------------------
 ENV_FILE=$1
 
 if [ ! -f "$ENV_FILE" ]; then
@@ -198,8 +225,9 @@ fi
 source $ENV_FILE
 verify_vars_provided
 
-read_passphrase
+read_luks_passphrase
 setup_luks_keys
 verify_luks_keys_added
+ensure_cryptsetup_initramfs_installed
 setup_crypt_files
-update-initramfs -u -k all
+update_initramfs

@@ -1,3 +1,4 @@
+#-------------------------------------------------------------------------------
 # SEE:
 #
 #  - https://nsg.cc/post/2024/autoinstall/
@@ -8,6 +9,7 @@
 #
 #  - https://curtin.readthedocs.io/en/latest/topics/storage.html
 #
+#-------------------------------------------------------------------------------
 autoinstall:
   version: 1
   interactive-sections:

@@ -8,6 +8,7 @@ if [ "$EUID" -ne 0 ]; then
   exit
 fi
 
+
 #-----------------------------------------------------------------------
 # GLOBAL Placeholder Variables
 #-----------------------------------------------------------------------
@@ -17,36 +18,14 @@ PASSPHRASE=
 #-----------------------------------------------------------------------
 # Constants
 #-----------------------------------------------------------------------
-EFI_PART_NAME="EFI System Partition"
-EFI_PART_SIZE=256M
-BOOT_PART_SIZE=1G
+CONSTANTS_ENV_FILE=constants.env
 
+if [ ! -e "$CONSTANTS_ENV_FILE" ]; then
+  echo "A \"$CONSTANTS_ENV_FILE\" must be in the same directory as this script"
+  exit 1
+fi
 
-#------------------------------------------------------
-# Partition Type IDs
-#
-# All not necessarily used in script but kept for ref
-#------------------------------------------------------
-LINUX_SWAP_PART_TYPE=8200
-LINUX_FS_PART_TYPE=8300
-
-# See: https://linux.die.net/man/8/gdisk
-EFI_SYSTEM_PART_TYPE=EF00
-BIOS_BOOT_PART_TYPE=EF02
-
-
-#-------------------------------------------------
-# LUKS
-#-------------------------------------------------
-BOOT_DEV_MAPPER=boot_crypt_luks1
-ROOTFS_DEV_MAPPER=root_crypt_luks2
-
-
-#-------------------------------------------------
-# LVM
-#-------------------------------------------------
-PV=/dev/mapper/$ROOTFS_DEV_MAPPER
-VG_NAME=ubuntu-vg
+source $CONSTANTS_ENV_FILE
 
 
 #-----------------------------------------------------------------------

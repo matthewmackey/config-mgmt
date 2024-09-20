@@ -28,7 +28,8 @@ source $CONSTANTS_ENV_FILE
 ENV_FILE=$1
 
 if [ ! -f "$ENV_FILE" ]; then
-  error "You must provide and ENV_FILE"
+  echo "You must provide an ENV_FILE"
+  exit 1
 fi
 
 # source $ENV_FILE

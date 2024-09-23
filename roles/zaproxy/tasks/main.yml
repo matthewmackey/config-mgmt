@@ -40,7 +40,7 @@
   shell: |
     rm -f /usr/share/applications/install4j_*-zap.sh.desktop && \
     cat {{ zaproxy__install_dir }}/.install4j/*.desktop \
-      {{ zaproxy__install_dir }}/OWASP\ ZAP.desktop \
+      {{ zaproxy__install_dir }}/ZAP.desktop \
       > /usr/share/applications/zaproxy.desktop
   args:
     creates: /usr/share/applications/zaproxy.desktop

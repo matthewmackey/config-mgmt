@@ -91,20 +91,26 @@
         - never
         - moonlander
 
-    - name: net
+    - name: net_tools
       tags:
         - never
-        - net
+        - net_tools
 
     - name: qemu_kvm
       tags:
         - never
         - qemu_kvm
 
-    - name: python
+    - name: printer
       tags:
         - never
-        - python
+        - printer
+
+    # DEPRECATED
+    # - name: python
+    #   tags:
+    #     - never
+    #     - python
 
     - name: resolvconf
       tags:
@@ -136,11 +142,6 @@
         - never
         - sudoers
 
-    - name: tools_common
-      tags:
-        - never
-        - tools_common
-
     - name: virtual_machines
       tags:
         - never
@@ -151,6 +152,12 @@
       tags:
         - never
         - vim
+
+    - name: zoom
+      tags:
+        - never
+        - zoom
+
 
 #- name: Setup managed resolv.conf on DNS clients
   #hosts: dns_clients

@@ -1,8 +1,0 @@
-- name: Run base playbook
-  import_playbook: play-base.yml
-
-- name: Configure machines for GUI
-  hosts: all
-  roles:
-    - role: tools_common
-    - role: alacritty

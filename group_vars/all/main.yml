@@ -25,7 +25,7 @@ ansible_bash_dir: "/home/{{ username }}/.local/ansible_bash"
 
 nfs_mount_dir: /mnt/mmackey-sync
 nfs_mount_str: 192.168.1.253:/{{ nfs_mount_dir }}
-nfs_exports_str: "{{ nfs_mount_dir }} 192.168.1.0/24(rw,sync,no_subtree_check)"
+nfs__exports_str: "{{ nfs_mount_dir }} 192.168.1.0/24(rw,sync,no_subtree_check)"
 
 
 # -------------------------------------------------------------------------------

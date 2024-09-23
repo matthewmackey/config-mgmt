@@ -27,7 +27,7 @@
       - google-cloud-sdk-gke-gcloud-auth-plugin
 
 - name: google_cloud_sdk | Download Google Cloud SQL Auth proxy binary
-  ansible.builtin.shell: |
+  shell: |
     wget -q https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O {{ base__bin_dir }}/cloud_sql_proxy
   args:
     creates: "{{ base__bin_dir }}/cloud_sql_proxy"

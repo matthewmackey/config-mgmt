@@ -1,6 +1,7 @@
 is_gui: yes
 home_dir: /home/mmackey
 base__user: mmackey
+base__ansible_group: mmackey
 
 # sudoers__nopass_users:
 #   - app

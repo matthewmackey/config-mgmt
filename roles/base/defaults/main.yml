@@ -1,3 +1,12 @@
+# This is the group for the varous /srv/ansible/* directories.  On
+# managed-systems (like servers) it makes sense for this to be `ansible`
+# however that requires creation of that user/group in a prior bootstrapping step
+# (and probably setting them up with as a nopass sudoer user as well).
+#
+# For developer machines, like a laptop, we don't really manage those remotely
+# and just run Ansible directly on the machine.  Therefore, we don't need to necessarily
+# create a separate `ansible` user (and nopass sudoer setup).  In these cases, we
+# would just set `base__ansible_group` to be the group of the main user on that system.
 base__ansible_group: ansible
 
 base__packages:

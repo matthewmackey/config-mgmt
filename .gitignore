@@ -5,7 +5,7 @@ vault.yml
 
 # Files for local inventory and host vars for a "local" host that I don't want
 # committed to VCS
-local
 host_vars/local.yml
-
+local
+local.inv
 local-mmlenovo

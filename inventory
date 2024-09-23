@@ -31,9 +31,6 @@ all:
       ansible_python_interpreter: /usr/bin/python3
     mmtower:
       ansible_python_interpreter: /usr/bin/python3
-      sudoers__nopass_users:
-        - mmachaj
-        - mmackey
     mmlenovo:
       ansible_connection: local
       ansible_host: 127.0.0.1

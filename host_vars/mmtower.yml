@@ -1,6 +1,7 @@
----
 is_gui: yes
-home_dir: /home/{{ username }}
+home_dir: /home/mmackey
+base__user: mmackey
+
 # sudoers__nopass_users:
 #   - app
 #   - cm

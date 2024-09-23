@@ -13,7 +13,7 @@
 - name: Disable NetworkManager DNS so it won't overwrite /etc/resolv.conf - dns setting
   become: yes
   become_user: root
-  ansible.builtin.ini_file:
+  community.general.ini_file:
     state: present
     path: /etc/NetworkManager/NetworkManager.conf
     no_extra_spaces: yes
@@ -31,7 +31,7 @@
 - name: Disable NetworkManager DNS so it won't overwrite /etc/resolv.conf - rc-manager setting
   become: yes
   become_user: root
-  ansible.builtin.ini_file:
+  community.general.ini_file:
     state: present
     path: /etc/NetworkManager/NetworkManager.conf
     no_extra_spaces: yes

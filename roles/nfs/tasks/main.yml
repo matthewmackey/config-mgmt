@@ -1,0 +1,27 @@
+- become: yes
+  become_user: root
+  block:
+    - name: nfs | Update APT cache
+      ansible.builtin.apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: nfs | Install common packages
+      ansible.builtin.apt:
+        state: present
+        name: nfs-kernel-server
+
+    - name: nfs | Create NFS export mount points
+      ansible.builtin.file:
+        state: directory
+        path: /mnt/mmackey-sync
+
+    - name: nfs | Create NFS exports file
+      ansible.builtin.template:
+        src: exports.j2
+        dest: /etc/exports
+
+    - name: nfs | Restart NFS server
+      ansible.builtin.service:
+        name: nfs-kernel-server
+        state: restarted

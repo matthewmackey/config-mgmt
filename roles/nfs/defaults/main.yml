@@ -1,0 +1,3 @@
+# Example:
+nfs__exports_str: "/mnt/my-nfs 192.168.1.0/24(rw,sync,no_subtree_check)"
+nfs__exports_str: ""

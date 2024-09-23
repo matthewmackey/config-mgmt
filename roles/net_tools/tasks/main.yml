@@ -1,0 +1,6 @@
+- name: net_tools | Install common network tools
+  become: yes
+  become_user: root
+  ansible.builtin.apt:
+    name: "{{ net_tools__packages }}"
+    state: present

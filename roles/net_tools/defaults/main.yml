@@ -1,4 +1,4 @@
-tools_net__packages:
+net_tools__packages:
   - arping
   - arp-scan
   # Provides: tracepath

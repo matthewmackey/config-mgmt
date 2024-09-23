@@ -1,18 +1,20 @@
-- name: Download & extract Epson ES-200 Scanner driver tarball that includes .deb file
-  ansible.builtin.unarchive:
-    src: "{{ epson_scanner__tarball_url }}"
-    dest: /tmp
-    remote_src: yes
-    creates: /tmp/{{ epson_scanner__tarball_install_script_path }}"
-  tags:
-    - epson
+- when: is_gui | bool
+  block:
+    - name: epson_scanner | Download & extract Epson ES-200 Scanner driver tarball that includes .deb file
+      ansible.builtin.unarchive:
+        src: "{{ epson_scanner__tarball_url }}"
+        dest: /tmp
+        remote_src: yes
+        creates: /tmp/{{ epson_scanner__tarball_install_script_path }}"
+      tags:
+        - epson
 
-- name: Run Epson ES-200 Scanner driver install script
-  become: yes
-  become_user: root
-  shell: |
-    /tmp/{{ epson_scanner__tarball_install_script_path }}
-  args:
-    creates: /usr/bin/epsonscan2
-  tags:
-    - epson
+    - name: epson_scanner | Run Epson ES-200 Scanner driver install script
+      become: yes
+      become_user: root
+      shell: |
+        /tmp/{{ epson_scanner__tarball_install_script_path }}
+      args:
+        creates: /usr/bin/epsonscan2
+      tags:
+        - epson

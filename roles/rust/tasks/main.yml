@@ -1,4 +1,4 @@
-- name: Install rust via installer
+- name: rust | Install rust via installer
   shell: |
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
       --no-modify-path --profile default \

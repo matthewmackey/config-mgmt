@@ -83,7 +83,7 @@
 - name: devtools | Install devtools utility Snaps
   become: yes
   become_user: root
-  ansible.builtin.snap:
+  community.general.snap:
     name: "{{ devtools__snaps }}"
     state: present
   tags:

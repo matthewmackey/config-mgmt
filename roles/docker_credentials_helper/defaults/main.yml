@@ -1,0 +1,2 @@
+docker_credentials_helper__version: v0.8.2
+docker_credentials_helper__download_url: https://github.com/docker/docker-credential-helpers/releases/download/{{ docker_credentials_helper__version }}/docker-credential-pass-{{ docker_credentials_helper__version }}.linux-amd64

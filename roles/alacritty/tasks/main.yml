@@ -1,89 +1,92 @@
-- name: Install Debian dependencies
-  become: yes
-  become_user: root
-  ansible.builtin.apt:
-    state: present
-    name:
-      - cmake
-      - libxcb-xfixes0-dev
-      - libfontconfig1-dev
-      - libfreetype6-dev
-      - libxkbcommon-dev
-      - pkg-config
-      - python3
-  tags:
-    - install
-    - setup
-    - alacritty
-    - gui
+- block:
+    - name: alacritty | Install Debian dependencies
+      become: yes
+      become_user: root
+      ansible.builtin.apt:
+        state: present
+        name:
+          - cmake
+          - libxcb-xfixes0-dev
+          - libfontconfig1-dev
+          - libfreetype6-dev
+          - libxkbcommon-dev
+          - pkg-config
+          - python3
+      tags:
+        - install
+        - setup
+        - alacritty
+        - gui
 
-- name: Checkout alacritty git repository
-  ansible.builtin.git:
-    repo: 'https://github.com/alacritty/alacritty.git'
-    dest: "{{ base__git_dir }}/alacritty"
-  tags:
-    - install
-    - setup
-    - alacritty
-    - gui
+    - name: alacritty | Checkout alacritty git repository
+      ansible.builtin.git:
+        repo: 'https://github.com/alacritty/alacritty.git'
+        dest: "{{ base__git_dir }}/alacritty"
+      tags:
+        - install
+        - setup
+        - alacritty
+        - gui
 
-- name: Build alacritty from source
-  shell: |
-    "{{ ansible_env.HOME }}"/.cargo/bin/cargo build --release
-  args:
-    chdir: "{{ base__git_dir }}/alacritty"
-    creates: "{{ base__git_dir }}/alacritty/target/release/alacritty"
-  tags:
-    - install
-    - alacritty
-    - gui
+    - name: alacritty | Build alacritty from source
+      shell: |
+        "{{ ansible_env.HOME }}"/.cargo/bin/cargo build --release
+      args:
+        chdir: "{{ base__git_dir }}/alacritty"
+        creates: "{{ base__git_dir }}/alacritty/target/release/alacritty"
+      tags:
+        - install
+        - alacritty
+        - gui
 
-- name: Copy alacritty binary to ansible bin directory
-  ansible.builtin.copy:
-    src: "{{ base__git_dir }}/alacritty/target/release/alacritty"
-    dest: "{{ base__bin_dir }}/alacritty"
-    mode: 0755
-  tags:
-    - install
-    - alacritty
-    - gui
+    - name: alacritty | Copy alacritty binary to ansible bin directory
+      ansible.builtin.copy:
+        src: "{{ base__git_dir }}/alacritty/target/release/alacritty"
+        dest: "{{ base__bin_dir }}/alacritty"
+        mode: 0755
+      tags:
+        - install
+        - alacritty
+        - gui
 
-- name: Symlink alacritty binary to /usr/local/bin
-  become: yes
-  become_user: root
-  ansible.builtin.file:
-    state: link
-    src: "{{ base__bin_dir }}/alacritty"
-    dest: /usr/local/bin/alacritty
-    owner: root
-    group: root
-    mode: 0755
-  tags:
-    - install
-    - alacritty
-    - gui
+    - name: alacritty | Symlink alacritty binary to /usr/local/bin
+      become: yes
+      become_user: root
+      ansible.builtin.file:
+        state: link
+        src: "{{ base__bin_dir }}/alacritty"
+        dest: /usr/local/bin/alacritty
+        owner: root
+        group: root
+        mode: 0755
+      tags:
+        - install
+        - alacritty
+        - gui
 
-- name: Copy alacritty logo to /usr/share/pixmaps for use with .desktop file
-  become: yes
-  become_user: root
-  ansible.builtin.copy:
-    src: "{{ base__git_dir }}/alacritty/extra/logo/alacritty-term.svg"
-    dest: /usr/share/pixmaps/Alacritty.svg
-    owner: root
-    group: root
-  tags:
-    - install
-    - alacritty
-    - gui
+    - name: alacritty | Copy alacritty logo to /usr/share/pixmaps for use with .desktop file
+      become: yes
+      become_user: root
+      ansible.builtin.copy:
+        src: "{{ base__git_dir }}/alacritty/extra/logo/alacritty-term.svg"
+        dest: /usr/share/pixmaps/Alacritty.svg
+        owner: root
+        group: root
+      tags:
+        - install
+        - alacritty
+        - gui
 
-- name: Install alacritty .desktop file
-  become: yes
-  become_user: root
-  shell: |
-    desktop-file-install {{ base__git_dir }}/alacritty/extra/linux/Alacritty.desktop
-    update-desktop-database
-  changed_when: False
-  tags:
-    - install
-    - alacritty
-    - gui
+    - name: alacritty | Install alacritty .desktop file
+      become: yes
+      become_user: root
+      shell: |
+        desktop-file-install {{ base__git_dir }}/alacritty/extra/linux/Alacritty.desktop
+        update-desktop-database
+      changed_when: False
+      tags:
+        - install
+        - alacritty
+        - gui
+
+  when: is_gui | bool

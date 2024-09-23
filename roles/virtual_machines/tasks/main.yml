@@ -121,7 +121,7 @@
 - name: Install Multipass Ubuntu VM manager by Canonical
   become: yes
   become_user: root
-  ansible.builtin.snap:
+  community.general.snap:
     state: present
     name: multipass
     classic: yes

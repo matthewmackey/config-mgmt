@@ -1,53 +1,68 @@
----
-- name: Install Hashicorp's APT repository key
-  become: yes
-  apt_key:
-    state: present
-    url: https://apt.releases.hashicorp.com/gpg
-  tags:
-    - packer
-    - terraform
-    - vagrant
-    - vault
+- become: yes
+  become_user: root
+  block:
+    - name: hashicorp | Install Hashicorp's APT repository key
+      ansible.builtin.apt_key:
+        state: present
+        url: https://apt.releases.hashicorp.com/gpg
+        keyring: /usr/share/keyrings/hashicorp-archive-keyring.gpg
+      tags:
+        - packer
+        - terraform
+        - vagrant
+        - vault
 
-- name: Add Hashicorp's APT repository for Ubuntu 20.04
-  become: yes
-  apt_repository:
-    state: present
-    repo: deb [arch=amd64] https://apt.releases.hashicorp.com focal main
-    update_cache: yes
-  when:
-    - ansible_facts['distribution'] == "Ubuntu"
-    - ansible_facts['distribution_major_version'] == "20"
-  tags:
-    - packer
-    - terraform
-    - vault
+    - name: hashicorp | Add Hashicorp's APT repository for Ubuntu 20.04
+      ansible.builtin.apt_repository:
+        state: present
+        repo: deb [arch=amd64] https://apt.releases.hashicorp.com focal main
+        update_cache: yes
+      when:
+        - ansible_facts['distribution'] == "Ubuntu"
+        - ansible_facts['distribution_major_version'] == "20"
+      tags:
+        - packer
+        - terraform
+        - vault
 
-- name: Install `packer`
-  become: yes
-  apt:
-    name: packer
-    state: present
-  tags: packer
+    - name: hashicorp | Add Hashicorp's APT repository for Ubuntu 22.04
+      ansible.builtin.apt_repository:
+        state: present
+        repo: >
+          deb
+          [arch=amd64 signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg]
+          https://apt.releases.hashicorp.com
+          jammy
+          main
+        update_cache: yes
+      when:
+        - ansible_facts['distribution'] == "Ubuntu"
+        - ansible_facts['distribution_major_version'] == "22"
+      tags:
+        - packer
+        - terraform
+        - vault
 
-- name: Install `terraform`
-  become: yes
-  apt:
-    name: terraform
-    state: present
-  tags: terraform
+    - name: hashicorp | Install `packer`
+      ansible.builtin.apt:
+        name: packer
+        state: present
+      tags: packer
 
-- name: Install `vagrant`
-  become: yes
-  apt:
-    name: vagrant
-    state: latest
-  tags: vagrant
+    - name: hashicorp | Install `terraform`
+      ansible.builtin.apt:
+        name: terraform
+        state: present
+      tags: terraform
 
-- name: Install `vault`
-  become: yes
-  apt:
-    name: vault
-    state: present
-  tags: vault
+    - name: hashicorp | Install `vagrant`
+      ansible.builtin.apt:
+        name: vagrant
+        state: latest
+      tags: vagrant
+
+    - name: hashicorp | Install `vault`
+      ansible.builtin.apt:
+        name: vault
+        state: present
+      tags: vault

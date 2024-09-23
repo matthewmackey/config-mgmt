@@ -6,8 +6,11 @@
 # go__version: 1.19.3
 # go__tarball_checksum: sha256:74b9640724fd4e6bb0ed2a1bc44ae813a03f1e72a4c76253e2d5c015494430ba
 
-go__version: 1.22.0
-go__tarball_checksum: sha256:f6c8a87aa03b92c4b0bf3d558e28ea03006eb29db78917daec5cfb6ec1046265
+# go__version: 1.22.0
+# go__tarball_checksum: sha256:f6c8a87aa03b92c4b0bf3d558e28ea03006eb29db78917daec5cfb6ec1046265
+
+go__version: 1.23.1
+go__tarball_checksum: sha256:49bbb517cfa9eee677e1e7897f7cf9cfdbcf49e05f61984a2789136de359f9bd
 
 go__arch: linux-amd64
 go__tarball_filename: "go{{ go__version }}.{{ go__arch }}.tar.gz"

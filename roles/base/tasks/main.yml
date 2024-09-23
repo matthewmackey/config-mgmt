@@ -81,7 +81,7 @@
 - name: base | Install base tools from Snaps
   become: yes
   become_user: root
-  ansible.builtin.snap:
+  community.general.snap:
     state: present
     name: "{{ base__snaps }}"
   tags:
@@ -151,7 +151,7 @@
 - name: base | gui | Install base GUI Snaps
   become: yes
   become_user: root
-  ansible.builtin.snap:
+  community.general.snap:
     state: present
     name: "{{ base__gui_snaps }}"
   when: is_gui | bool

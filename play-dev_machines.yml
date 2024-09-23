@@ -1,68 +1,73 @@
 ---
 - name: Configure development machines
   hosts: dev_machines
-  tasks:
+  roles:
+    - 1password
+    - awscli
+    - crypt
+    - devtools
+    - docker
+    - docker_credentials_helper
+    - epson_scanner
+    - flatpak
+    - go
+    - google_cloud_sdk
+    - hashicorp
+    - rust
+    - alacritty
+    # - burpsuite
 
-    - import_role:
-        name: tools_common
-      tags:
-        - tools_common
-        - tools
 
-    - import_role:
-        name: tools_net
-      tags:
-        - tools_net
-        - tools
+  # tasks:
 
-    - import_role:
-        name: sudoers
-      tags: sudoers
+    # - import_role:
+    #     name: sudoers
+    #   tags: sudoers
 
-    - import_role:
-        name: go
-      tags: go
+    # - import_role:
+    #     name: go
+    #   tags: go
 
-    - import_role:
-        name: python
-      tags: python
+    # - import_role:
+    #     name: python
+    #   tags: python
 
-    - import_role:
-        name: google_cloud_sdk
-      tags: google
+    # - import_role:
+    #     name: google_cloud_sdk
+    #   tags: google
 
-    - import_role:
-        name: hashicorp
-      tags: hashicorp
+    # - import_role:
+    #     name: hashicorp
+    #   tags: hashicorp
 
-    - import_role:
-        name: docker
-      tags: docker
+    # - import_role:
+    #     name: docker
+    #   tags: docker
 
-    - import_role:
-        name: docker_compose
-      tags: docker_compose
+    # - import_role:
+    #     name: docker_compose
+    #   tags: docker_compose
 
-    - import_role:
-        name: docker_credentials_helper
-      tags: docker_credentials
+    # - import_role:
+    #     name: docker_credentials_helper
+    #   tags: docker_credentials
 
-    - import_role:
-        name: qemu-kvm
-      tags: kvm
+    # - import_role:
+    #     name: qemu-kvm
+    #   tags: kvm
 
-    - include_role:
-        name: kubernetes
-        tasks_from: repos.yml
-        apply:
-          tags:
-             - kubectl
-      tags:
-        - always
+    # - include_role:
+    #     name: kubernetes
+    #     tasks_from: repos.yml
+    #     apply:
+    #       tags:
+    #          - kubectl
+    #   tags:
+    #     - always
 
-    - name: Install kubectl
-      become: yes
-      apt:
-        name: kubectl
-        state: present
-      tags: kubectl
+    # - name: Install kubectl
+    #   become: yes
+    #   apt:
+    #     name: kubectl
+    #     state: present
+    #   tags: kubectl

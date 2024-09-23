@@ -1,4 +1,4 @@
-- name: Install packages that allow APT to be used over HTTPS
+- name: apt_https | Install packages that allow APT to be used over HTTPS
   become: yes
   apt:
     name: "{{ apt_https_packages }}"

@@ -4,8 +4,9 @@
 # ------------------------------------------------------------------------------
 - become: yes
   become_user: root
+  when: is_gui | bool
   block:
-    - name: Install `wally` GUI dependencies
+    - name: moonlander | Install `wally` GUI dependencies
       ansible.builtin.apt:
         state: present
         name:
@@ -14,25 +15,25 @@
           - libusb-1.0-0-dev
           # - webkit2gtk
 
-    - name: Create udev rules for ZSA moonlander keyboard
+    - name: moonlander | Create udev rules for ZSA moonlander keyboard
       ansible.builtin.template:
         src: 50-zsa-moonlander.rules.j2
         dest: /etc/udev/rules.d/50-zsa-moonlander.rules
 
-    - name: Install `wally` GUI application executable
+    - name: moonlander | Install `wally` GUI application executable
       ansible.builtin.get_url:
         url: "{{ moonlander__wally_bin_url }}"
         dest: /usr/local/bin/wally
         mode: '0755'
 
-    - name: Install `wally` GUI application .desktop file
+    - name: moonlander | Install `wally` GUI application .desktop file
       ansible.builtin.get_url:
         url: "{{ moonlander__wally_desktop_url }}"
         dest: /usr/share/applications/wally-zsa-moonlander.desktop
         mode: '0644'
 
     # Can't seem to get icon location to work but don't have time to figure it out
-    - name: Install `wally` GUI application icon
+    - name: moonlander | Install `wally` GUI application icon
       ansible.builtin.get_url:
         url: "{{ moonlander__wally_icon_url }}"
         # dest: /usr/share/icons/hicolor/256x256/apps/wally.png

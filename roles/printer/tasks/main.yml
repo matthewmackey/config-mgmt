@@ -18,9 +18,9 @@
   ansible.builtin.apt:
     name: hplip-gui
     state: present
-  when: is_gui | bool
   tags:
     - printer
     - install
     - packages
     - gui
+  when: is_gui | bool

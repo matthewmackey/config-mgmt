@@ -10,3 +10,4 @@
     - install
     - zoom
     - remote_debs
+  when: is_gui | bool

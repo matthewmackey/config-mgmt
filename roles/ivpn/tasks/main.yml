@@ -40,3 +40,4 @@
   tags:
     - ivpn
     - gui
+  when: is_gui | bool

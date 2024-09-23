@@ -4,9 +4,11 @@
     file: global__install_remote_deb.yml
   loop:
     - name: vscode
-      url: https://update.code.visualstudio.com/1.68.1/linux-deb-x64/stable
       filename: vscode_amd64.deb
-      checksum: sha256:19f21cb2481129070d4a5db4b47b20e93715c8e7696d4d4b9dddc3c229c9c495
+      # url: https://update.code.visualstudio.com/1.68.1/linux-deb-x64/stable
+      # checksum: sha256:19f21cb2481129070d4a5db4b47b20e93715c8e7696d4d4b9dddc3c229c9c495
+      url: https://update.code.visualstudio.com/1.93.1/linux-deb-x64/stable
+      checksum: sha256:29a9431daea5307cf9a22f6a95cbbe328f48ace6bda126457e1171390dc84aed
   tags:
     - vscode
     - remote_debs

@@ -34,6 +34,7 @@
   ansible.builtin.apt:
     state: present
     name: virt-manager
+  when: is_gui | bool
 
 - name: Install 'virt-viewer' utility for viewing graphical console of VMs
   become: yes

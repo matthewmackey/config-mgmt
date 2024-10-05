@@ -7,6 +7,9 @@
     state: present
     name:
       - openjdk-11-jdk-headless
+  tags:
+    - install
+    - java
 
 - name: java | Install Java 13 OpenJDK Development Kit (JDK) (headless)
   become: yes
@@ -15,6 +18,12 @@
     state: present
     name:
       - openjdk-13-jdk-headless
+  when:
+    - ansible_facts['distribution'] == "Ubuntu"
+    - ansible_facts['distribution_major_version'] == "20"
+  tags:
+    - install
+    - java
 
 # We picked this latest version to use for any GUI Java applications
 # Implicitly includes the headless .deb package
@@ -25,5 +34,27 @@
     state: present
     name:
       - openjdk-17-jdk
+      - openjdk-17-source
+  when:
+    - ansible_facts['distribution'] == "Ubuntu"
+    - ansible_facts['distribution_major_version'] == "20"
   tags:
+    - install
+    - java
+    - gui
+
+- name: java | Install Java 21 OpenJDK Development Kit (JDK) (non-headless)
+  become: yes
+  become_user: root
+  apt:
+    state: present
+    name:
+      - openjdk-21-jdk
+      - openjdk-21-source
+  when:
+    - ansible_facts['distribution'] == "Ubuntu"
+    - ansible_facts['distribution_major_version'] == "22"
+  tags:
+    - install
+    - java
     - gui
